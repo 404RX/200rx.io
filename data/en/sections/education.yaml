@@ -1,0 +1,155 @@
+# section information
+section:
+  name: Education
+  id: education
+  enable: true
+  weight: 4
+  showOnNavbar: true
+  # Can optionally hide the title in sections
+  # hideTitle: true
+
+degrees:
+- name: Master of Science in Computer Science
+  icon: fa-graduation-cap
+  timeframe: 2018-2020
+  institution:
+    name: Stanford University
+    url: "https://www.stanford.edu"
+    logo: /images/sections/education/stanford.png
+  grade: #(optional)
+    scale: GPA
+    achieved: 3.8
+    outOf: 4.0
+  takenCourses: #(optional)
+    # if true, the courses will be rendered as a table otherwise it will be rendered as a list and the grades will be hidden.
+    showGrades: true
+    collapseAfter: 3
+    courses:
+    - name: Advanced Algorithms
+      achieved: A
+      outOf: A
+    - name: Machine Learning
+      achieved: A-
+      outOf: A
+    - name: Distributed Systems
+      achieved: A
+      outOf: A
+    - name: Database Systems
+      achieved: A-
+      outOf: A
+    - name: Software Engineering
+      achieved: A
+      outOf: A
+    - name: Computer Networks
+      achieved: B+
+      outOf: A
+  publications: #(optional)
+  - title: "Optimizing Database Query Performance in Distributed Systems"
+    url: "https://example.com/publication1"
+  - title: "Machine Learning Approaches for Real-time Data Processing"
+    url: "https://example.com/publication2"
+  extracurricularActivities: #(optional)
+  - Graduate Student Association - Technology Committee Member
+  - CS Department Teaching Assistant for Data Structures course
+  - Organized annual tech symposium with 500+ attendees
+
+- name: Bachelor of Science in Computer Science
+  icon: fa-graduation-cap
+  timeframe: 2014-2018
+  institution:
+    name: University of California, Berkeley
+    url: "https://www.berkeley.edu"
+    logo: /images/sections/education/berkeley.png
+  grade: #(optional)
+    scale: GPA
+    achieved: 3.7
+    outOf: 4.0
+  takenCourses: #(optional)
+    showGrades: true
+    collapseAfter: 4
+    courses:
+    - name: Data Structures and Algorithms
+      achieved: A
+      outOf: A
+    - name: Computer Architecture
+      achieved: A-
+      outOf: A
+    - name: Operating Systems
+      achieved: A
+      outOf: A
+    - name: Programming Languages
+      achieved: A-
+      outOf: A
+    - name: Software Engineering
+      achieved: A
+      outOf: A
+    - name: Computer Graphics
+      achieved: B+
+      outOf: A
+    - name: Artificial Intelligence
+      achieved: A-
+      outOf: A
+    - name: Web Development
+      achieved: A
+      outOf: A
+  publications: #(optional)
+  - title: "Undergraduate Research in Web Application Security"
+    url: "https://example.com/undergrad-research"
+  extracurricularActivities: #(optional)
+  - Computer Science Student Association - Vice President
+  - ACM Programming Contest Team Member
+  - Volunteer tutor for introductory programming courses
+  - Hackathon organizer and participant (won 2nd place in Berkeley Hackathon 2017)
+
+- name: Professional Certifications
+  icon: fa-certificate
+  timeframe: 2020-2024
+  institution:
+    name: Various Providers
+    url: ""
+    logo: /images/sections/education/certifications.png
+  certifications:
+  - name: AWS Certified Solutions Architect - Associate
+    url: "https://aws.amazon.com/certification/"
+    achieved: 2023
+  - name: Google Cloud Professional Cloud Architect
+    url: "https://cloud.google.com/certification"
+    achieved: 2022
+  - name: Certified Kubernetes Administrator (CKA)
+    url: "https://www.cncf.io/certification/cka/"
+    achieved: 2022
+  - name: MongoDB Certified Developer
+    url: "https://university.mongodb.com/certification"
+    achieved: 2021
+  - name: Docker Certified Associate
+    url: "https://training.mirantis.com/certification/"
+    achieved: 2021
+
+- name: Online Learning & Continuous Education
+  icon: fa-laptop
+  timeframe: 2018-Present
+  institution:
+    name: Multiple Platforms
+    url: ""
+    logo: /images/sections/education/online.png
+  completedCourses:
+  - name: "Full Stack Web Development Specialization"
+    provider: "Coursera - University of Hong Kong"
+    completed: 2020
+    url: "https://www.coursera.org/specializations/full-stack-web-development-hkust"
+  - name: "Machine Learning Course"
+    provider: "Coursera - Stanford University"
+    completed: 2019
+    url: "https://www.coursera.org/learn/machine-learning"
+  - name: "React - The Complete Guide"
+    provider: "Udemy"
+    completed: 2021
+    url: "https://www.udemy.com/course/react-the-complete-guide-incl-redux/"
+  - name: "Docker and Kubernetes: The Complete Guide"
+    provider: "Udemy"
+    completed: 2022
+    url: "https://www.udemy.com/course/docker-and-kubernetes-the-complete-guide/"
+  - name: "System Design Interview Preparation"
+    provider: "Educative.io"
+    completed: 2023
+    url: "https://www.educative.io/courses/grokking-the-system-design-interview"

@@ -1,0 +1,60 @@
+# some information about you
+name: "Alex Johnson"
+nickname: "Alex"
+# greeting message before your name. it will default to "Hi! I am" if not provided
+greeting: "Hello, I'm"
+image: "images/author/avatar.png"
+# give your some contact information. they will be used in the footer
+contactInfo:
+  email: "alex.johnson@example.com"
+  phone: "+1 (555) 123-4567"
+  location: "San Francisco, CA"
+  website: "https://alexjohnson.dev"
+  
+# some summary about what you do
+summary:
+  - I am a passionate Full Stack Developer with 5+ years of experience
+  - I specialize in modern web technologies and cloud architecture
+  - I love building scalable applications that solve real-world problems
+  - I'm experienced in React, Node.js, Python, and DevOps practices
+  - I enjoy mentoring junior developers and contributing to open source
+
+# Additional social links
+socialLinks:
+  - name: "GitHub"
+    icon: "fab fa-github"
+    url: "https://github.com/username"
+  - name: "LinkedIn"
+    icon: "fab fa-linkedin"
+    url: "https://linkedin.com/in/username"
+  - name: "Twitter"
+    icon: "fab fa-twitter"
+    url: "https://twitter.com/username"
+  - name: "Stack Overflow"
+    icon: "fab fa-stack-overflow"
+    url: "https://stackoverflow.com/users/username"
+  - name: "Medium"
+    icon: "fab fa-medium"
+    url: "https://medium.com/@username"
+
+# Professional details
+professional:
+  currentRole: "Senior Full Stack Developer"
+  currentCompany: "TechCorp Solutions"
+  yearsOfExperience: 5
+  specializations:
+    - "Full Stack Web Development"
+    - "Cloud Architecture (AWS, GCP)"
+    - "DevOps & CI/CD"
+    - "API Design & Development"
+    - "Database Design & Optimization"
+    - "Team Leadership & Mentoring"
+
+# Personal interests
+interests:
+  - "Open Source Contributions"
+  - "Technology Blogging"
+  - "Hiking & Photography"
+  - "Coffee Brewing"
+  - "Reading Tech Books"
+  - "Attending Tech Conferences"

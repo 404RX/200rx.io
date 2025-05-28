@@ -1,0 +1,94 @@
+# section information
+section:
+  name: Projects
+  id: projects
+  enable: true
+  weight: 5
+  showOnNavbar: true
+  # Can optionally hide the title in sections
+  # hideTitle: true
+
+# filter buttons
+buttons:
+- name: All
+  filter: "all"
+- name: Professional
+  filter: "professional"
+- name: Academic
+  filter: "academic"
+- name: Hobby
+  filter: "hobby"
+
+# your projects
+projects:
+- name: E-Commerce Platform
+  logo: /images/sections/projects/ecommerce.png
+  role: Full Stack Developer
+  timeline: "Jan 2023 - Present"
+  repo: https://github.com/username/ecommerce-platform
+  url: https://demo-ecommerce.example.com
+  summary: A modern e-commerce platform built with React, Node.js, and PostgreSQL featuring real-time inventory management, payment processing, and admin dashboard.
+  tags: ["professional", "react", "nodejs", "postgresql", "stripe"]
+
+- name: Task Management API
+  logo: /images/sections/projects/api.png
+  role: Backend Developer
+  timeline: "Sep 2023 - Dec 2023"
+  repo: https://github.com/username/task-api
+  url: ""
+  summary: RESTful API for task management with user authentication, role-based permissions, and real-time notifications using WebSockets.
+  tags: ["professional", "nodejs", "express", "mongodb", "websockets"]
+
+- name: Weather Dashboard
+  logo: /images/sections/projects/weather.png
+  role: Frontend Developer
+  timeline: "Jun 2023 - Aug 2023"
+  repo: https://github.com/username/weather-dashboard
+  url: https://weather-dashboard.example.com
+  summary: Interactive weather dashboard with location-based forecasts, historical data visualization, and responsive design using Vue.js and Chart.js.
+  tags: ["hobby", "vuejs", "chartjs", "api", "responsive"]
+
+- name: Machine Learning Model Deployment
+  logo: /images/sections/projects/ml.png
+  role: ML Engineer
+  timeline: "Mar 2023 - May 2023"
+  repo: https://github.com/username/ml-deployment
+  url: ""
+  summary: Deployed a sentiment analysis model using FastAPI and Docker, with automated CI/CD pipeline and monitoring dashboard.
+  tags: ["academic", "python", "fastapi", "docker", "ml"]
+
+- name: Blog CMS
+  logo: /images/sections/projects/cms.png
+  role: Full Stack Developer
+  timeline: "Nov 2022 - Feb 2023"
+  repo: https://github.com/username/blog-cms
+  url: https://blog-cms.example.com
+  summary: Content Management System for blogs with markdown support, SEO optimization, and multi-author capabilities built with Next.js.
+  tags: ["hobby", "nextjs", "markdown", "seo", "cms"]
+
+- name: Real-time Chat Application
+  logo: /images/sections/projects/chat.png
+  role: Full Stack Developer
+  timeline: "Aug 2022 - Oct 2022"
+  repo: https://github.com/username/chat-app
+  url: https://chat-app.example.com
+  summary: Real-time chat application with rooms, file sharing, and emoji reactions using Socket.io, React, and Redis for session management.
+  tags: ["hobby", "react", "socketio", "redis", "realtime"]
+
+- name: University Course Management System
+  logo: /images/sections/projects/university.png
+  role: Team Lead
+  timeline: "Jan 2022 - May 2022"
+  repo: https://github.com/username/course-management
+  url: ""
+  summary: Academic project for managing university courses, student enrollments, and grade tracking with role-based access control.
+  tags: ["academic", "java", "spring", "mysql", "team-project"]
+
+- name: Personal Portfolio Website
+  logo: /images/sections/projects/portfolio.png
+  role: Designer & Developer
+  timeline: "Dec 2021 - Jan 2022"
+  repo: https://github.com/username/portfolio
+  url: https://portfolio.example.com
+  summary: Responsive portfolio website showcasing projects and skills, built with Hugo static site generator and deployed on GitHub Pages.
+  tags: ["hobby", "hugo", "scss", "responsive", "github-pages"]

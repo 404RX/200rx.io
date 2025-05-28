@@ -1,0 +1,111 @@
+# section information
+section:
+  name: Experiences
+  id: experiences
+  enable: true
+  weight: 3
+  showOnNavbar: true
+  # Can optionally hide the title in sections
+  # hideTitle: true
+
+# Your experiences
+experiences:
+- company:
+    name: TechCorp Solutions
+    url: "https://techcorp.example.com"
+    location: San Francisco, CA
+    logo: /images/sections/experiences/techcorp.png
+    # Can optionally show a different logo for dark theme
+    # darkLogo: /images/sections/experiences/company1-dark.png
+    # company overview
+    overview: Leading technology company specializing in cloud-native solutions and enterprise software development.
+  positions:
+  - designation: Senior Full Stack Developer
+    start: Jan 2023
+    # don't provide end date if you are currently working there. It will be replaced by "Present"
+    # end: Dec 2023
+    # give some points about what was your responsibilities at the company.
+    responsibilities:
+    - Led development of microservices architecture serving 100K+ daily active users
+    - Implemented CI/CD pipelines reducing deployment time by 60%
+    - Mentored junior developers and conducted code reviews
+    - Collaborated with product team to define technical requirements
+    - Optimized database queries improving application performance by 40%
+
+  - designation: Full Stack Developer
+    start: Jun 2021
+    end: Dec 2022
+    responsibilities:
+    - Developed and maintained React-based web applications
+    - Built RESTful APIs using Node.js and Express.js
+    - Integrated third-party services including payment gateways and analytics
+    - Participated in agile development process and sprint planning
+    - Wrote comprehensive unit and integration tests
+
+- company:
+    name: StartupXYZ
+    url: "https://startupxyz.example.com"
+    location: Austin, TX
+    logo: /images/sections/experiences/startupxyz.png
+    overview: Fast-growing fintech startup focused on digital banking solutions for small businesses.
+  positions:
+  - designation: Frontend Developer
+    start: Aug 2020
+    end: May 2021
+    responsibilities:
+    - Built responsive web applications using Vue.js and TypeScript
+    - Implemented real-time features using WebSocket connections
+    - Collaborated with UX/UI designers to create intuitive user interfaces
+    - Optimized application performance and accessibility
+    - Participated in user testing and feedback incorporation
+
+- company:
+    name: Digital Agency Pro
+    url: "https://digitalagencypro.example.com"
+    location: Remote
+    logo: /images/sections/experiences/agency.png
+    overview: Full-service digital agency creating custom web solutions for clients across various industries.
+  positions:
+  - designation: Junior Web Developer
+    start: Jan 2020
+    end: Jul 2020
+    responsibilities:
+    - Developed custom WordPress themes and plugins
+    - Created responsive websites using HTML, CSS, and JavaScript
+    - Worked with clients to understand requirements and deliver solutions
+    - Maintained and updated existing client websites
+    - Learned modern development practices and version control with Git
+
+- company:
+    name: University Research Lab
+    url: "https://university.example.edu"
+    location: Boston, MA
+    logo: /images/sections/experiences/university.png
+    overview: Computer Science research laboratory focusing on machine learning and data analysis applications.
+  positions:
+  - designation: Research Assistant
+    start: Sep 2019
+    end: Dec 2019
+    responsibilities:
+    - Developed Python scripts for data processing and analysis
+    - Implemented machine learning models using scikit-learn and TensorFlow
+    - Created data visualizations and research presentations
+    - Collaborated with PhD students on research projects
+    - Published findings in academic conferences
+
+- company:
+    name: Freelance
+    url: ""
+    location: Remote
+    logo: /images/sections/experiences/freelance.png
+    overview: Independent contractor providing web development services to small businesses and startups.
+  positions:
+  - designation: Freelance Web Developer
+    start: May 2019
+    end: Aug 2020
+    responsibilities:
+    - Built custom websites and web applications for various clients
+    - Provided technical consulting and project planning services
+    - Managed client relationships and project timelines
+    - Worked with diverse technology stacks based on client needs
+    - Delivered projects on time and within budget constraints

@@ -1,0 +1,92 @@
+# section information
+section:
+  name: Skills
+  id: skills
+  enable: true
+  weight: 2
+  showOnNavbar: true
+  # Can optionally hide the title in sections
+  # hideTitle: true
+
+# Your Skills.
+# Give a summary of you each skill in the summary section.
+skills:
+- name: JavaScript
+  logo: /images/sections/skills/javascript.png
+  summary: "Proficient in modern JavaScript (ES6+), including async/await, destructuring, modules, and advanced concepts like closures and prototypes."
+  url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+
+- name: React
+  logo: /images/sections/skills/react.png
+  summary: "Experienced in building complex SPAs with React, including hooks, context API, state management with Redux, and performance optimization."
+  url: "https://reactjs.org/"
+
+- name: Node.js
+  logo: /images/sections/skills/nodejs.png
+  summary: "Backend development with Node.js, Express.js, building RESTful APIs, microservices, and real-time applications with Socket.io."
+  url: "https://nodejs.org/"
+
+- name: Python
+  logo: /images/sections/skills/python.png
+  summary: "Full-stack development with Python, Django/Flask frameworks, data analysis with pandas, and machine learning with scikit-learn."
+  url: "https://www.python.org/"
+
+- name: TypeScript
+  logo: /images/sections/skills/typescript.png
+  summary: "Strong typing for JavaScript applications, interface design, generics, and building scalable applications with better code maintainability."
+  url: "https://www.typescriptlang.org/"
+
+- name: Vue.js
+  logo: /images/sections/skills/vue.png
+  summary: "Progressive framework for building user interfaces, composition API, Vuex for state management, and Vue Router for SPA development."
+  url: "https://vuejs.org/"
+
+- name: Docker
+  logo: /images/sections/skills/docker.png
+  summary: "Containerization of applications, multi-stage builds, Docker Compose for local development, and container orchestration basics."
+  url: "https://www.docker.com/"
+
+- name: PostgreSQL
+  logo: /images/sections/skills/postgresql.png
+  summary: "Advanced SQL queries, database design, indexing strategies, performance optimization, and working with ORMs like Prisma and Sequelize."
+  url: "https://www.postgresql.org/"
+
+- name: MongoDB
+  logo: /images/sections/skills/mongodb.png
+  summary: "NoSQL database design, aggregation pipelines, indexing, and integration with Node.js applications using Mongoose ODM."
+  url: "https://www.mongodb.com/"
+
+- name: AWS
+  logo: /images/sections/skills/aws.png
+  summary: "Cloud services including EC2, S3, Lambda, RDS, API Gateway, and deployment strategies using CloudFormation and CDK."
+  url: "https://aws.amazon.com/"
+
+- name: Git
+  logo: /images/sections/skills/git.png
+  summary: "Version control with Git, branching strategies, code reviews, conflict resolution, and collaborative development workflows."
+  url: "https://git-scm.com/"
+
+- name: Linux
+  logo: /images/sections/skills/linux.png
+  summary: "Command line proficiency, shell scripting, system administration, process management, and server deployment on various distributions."
+  url: "https://www.linux.org/"
+
+- name: GraphQL
+  logo: /images/sections/skills/graphql.png
+  summary: "API development with GraphQL, schema design, resolvers, and integration with Apollo Server and Apollo Client for efficient data fetching."
+  url: "https://graphql.org/"
+
+- name: Redis
+  logo: /images/sections/skills/redis.png
+  summary: "In-memory data structure store for caching, session management, pub/sub messaging, and performance optimization in web applications."
+  url: "https://redis.io/"
+
+- name: Kubernetes
+  logo: /images/sections/skills/kubernetes.png
+  summary: "Container orchestration, deployment strategies, service discovery, scaling applications, and managing containerized workloads in production."
+  url: "https://kubernetes.io/"
+
+- name: Next.js
+  logo: /images/sections/skills/nextjs.png
+  summary: "Full-stack React framework with SSR/SSG, API routes, file-based routing, and optimization features for production-ready applications."
+  url: "https://nextjs.org/"
