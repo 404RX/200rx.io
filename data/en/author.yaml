@@ -1,15 +1,14 @@
 # some information about you
-name: "Alex Johnson"
-nickname: "Alex"
+name: "Corey Miller"
+nickname: "Ray"
 # greeting message before your name. it will default to "Hi! I am" if not provided
 greeting: "Hello, I'm"
 image: "images/author/avatar.png"
 # give your some contact information. they will be used in the footer
 contactInfo:
-  email: "alex.johnson@example.com"
-  phone: "+1 (555) 123-4567"
-  location: "San Francisco, CA"
-  website: "https://alexjohnson.dev"
+  email: "vinnym@200rx.com"
+  location: "New York, Ny"
+  website: "https://200rx.com"
   
 # some summary about what you do
 summary:
