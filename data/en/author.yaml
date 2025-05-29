@@ -12,7 +12,7 @@ contactInfo:
   
 # some summary about what you do
 summary:
-summary:
+# Removed duplicate key
   - I’m an experienced IT Administrator with a strong background in infrastructure, automation, and support operations
   - I specialize in resolving complex system issues, scripting efficient workflows, and delivering scalable support solutions
   - My career spans federal, nonprofit, and enterprise sectors—each shaping how I approach uptime, user needs, and system integrity
