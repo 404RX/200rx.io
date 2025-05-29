@@ -3,7 +3,7 @@ name: GitHub Pages
 on:
   push:
     branches:
-      - master  # Set a branch to deploy
+      - main  # Set a branch to deploy
   pull_request:
 
 jobs:
@@ -36,7 +36,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-          cache: 'npm'
 
       - name: Install dependencies
         run: npm install
