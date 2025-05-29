@@ -5,6 +5,22 @@ title: "Corey Miller - Systems Administrator"
 # Theme configuration
 theme: toha
 
+# Module configuration for npm dependencies
+module:
+  mounts:
+  - source: node_modules/bootstrap/scss
+    target: assets/bootstrap/scss
+  - source: node_modules/@fontsource/mulish
+    target: assets/@fontsource/mulish
+  - source: node_modules/include-media/dist
+    target: assets/include-media/dist
+  - source: node_modules/flag-icons/flags
+    target: static/flags
+  - source: node_modules/@fontsource/mulish/files
+    target: static/files
+  - source: node_modules/katex/dist/fonts
+    target: static/fonts
+
 # Allow raw html in markdown file
 markup:
   goldmark:
@@ -36,7 +52,6 @@ params:
   logo:
     main: /images/site/main-logo.png
     inverted: /images/site/inverted-logo.png
-    favicon: /images/site/favicon.png
 
   # GitHub repo of your site (update this with your actual repo)
   gitRepo: https://github.com/404RX/200rx.io
@@ -195,7 +210,7 @@ taxonomies:
 privacy:
   googleAnalytics:
     disable: true
-  twitter:
+  x:
     disable: false
     enableDNT: true
     simple: true
