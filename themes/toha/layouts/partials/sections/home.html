@@ -45,125 +45,133 @@
 {{ $mediumw := default "1200x" }}
 {{ $largew := default "1500x" }}
 
-{{/* resize the src image to the given sizes */}}
+{{/* resize the src image to the given sizes - only if src exists */}}
+{{ $tiny := "" }}
+{{ $small := "" }}
+{{ $medium := "" }}
+{{ $large := "" }}
 
-{{ $tiny := $src.Resize $tinyw }}
-{{ $small := $src.Resize $smallw }}
-{{ $medium := $src.Resize $mediumw }}
-{{ $large := $src.Resize $largew }}
+{{ if $src }}
+  {{ $tiny = $src.Resize $tinyw }}
+  {{ $small = $src.Resize $smallw }}
+  {{ $medium = $src.Resize $mediumw }}
+  {{ $large = $src.Resize $largew }}
 
-{{/* only use images smaller than or equal to the src (original) image size, as Hugo will upscale small images */}}
-{{/* set the sizes attribute to (min-width: 35em) 1200px, 100vw unless overridden in shortcode */}}
+  {{/* only use images smaller than or equal to the src (original) image size, as Hugo will upscale small images */}}
+  {{ if lt $src.Width "500" }}
+    {{ $tiny = $src}}
+    {{ $small = $src}}
+    {{ $medium = $src}}
+    {{ $large = $src}}
+  {{ end }}
 
-{{ if lt $src.Width "500" }}
-  {{ $tiny := $src}}
-  {{ $small := $src}}
-  {{ $medium := $src}}
-  {{ $large := $src}}
-{{ end }}
+  {{ if lt $src.Width "800" }}
+    {{ $small = $src}}
+    {{ $medium = $src}}
+    {{ $large = $src}}
+  {{ end }}
 
-{{ if lt $src.Width "800" }}
-  {{ $small := $src}}
-  {{ $medium := $src}}
-  {{ $large := $src}}
-{{ end }}
+  {{ if lt $src.Width "1200" }}
+    {{ $medium = $src}}
+    {{ $large = $src}}
+  {{ end }}
 
-{{ if lt $src.Width "1200" }}
-  {{ $medium := $src}}
-  {{ $large := $src}}
-{{ end }}
-
-{{ if lt $src.Width "1500" }}
-  {{ $large := $src}}
+  {{ if lt $src.Width "1500" }}
+    {{ $large = $src}}
+  {{ end }}
 {{ end }}
 
 {{/* get file that matches the filename as specified as src="" in shortcode */}}
 {{ $darkSrc := resources.Get $darkBackgroundImage }}
 
-{{/* resize the src image to the given sizes */}}
+{{/* resize the dark src image to the given sizes - only if darkSrc exists */}}
+{{ $darkTiny := "" }}
+{{ $darkSmall := "" }}
+{{ $darkMedium := "" }}
+{{ $darkLarge := "" }}
 
-{{ $darkTiny := $darkSrc.Resize $tinyw }}
-{{ $darkSmall := $darkSrc.Resize $smallw }}
-{{ $darkMedium := $darkSrc.Resize $mediumw }}
-{{ $darkLarge := $darkSrc.Resize $largew }}
+{{ if $darkSrc }}
+  {{ $darkTiny = $darkSrc.Resize $tinyw }}
+  {{ $darkSmall = $darkSrc.Resize $smallw }}
+  {{ $darkMedium = $darkSrc.Resize $mediumw }}
+  {{ $darkLarge = $darkSrc.Resize $largew }}
 
-{{/* only use images smaller than or equal to the src (original) image size, as Hugo will upscale small images */}}
-{{/* set the sizes attribute to (min-width: 35em) 1200px, 100vw unless overridden in shortcode */}}
+  {{/* only use images smaller than or equal to the src (original) image size, as Hugo will upscale small images */}}
+  {{ if lt $darkSrc.Width "500" }}
+    {{ $darkTiny = $darkSrc}}
+    {{ $darkSmall = $darkSrc}}
+    {{ $darkMedium = $darkSrc}}
+    {{ $darkLarge = $darkSrc}}
+  {{ end }}
 
-{{ if lt $darkSrc.Width "500" }}
-  {{ $darkTiny := $src}}
-  {{ $darkSmall := $src}}
-  {{ $darkMedium := $src}}
-  {{ $darkLarge := $src}}
-{{ end }}
+  {{ if lt $darkSrc.Width "800" }}
+    {{ $darkSmall = $darkSrc}}
+    {{ $darkMedium = $darkSrc}}
+    {{ $darkLarge = $darkSrc}}
+  {{ end }}
 
-{{ if lt $src.Width "800" }}
-  {{ $darkSmall := $src}}
-  {{ $darkMedium := $src}}
-  {{ $darkLarge := $src}}
-{{ end }}
+  {{ if lt $darkSrc.Width "1200" }}
+    {{ $darkMedium = $darkSrc}}
+    {{ $darkLarge = $darkSrc}}
+  {{ end }}
 
-{{ if lt $src.Width "1200" }}
-  {{ $darkMedium := $src}}
-  {{ $darkLarge := $src}}
-{{ end }}
-
-{{ if lt $src.Width "1500" }}
-  {{ $darkLarge := $src}}
+  {{ if lt $darkSrc.Width "1500" }}
+    {{ $darkLarge = $darkSrc}}
+  {{ end }}
 {{ end }}
 
 <div class="container-fluid home" id="home">
   <style>
     /* 0 to 299 */
     #homePageBackgroundImageDivStyled {
-      background-image: url('{{ $tiny.RelPermalink }}');
+      {{ if $tiny }}background-image: url('{{ $tiny.RelPermalink }}');{{ end }}
     }
     /* 300 to X */
     @media (min-width: 500px) and (max-width: 800px) { /* or 301 if you want really the same as previously.  */
-      #homePageBackgroundImageDivStyled {   
-          background-image: url('{{ $small.RelPermalink }}');
+      #homePageBackgroundImageDivStyled {
+          {{ if $small }}background-image: url('{{ $small.RelPermalink }}');{{ end }}
         }
     }
     @media (min-width: 801px) and (max-width: 1200px) { /* or 301 if you want really the same as previously.  */
-      #homePageBackgroundImageDivStyled {   
-          background-image: url('{{ $medium.RelPermalink }}');
+      #homePageBackgroundImageDivStyled {
+          {{ if $medium }}background-image: url('{{ $medium.RelPermalink }}');{{ end }}
         }
     }
     @media (min-width: 1201px) and (max-width: 1500px) { /* or 301 if you want really the same as previously.  */
-      #homePageBackgroundImageDivStyled {   
-          background-image: url('{{ $large.RelPermalink }}');
+      #homePageBackgroundImageDivStyled {
+          {{ if $large }}background-image: url('{{ $large.RelPermalink }}');{{ end }}
         }
     }
     @media (min-width: 1501px) { /* or 301 if you want really the same as previously.  */
-      #homePageBackgroundImageDivStyled {   
-          background-image: url('{{ $src.RelPermalink }}');
+      #homePageBackgroundImageDivStyled {
+          {{ if $src }}background-image: url('{{ $src.RelPermalink }}');{{ end }}
         }
     }
 
     html[data-theme='dark'] {
       /* 0 to 299 */
       #homePageBackgroundImageDivStyled {
-        background-image: url('{{ $darkTiny.RelPermalink }}');
+        {{ if $darkTiny }}background-image: url('{{ $darkTiny.RelPermalink }}');{{ end }}
       }
       /* 300 to X */
       @media (min-width: 500px) and (max-width: 800px) { /* or 301 if you want really the same as previously.  */
-        #homePageBackgroundImageDivStyled {   
-          background-image: url('{{ $darkSmall.RelPermalink }}');
+        #homePageBackgroundImageDivStyled {
+          {{ if $darkSmall }}background-image: url('{{ $darkSmall.RelPermalink }}');{{ end }}
         }
       }
       @media (min-width: 801px) and (max-width: 1200px) { /* or 301 if you want really the same as previously.  */
-        #homePageBackgroundImageDivStyled {   
-          background-image: url('{{ $darkMedium.RelPermalink }}');
+        #homePageBackgroundImageDivStyled {
+          {{ if $darkMedium }}background-image: url('{{ $darkMedium.RelPermalink }}');{{ end }}
         }
       }
       @media (min-width: 1201px) and (max-width: 1500px) { /* or 301 if you want really the same as previously.  */
-        #homePageBackgroundImageDivStyled {   
-          background-image: url('{{ $darkLarge.RelPermalink }}');
+        #homePageBackgroundImageDivStyled {
+          {{ if $darkLarge }}background-image: url('{{ $darkLarge.RelPermalink }}');{{ end }}
         }
       }
       @media (min-width: 1501px) { /* or 301 if you want really the same as previously.  */
-        #homePageBackgroundImageDivStyled {   
-          background-image: url('{{ $darkSrc.RelPermalink }}');
+        #homePageBackgroundImageDivStyled {
+          {{ if $darkSrc }}background-image: url('{{ $darkSrc.RelPermalink }}');{{ end }}
         }
       }
     }
@@ -174,10 +182,12 @@
     class="background container-fluid"
   ></div>
   <div class="container content text-center">
+    {{ if $authorImage }}
     <img src="{{ $authorImage.RelPermalink }}"
       class="rounded-circle mx-auto d-block img-fluid"
       alt="Author Image"
     />
+    {{ end }}
     <h1 class="greeting"> {{ $author.greeting }} {{ $name }}</h1>
     {{ if $author.subtitle }}
       <h2 class="greeting-subtitle">{{ $author.subtitle }}</h2>
