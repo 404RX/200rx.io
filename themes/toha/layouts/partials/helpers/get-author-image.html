@@ -19,15 +19,30 @@
 {{ end }}
 
 {{/* apply image processing. don't use "Fit" in svg or gif because its not supported */}}
-{{ $authorImage:= resources.Get $authorImage}}
+{{/* $authorImage at this point is the image path string determined by the logic above (lines 1-20) */}}
+{{ $authorImageResource := "" }} {{/* Initialize variable for the resource object */}}
+{{ if $authorImage }} {{/* Ensure the path string is not empty before calling resources.Get */}}
+  {{ $authorImageResource = resources.Get $authorImage }}
+{{ end }}
 
-{{ if $authorImage }}
-  {{ if and $authorImage (and (ne $authorImage.MediaType.SubType "svg") ( ne $authorImage.MediaType.SubType "gif")) }}
-    {{ $authorImage = $authorImage.Fit "120x120" }}
+{{ if $authorImageResource }}
+  {{/* We have a valid resource object from resources.Get */}}
+  {{ if and (ne $authorImageResource.MediaType.SubType "svg") (ne $authorImageResource.MediaType.SubType "gif") }}
+    {{/* It's not an SVG or GIF, so attempt to Fit it */}}
+    {{ $fittedImage := $authorImageResource.Fit "120x120" }}
+    {{ if $fittedImage }}
+      {{/* Fit was successful, return its RelPermalink */}}
+      {{ return $fittedImage.RelPermalink }}
+    {{ else }}
+      {{/* Fit failed (e.g. corrupt image), fall back to the original resource's RelPermalink */}}
+      {{ return $authorImageResource.RelPermalink }}
+    {{ end }}
+  {{ else }}
+    {{/* It's an SVG or GIF (or Fit was not applicable). Use original resource's RelPermalink */}}
+    {{ return $authorImageResource.RelPermalink }}
   {{ end }}
-  {{/*  return the author image link  */}}
-  {{ return $authorImage.RelPermalink }}
 {{ else }}
-  {{/* return empty string if image resource not found */}}
-  {{ return }}
+  {{/* resources.Get failed to find the image or the initial image path string was empty. */}}
+  {{/* Return empty string. Original 'return' with no args is equivalent to 'return ""'. */}}
+  {{ return "" }}
 {{ end }}
