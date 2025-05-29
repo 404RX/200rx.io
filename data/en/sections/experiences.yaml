@@ -17,6 +17,7 @@ experiences:
     overview: Mission-critical government agency supporting national operations and security infrastructure at a major transportation hub.
   positions:
   - designation: IT Administrator (GS-12)
+    start: Jan 2024
     responsibilities:
     - Provide frontline and backend IT support across a high-security federal environment with 600+ endpoints
     - Lead imaging, deployment, and lifecycle management of systems in time-sensitive operational zones
@@ -24,6 +25,23 @@ experiences:
     - Train and mentor new technicians on procedures, tools, and process automation
     - Troubleshoot and resolve issues related to network connectivity, group policy, access permissions, and endpoint behavior
     - Automate recurring tasks using PowerShell and batch scripting to reduce manual workload
+
+- company:
+    name: Fortune 500 MSP (Confidential)
+    location: Remote / Hybrid
+    logo: /images/sections/experiences/fortune500.png
+    overview: Leading managed service provider offering global IT solutions to enterprise clients across various industries.
+  positions:
+  - designation: Tier 3 Systems Technician
+    start: Dec 2022
+    end: Dec 2023  
+    responsibilities:
+    - Serve as second-to-last escalation point for complex issues across networking, virtualization, and endpoint management
+    - Support clients across diverse infrastructure stacks with tailored automation and troubleshooting
+    - Develop and deploy remote PowerShell scripts for client environments to monitor, report, and self-heal IT systems
+    - Interface with specialized infrastructure teams to ensure smooth handoff of escalated cases
+    - Participate in system hardening, incident response, and maintenance of security controls across critical endpoints
+    - Document process improvements and contribute to shared knowledge bases for long-term service delivery
 
 experiences:
 - company:
@@ -34,27 +52,12 @@ experiences:
   positions:
   - designation: System Administrator (GS-9)
     start: Jul 2021
-    end: Dec 2023
+    end: Dec 2022
     responsibilities:
     - Administer, secure, and troubleshoot IT infrastructure supporting federal operations and critical communications
     - Manage Active Directory, user provisioning, and system rollouts in a high-stakes, security-focused environment
     - Ensure continuous availability of essential services through scripting, process standardization, and proactive maintenance
     - Coordinate across units to resolve complex issues affecting network integrity and endpoint performance
-
-- company:
-    name: Fortune 500 MSP (Confidential)
-    location: Remote / Hybrid
-    logo: /images/sections/experiences/fortune500.png
-    overview: Leading managed service provider offering global IT solutions to enterprise clients across various industries.
-  positions:
-  - designation: Tier 3 Systems Technician
-    responsibilities:
-    - Serve as second-to-last escalation point for complex issues across networking, virtualization, and endpoint management
-    - Support clients across diverse infrastructure stacks with tailored automation and troubleshooting
-    - Develop and deploy remote PowerShell scripts for client environments to monitor, report, and self-heal IT systems
-    - Interface with specialized infrastructure teams to ensure smooth handoff of escalated cases
-    - Participate in system hardening, incident response, and maintenance of security controls across critical endpoints
-    - Document process improvements and contribute to shared knowledge bases for long-term service delivery
 
 - company:
     name: Compass Point
