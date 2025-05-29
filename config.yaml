@@ -1,6 +1,6 @@
 baseURL: https://200rx.com/
 languageCode: en-us
-title: "Corey Miller - Systems Administrator"
+title: "Ray - Systems Administrator"
 
 # Theme configuration
 theme: toha
@@ -75,7 +75,7 @@ params:
     name: "Corey Miller"
     image: "/images/author/avatar.png"
     designation: "Experienced System Administrator"
-    company: "Federal Government Agency"
+    company: "Government"
     location: "New York, Ny"
 
   # Configure the number of section title visible in the top navbar
@@ -103,10 +103,10 @@ params:
       # Share post on different social media
       shareButtons:
         facebook: true
-        twitter: true
+        twitter: false
         linkedin: true
-        reddit: true
-        whatsapp: true
+        reddit: false
+        whatsapp: false
         email: true
 
     # Enable & configure "Notes" features

@@ -9,20 +9,15 @@ section:
   # hideTitle: true
 
 degrees:
-- name: Master of Science in Computer Science
+- name: Information Systems Management
   icon: fa-graduation-cap
-  timeframe: 2018-2020
+  timeframe: 2020-2022
   institution:
-    name: Stanford University
-    url: "https://www.stanford.edu"
-    logo: /images/sections/education/stanford.png
-  grade: #(optional)
-    scale: GPA
-    achieved: 3.8
-    outOf: 4.0
+    name: York College (CUNY)
+    url: "https://www.york.cuny.edu/"
   takenCourses: #(optional)
     # if true, the courses will be rendered as a table otherwise it will be rendered as a list and the grades will be hidden.
-    showGrades: true
+    showGrades: false
     collapseAfter: 3
     courses:
     - name: Advanced Algorithms
@@ -43,29 +38,15 @@ degrees:
     - name: Computer Networks
       achieved: B+
       outOf: A
-  publications: #(optional)
-  - title: "Optimizing Database Query Performance in Distributed Systems"
-    url: "https://example.com/publication1"
-  - title: "Machine Learning Approaches for Real-time Data Processing"
-    url: "https://example.com/publication2"
-  extracurricularActivities: #(optional)
-  - Graduate Student Association - Technology Committee Member
-  - CS Department Teaching Assistant for Data Structures course
-  - Organized annual tech symposium with 500+ attendees
 
-- name: Bachelor of Science in Computer Science
+- name: Computer Science and Information Security — Associate in Science degree (AS)
   icon: fa-graduation-cap
-  timeframe: 2014-2018
+  timeframe: 2017-2019
   institution:
-    name: University of California, Berkeley
-    url: "https://www.berkeley.edu"
-    logo: /images/sections/education/berkeley.png
-  grade: #(optional)
-    scale: GPA
-    achieved: 3.7
-    outOf: 4.0
+    name: Queensborough Community College
+    url: "https://www.qcc.cuny.edu/"
   takenCourses: #(optional)
-    showGrades: true
+    showGrades: false
     collapseAfter: 4
     courses:
     - name: Data Structures and Algorithms
@@ -92,38 +73,24 @@ degrees:
     - name: Web Development
       achieved: A
       outOf: A
-  publications: #(optional)
-  - title: "Undergraduate Research in Web Application Security"
-    url: "https://example.com/undergrad-research"
-  extracurricularActivities: #(optional)
-  - Computer Science Student Association - Vice President
-  - ACM Programming Contest Team Member
-  - Volunteer tutor for introductory programming courses
-  - Hackathon organizer and participant (won 2nd place in Berkeley Hackathon 2017)
 
 - name: Professional Certifications
   icon: fa-certificate
-  timeframe: 2020-2024
+  timeframe: 2017-2024
   institution:
     name: Various Providers
     url: ""
     logo: /images/sections/education/certifications.png
   certifications:
-  - name: AWS Certified Solutions Architect - Associate
-    url: "https://aws.amazon.com/certification/"
+  - name: CompTIA CySA+
+    url: "https://www.comptia.org/certifications/cybersecurity-analyst/"
     achieved: 2023
-  - name: Google Cloud Professional Cloud Architect
-    url: "https://cloud.google.com/certification"
+  - name: CompTIA Network+
+    url: "https://www.comptia.org/certifications/network"
+    achieved: 2018
+  - name: CCNA
+    url: "https://www.cisco.com/site/us/en/learn/training-certifications/certifications/enterprise/ccna/index.html"
     achieved: 2022
-  - name: Certified Kubernetes Administrator (CKA)
-    url: "https://www.cncf.io/certification/cka/"
-    achieved: 2022
-  - name: MongoDB Certified Developer
-    url: "https://university.mongodb.com/certification"
-    achieved: 2021
-  - name: Docker Certified Associate
-    url: "https://training.mirantis.com/certification/"
-    achieved: 2021
 
 - name: Online Learning & Continuous Education
   icon: fa-laptop

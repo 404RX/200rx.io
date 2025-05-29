@@ -5,13 +5,13 @@ This directory contains all the static images used by the Hugo site with Toha th
 ## Required Images
 
 ### Author Images
-- `author/avatar.png` - Author profile picture (recommended: 400x400px)
+- `author/self.png` - Author profile picture (recommended: 400x400px)
 
 ### Site Images
 - `site/background.jpg` - Landing page background image
 - `site/main-logo.png` - Main site logo
 - `site/inverted-logo.png` - Inverted logo for transparent navbar
-- `site/favicon.png` - Site favicon
+- `site/CM.png` - Site favicon
 
 ### Section Images
 

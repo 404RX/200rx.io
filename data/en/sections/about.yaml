@@ -85,29 +85,45 @@ badges:
   badge: "https://images.credly.com/size/220x220/images/683783d8-eaac-4c37-a14d-11bd8a36321d/ccna_600.png"
 
 - type: soft-skill-indicator
-  name: Leadership
-  percentage: 90
-  color: blue
-
-- type: soft-skill-indicator
-  name: Team Collaboration
+  name: Systems Thinking
   percentage: 95
-  color: green
+  color: deep-purple
 
 - type: soft-skill-indicator
-  name: Problem Solving
-  percentage: 88
+  name: Adaptability
+  percentage: 92
+  color: teal
+
+- type: soft-skill-indicator
+  name: Strategic Problem Solving
+  percentage: 90
   color: orange
 
 - type: soft-skill-indicator
-  name: Communication
-  percentage: 85
-  color: purple
+  name: Cross-Functional Communication
+  percentage: 88
+  color: blue
 
 - type: soft-skill-indicator
-  name: Mentoring
-  percentage: 82
+  name: Initiative & Ownership
+  percentage: 87
+  color: green
+
+- type: soft-skill-indicator
+  name: Mentorship & Peer Development
+  percentage: 85
   color: red
+
+- type: soft-skill-indicator
+  name: Operational Awareness
+  percentage: 84
+  color: amber
+
+- type: soft-skill-indicator
+  name: Conflict Navigation
+  percentage: 82
+  color: gray
+
 
 # you can also provide color code instead of the color name
 # - type: soft-skill-indicator

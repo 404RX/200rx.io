@@ -3,7 +3,7 @@ name: "Corey Miller"
 nickname: "Ray"
 # greeting message before your name. it will default to "Hi! I am" if not provided
 greeting: "Hello, I'm"
-image: "images/author/avatar.png"
+image: "images/author/self.png"
 # give your some contact information. they will be used in the footer
 contactInfo:
   email: "vinnym@200rx.com"
@@ -12,20 +12,23 @@ contactInfo:
   
 # some summary about what you do
 summary:
-  - I am a passionate Full Stack Developer with 5+ years of experience
-  - I specialize in modern web technologies and cloud architecture
-  - I love building scalable applications that solve real-world problems
-  - I'm experienced in React, Node.js, Python, and DevOps practices
-  - I enjoy mentoring junior developers and contributing to open source
+summary:
+  - I’m an experienced IT Administrator with a strong background in infrastructure, automation, and support operations
+  - I specialize in resolving complex system issues, scripting efficient workflows, and delivering scalable support solutions
+  - My career spans federal, nonprofit, and enterprise sectors—each shaping how I approach uptime, user needs, and system integrity
+  - I enjoy mentoring peers, building documentation, and streamlining service delivery in high-impact environments
+  - Whether deploying hundreds of machines or solving deep-rooted endpoint problems, I bring structure, speed, and calm under pressure
+
+
 
 # Additional social links
 socialLinks:
   - name: "GitHub"
     icon: "fab fa-github"
-    url: "https://github.com/username"
+    url: "https://github.com/404RX"
   - name: "LinkedIn"
     icon: "fab fa-linkedin"
-    url: "https://linkedin.com/in/username"
+    url: "https://linkedin.com/in/coreyvmiller"
   - name: "Twitter"
     icon: "fab fa-twitter"
     url: "https://twitter.com/username"
@@ -38,22 +41,21 @@ socialLinks:
 
 # Professional details
 professional:
-  currentRole: "Senior Full Stack Developer"
-  currentCompany: "TechCorp Solutions"
-  yearsOfExperience: 5
+  currentRole: "IT Administrator"
+  currentCompany: "U.S. Federal Government
+  yearsOfExperience: 10
   specializations:
-    - "Full Stack Web Development"
-    - "Cloud Architecture (AWS, GCP)"
-    - "DevOps & CI/CD"
-    - "API Design & Development"
-    - "Database Design & Optimization"
-    - "Team Leadership & Mentoring"
+    - "Systems Administration & Endpoint Management"
+    - "Automation Scripting (PowerShell, Python, Batch)"
+    - "IT Infrastructure Troubleshooting & Escalation"
+    - "Compliance & Security Standardization"
+    - "Process Documentation & Mentorship"
+    - "Multi-environment Support (Gov, Nonprofit, Enterprise)"
 
 # Personal interests
 interests:
-  - "Open Source Contributions"
-  - "Technology Blogging"
-  - "Hiking & Photography"
-  - "Coffee Brewing"
-  - "Reading Tech Books"
-  - "Attending Tech Conferences"
+  - "Scripting Custom Tools for IT Automation"
+  - "AI and Cybersecurity Research"
+  - "Mentoring and Peer Training"
+  - "Building Self-sustaining Systems (Digital & Physical)"
+  - "Reading Strategy, Philosophy, and Futurism"

@@ -11,101 +11,131 @@ section:
 # Your experiences
 experiences:
 - company:
-    name: TechCorp Solutions
-    url: "https://techcorp.example.com"
-    location: San Francisco, CA
-    logo: /images/sections/experiences/techcorp.png
-    # Can optionally show a different logo for dark theme
-    # darkLogo: /images/sections/experiences/company1-dark.png
-    # company overview
-    overview: Leading technology company specializing in cloud-native solutions and enterprise software development.
+    name: U.S. Federal Agency
+    location: Queens, NY
+    logo: /images/sections/experiences/federal-agency.png
+    overview: Mission-critical government agency supporting national operations and security infrastructure at a major transportation hub.
   positions:
-  - designation: Senior Full Stack Developer
-    start: Jan 2023
-    # don't provide end date if you are currently working there. It will be replaced by "Present"
-    # end: Dec 2023
-    # give some points about what was your responsibilities at the company.
+  - designation: IT Administrator (GS-12)
     responsibilities:
-    - Led development of microservices architecture serving 100K+ daily active users
-    - Implemented CI/CD pipelines reducing deployment time by 60%
-    - Mentored junior developers and conducted code reviews
-    - Collaborated with product team to define technical requirements
-    - Optimized database queries improving application performance by 40%
+    - Provide frontline and backend IT support across a high-security federal environment with 600+ endpoints
+    - Lead imaging, deployment, and lifecycle management of systems in time-sensitive operational zones
+    - Spearheaded initiative to align 600 devices with mandatory federal compliance standards ahead of schedule
+    - Train and mentor new technicians on procedures, tools, and process automation
+    - Troubleshoot and resolve issues related to network connectivity, group policy, access permissions, and endpoint behavior
+    - Automate recurring tasks using PowerShell and batch scripting to reduce manual workload
 
-  - designation: Full Stack Developer
+experiences:
+- company:
+    name: United States Marine Corps
+    location: New York City Metropolitan Area
+    logo: /images/sections/experiences/usmc.png
+    overview: Elite military branch where technical excellence, operational readiness, and infrastructure reliability are mission-critical.
+  positions:
+  - designation: System Administrator (GS-9)
+    start: Jul 2021
+    end: Dec 2023
+    responsibilities:
+    - Administer, secure, and troubleshoot IT infrastructure supporting federal operations and critical communications
+    - Manage Active Directory, user provisioning, and system rollouts in a high-stakes, security-focused environment
+    - Ensure continuous availability of essential services through scripting, process standardization, and proactive maintenance
+    - Coordinate across units to resolve complex issues affecting network integrity and endpoint performance
+
+- company:
+    name: Fortune 500 MSP (Confidential)
+    location: Remote / Hybrid
+    logo: /images/sections/experiences/fortune500.png
+    overview: Leading managed service provider offering global IT solutions to enterprise clients across various industries.
+  positions:
+  - designation: Tier 3 Systems Technician
+    responsibilities:
+    - Serve as second-to-last escalation point for complex issues across networking, virtualization, and endpoint management
+    - Support clients across diverse infrastructure stacks with tailored automation and troubleshooting
+    - Develop and deploy remote PowerShell scripts for client environments to monitor, report, and self-heal IT systems
+    - Interface with specialized infrastructure teams to ensure smooth handoff of escalated cases
+    - Participate in system hardening, incident response, and maintenance of security controls across critical endpoints
+    - Document process improvements and contribute to shared knowledge bases for long-term service delivery
+
+- company:
+    name: Compass Point
+    location: New York City Metropolitan Area
+    logo: /images/sections/experiences/compasspoint.png
+    overview: Full-service IT consultancy providing solutions for private and public sector clients.
+  positions:
+  - designation: System Analyst
     start: Jun 2021
-    end: Dec 2022
+    end: Jul 2022
     responsibilities:
-    - Developed and maintained React-based web applications
-    - Built RESTful APIs using Node.js and Express.js
-    - Integrated third-party services including payment gateways and analytics
-    - Participated in agile development process and sprint planning
-    - Wrote comprehensive unit and integration tests
+    - Delivered Tier 2/3 support, systems analysis, and user training for enterprise clients
+    - Diagnosed software, hardware, and access control issues using a mix of scripting, logs, and monitoring tools
+    - Assisted in rollouts, migrations, and documentation across hybrid environments
 
 - company:
-    name: StartupXYZ
-    url: "https://startupxyz.example.com"
-    location: Austin, TX
-    logo: /images/sections/experiences/startupxyz.png
-    overview: Fast-growing fintech startup focused on digital banking solutions for small businesses.
+    name: Leukemia & Lymphoma Society
+    location: Rye Brook, NY
+    logo: /images/sections/experiences/lls.png
+    overview: Non-profit organization focused on curing blood cancers and improving quality of life for patients.
   positions:
-  - designation: Frontend Developer
-    start: Aug 2020
-    end: May 2021
+  - designation: Help Desk Specialist
+    start: Oct 2020
+    end: Jun 2021
     responsibilities:
-    - Built responsive web applications using Vue.js and TypeScript
-    - Implemented real-time features using WebSocket connections
-    - Collaborated with UX/UI designers to create intuitive user interfaces
-    - Optimized application performance and accessibility
-    - Participated in user testing and feedback incorporation
+    - Supported 1,300+ users in a Windows-based environment with troubleshooting and rapid issue resolution
+    - Performed Active Directory tasks (moves, adds, changes), endpoint remediation, and user onboarding
 
 - company:
-    name: Digital Agency Pro
-    url: "https://digitalagencypro.example.com"
-    location: Remote
-    logo: /images/sections/experiences/agency.png
-    overview: Full-service digital agency creating custom web solutions for clients across various industries.
+    name: NYC HRA Department of Social Services
+    location: New York City Metropolitan Area
+    logo: /images/sections/experiences/nycdss.png
+    overview: Largest municipal social services agency in the U.S., supporting millions of New Yorkers annually.
   positions:
-  - designation: Junior Web Developer
-    start: Jan 2020
-    end: Jul 2020
+  - designation: Remote Site Administrator (Internship)
+    start: Dec 2018
+    end: Oct 2020
     responsibilities:
-    - Developed custom WordPress themes and plugins
-    - Created responsive websites using HTML, CSS, and JavaScript
-    - Worked with clients to understand requirements and deliver solutions
-    - Maintained and updated existing client websites
-    - Learned modern development practices and version control with Git
+    - Provided on-site and remote desktop support across satellite offices
+    - Assisted with network troubleshooting, imaging, and access control
 
 - company:
-    name: University Research Lab
-    url: "https://university.example.edu"
-    location: Boston, MA
-    logo: /images/sections/experiences/university.png
-    overview: Computer Science research laboratory focusing on machine learning and data analysis applications.
+    name: Queensborough Community College (CUNY)
+    location: Queens, NY
+    logo: /images/sections/experiences/qcc.png
+    overview: Public community college offering STEM-focused programs and personalized instruction.
   positions:
-  - designation: Research Assistant
+  - designation: Computer Science Tutor (Part-time)
     start: Sep 2019
-    end: Dec 2019
+    end: Sep 2020
     responsibilities:
-    - Developed Python scripts for data processing and analysis
-    - Implemented machine learning models using scikit-learn and TensorFlow
-    - Created data visualizations and research presentations
-    - Collaborated with PhD students on research projects
-    - Published findings in academic conferences
+    - Tutored students in Python and C++ (introductory and object-oriented concepts)
+    - Helped students improve problem-solving skills and understanding of algorithms
 
 - company:
-    name: Freelance
-    url: ""
-    location: Remote
-    logo: /images/sections/experiences/freelance.png
-    overview: Independent contractor providing web development services to small businesses and startups.
+    name: United States Air Force
+    location: Columbus, Mississippi
+    logo: /images/sections/experiences/usaf.png
+    overview: Technical and tactical branch of the U.S. Armed Forces specializing in air, space, and cyber operations.
   positions:
-  - designation: Freelance Web Developer
-    start: May 2019
-    end: Aug 2020
+  - designation: Electronic Security Technician
+    start: Oct 2015
+    end: Jun 2017
     responsibilities:
-    - Built custom websites and web applications for various clients
-    - Provided technical consulting and project planning services
-    - Managed client relationships and project timelines
-    - Worked with diverse technology stacks based on client needs
-    - Delivered projects on time and within budget constraints
+    - Installed, maintained, and tested electronic security systems on military installations
+    - Handled classified communications equipment and incident response support
+
+  - designation: Budget Controller
+    start: Oct 2015
+    end: Jun 2017
+    responsibilities:
+    - Managed financial planning and budget allocations for operational units
+
+  - designation: Assistant Manager of Base Access
+    start: Feb 2014
+    end: Oct 2015
+    responsibilities:
+    - Oversaw identity verification systems, physical access controls, and visitor screening protocols
+
+  - designation: Military Police
+    start: Aug 2010
+    end: Feb 2015
+    responsibilities:
+    - Provided law enforcement, force protection, and emergency response on base

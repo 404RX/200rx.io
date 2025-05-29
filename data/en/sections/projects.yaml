@@ -14,81 +14,44 @@ buttons:
   filter: "all"
 - name: Professional
   filter: "professional"
-- name: Academic
-  filter: "academic"
-- name: Hobby
-  filter: "hobby"
+- name: Active-Directory
+  filter: "activedirectory"
+- name: Automation
+  filter: "automation, powershell"
 
 # your projects
 projects:
-- name: E-Commerce Platform
-  logo: /images/sections/projects/ecommerce.png
-  role: Full Stack Developer
-  timeline: "Jan 2023 - Present"
-  repo: https://github.com/username/ecommerce-platform
-  url: https://demo-ecommerce.example.com
-  summary: A modern e-commerce platform built with React, Node.js, and PostgreSQL featuring real-time inventory management, payment processing, and admin dashboard.
-  tags: ["professional", "react", "nodejs", "postgresql", "stripe"]
+- name: 600-System Compliance Standardization
+  logo: /images/sections/projects/compliance.png
+  role: Project Lead / IT Administrator
+  timeline: "Jan 2023 – Nov 2023"
+  summary: Led a proactive initiative to bring 600+ federal systems into compliance with new security and configuration baselines. Created audit checklists, automated validation scripts, and coordinated with leadership to complete rollout ahead of schedule.
+  tags: ["professional", "powershell", "compliance", "endpoint-management", "leadership"]
 
-- name: Task Management API
-  logo: /images/sections/projects/api.png
-  role: Backend Developer
-  timeline: "Sep 2023 - Dec 2023"
-  repo: https://github.com/username/task-api
-  url: ""
-  summary: RESTful API for task management with user authentication, role-based permissions, and real-time notifications using WebSockets.
-  tags: ["professional", "nodejs", "express", "mongodb", "websockets"]
+- name: Remote Imaging & Automation Toolkit
+  logo: /images/sections/projects/imaging.png
+  role: Systems Administrator
+  timeline: "Jul 2022 – Present"
+  summary: Developed a modular imaging and onboarding toolkit using PowerShell and batch scripting to automate OS deployment, app installation, and remote setup in constrained environments with limited tooling.
+  tags: ["automation", "powershell", "windows", "deployment", "scripts"]
 
-- name: Weather Dashboard
-  logo: /images/sections/projects/weather.png
-  role: Frontend Developer
-  timeline: "Jun 2023 - Aug 2023"
-  repo: https://github.com/username/weather-dashboard
-  url: https://weather-dashboard.example.com
-  summary: Interactive weather dashboard with location-based forecasts, historical data visualization, and responsive design using Vue.js and Chart.js.
-  tags: ["hobby", "vuejs", "chartjs", "api", "responsive"]
+- name: Tier 3 Remote Troubleshooting Suite
+  logo: /images/sections/projects/toolkit.png
+  role: Escalation Technician
+  timeline: "Apr 2022 – Present"
+  summary: Built a suite of remote tools for enterprise clients to diagnose and resolve issues related to DNS, GPO application, service failures, and user access without logging in interactively. Improved response time and decreased recurring tickets.
+  tags: ["msp", "troubleshooting", "powershell", "scripting", "enterprise-support"]
 
-- name: Machine Learning Model Deployment
-  logo: /images/sections/projects/ml.png
-  role: ML Engineer
-  timeline: "Mar 2023 - May 2023"
-  repo: https://github.com/username/ml-deployment
-  url: ""
-  summary: Deployed a sentiment analysis model using FastAPI and Docker, with automated CI/CD pipeline and monitoring dashboard.
-  tags: ["academic", "python", "fastapi", "docker", "ml"]
+- name: Active Directory Cleanup & Optimization
+  logo: /images/sections/projects/ad.png
+  role: Systems Analyst
+  timeline: "Jun 2021 – Jan 2022"
+  summary: Audited and cleaned up AD objects across multiple OUs, eliminating stale accounts, resolving permission overlaps, and improving group membership logic with automated checks. Reduced user provisioning errors and streamlined access audits.
+  tags: ["activedirectory", "powershell", "it-ops", "identity-management"]
 
-- name: Blog CMS
-  logo: /images/sections/projects/cms.png
-  role: Full Stack Developer
-  timeline: "Nov 2022 - Feb 2023"
-  repo: https://github.com/username/blog-cms
-  url: https://blog-cms.example.com
-  summary: Content Management System for blogs with markdown support, SEO optimization, and multi-author capabilities built with Next.js.
-  tags: ["hobby", "nextjs", "markdown", "seo", "cms"]
-
-- name: Real-time Chat Application
-  logo: /images/sections/projects/chat.png
-  role: Full Stack Developer
-  timeline: "Aug 2022 - Oct 2022"
-  repo: https://github.com/username/chat-app
-  url: https://chat-app.example.com
-  summary: Real-time chat application with rooms, file sharing, and emoji reactions using Socket.io, React, and Redis for session management.
-  tags: ["hobby", "react", "socketio", "redis", "realtime"]
-
-- name: University Course Management System
-  logo: /images/sections/projects/university.png
-  role: Team Lead
-  timeline: "Jan 2022 - May 2022"
-  repo: https://github.com/username/course-management
-  url: ""
-  summary: Academic project for managing university courses, student enrollments, and grade tracking with role-based access control.
-  tags: ["academic", "java", "spring", "mysql", "team-project"]
-
-- name: Personal Portfolio Website
-  logo: /images/sections/projects/portfolio.png
-  role: Designer & Developer
-  timeline: "Dec 2021 - Jan 2022"
-  repo: https://github.com/username/portfolio
-  url: https://portfolio.example.com
-  summary: Responsive portfolio website showcasing projects and skills, built with Hugo static site generator and deployed on GitHub Pages.
-  tags: ["hobby", "hugo", "scss", "responsive", "github-pages"]
+- name: Technician SOP & Mentorship Program
+  logo: /images/sections/projects/mentorship.png
+  role: Peer Trainer / Process Owner
+  timeline: "Jan 2023 – Present"
+  summary: Documented core support workflows, built onboarding materials, and led mentorship for junior techs. Standardized triage, escalation, and deployment practices across teams to increase consistency and reduce ramp-up time.
+  tags: ["professional","mentoring", "documentation", "training", "process-improvement", "leadership"]
