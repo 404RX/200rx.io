@@ -32,17 +32,17 @@
     {{ $fittedImage := $authorImageResource.Fit "120x120" }}
     {{ if $fittedImage }}
       {{/* Fit was successful, return its RelPermalink */}}
-      {{ return $fittedImage.RelPermalink }}
+      {{ .Scratch.Set "authorImageURL" $fittedImage.RelPermalink }}
     {{ else }}
       {{/* Fit failed (e.g. corrupt image), fall back to the original resource's RelPermalink */}}
-      {{ return $authorImageResource.RelPermalink }}
+      {{ .Scratch.Set "authorImageURL" $authorImageResource.RelPermalink }}
     {{ end }}
   {{ else }}
     {{/* It's an SVG or GIF (or Fit was not applicable). Use original resource's RelPermalink */}}
-    {{ return $authorImageResource.RelPermalink }}
+    {{ .Scratch.Set "authorImageURL" $authorImageResource.RelPermalink }}
   {{ end }}
 {{ else }}
   {{/* resources.Get failed to find the image or the initial image path string was empty. */}}
   {{/* Return empty string. Original 'return' with no args is equivalent to 'return ""'. */}}
-  {{ return "" }}
+  {{ .Scratch.Set "authorImageURL" "" }}
 {{ end }}
