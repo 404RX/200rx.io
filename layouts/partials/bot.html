@@ -1,0 +1,12 @@
+
+<div id="chat-launcher" onclick="toggleChat()">💬 Questions about my experience?</div>
+<div id="chat-box" style="display:none;">
+  <div id="chat-log"></div>
+  <input id="chat-input" placeholder="Ask me something..." onkeydown="if(event.key==='Enter'){sendMessage()}">
+</div>
+<style>
+  #chat-launcher { position: fixed; bottom: 20px; right: 20px; background: #333; color: #fff; padding: 10px; border-radius: 20px; cursor: pointer; }
+  #chat-box { position: fixed; bottom: 70px; right: 20px; width: 300px; max-height: 400px; background: white; border: 1px solid #ccc; padding: 10px; font-family: sans-serif; overflow-y: auto; }
+  #chat-log { max-height: 300px; overflow-y: auto; margin-bottom: 10px; }
+</style>
+<script src="bot.js"></script>
