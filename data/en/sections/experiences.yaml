@@ -33,8 +33,8 @@ experiences:
     overview: Leading managed service provider offering global IT solutions to enterprise clients across various industries.
   positions:
   - designation: Tier 3 Systems Technician
-    start: Dec 2022
-    end: Dec 2023  
+    start: Dec 2023
+    end: Dec 2024  
     responsibilities:
     - Serve as second-to-last escalation point for complex issues across networking, virtualization, and endpoint management
     - Support clients across diverse infrastructure stacks with tailored automation and troubleshooting
@@ -51,8 +51,8 @@ experiences:
     overview: Elite military branch where technical excellence, operational readiness, and infrastructure reliability are mission-critical.
   positions:
   - designation: System Administrator (GS-9)
-    start: Jul 2021
-    end: Dec 2022
+    start: Jul 2022
+    end: Dec 2023
     responsibilities:
     - Administer, secure, and troubleshoot IT infrastructure supporting federal operations and critical communications
     - Manage Active Directory, user provisioning, and system rollouts in a high-stakes, security-focused environment
@@ -98,19 +98,6 @@ experiences:
     responsibilities:
     - Provided on-site and remote desktop support across satellite offices
     - Assisted with network troubleshooting, imaging, and access control
-
-- company:
-    name: Queensborough Community College (CUNY)
-    location: Queens, NY
-    logo: /images/sections/experiences/qcc.png
-    overview: Public community college offering STEM-focused programs and personalized instruction.
-  positions:
-  - designation: Computer Science Tutor (Part-time)
-    start: Sep 2019
-    end: Sep 2020
-    responsibilities:
-    - Tutored students in Python and C++ (introductory and object-oriented concepts)
-    - Helped students improve problem-solving skills and understanding of algorithms
 
 - company:
     name: United States Air Force
