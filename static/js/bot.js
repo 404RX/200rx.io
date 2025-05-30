@@ -19,3 +19,10 @@ function toggleChat() {
   const box = document.getElementById('chat-box');
   box.style.display = box.style.display === 'none' ? 'block' : 'none';
 }
+
+window.addEventListener("DOMContentLoaded", function () {
+  const launcher = document.getElementById("chat-launcher");
+  if (launcher) {
+    launcher.addEventListener("click", toggleChat);
+  }
+});
