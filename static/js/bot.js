@@ -6,14 +6,20 @@ async function sendMessage() {
   chatLog.innerHTML += '<div><strong>You:</strong> ' + msg + '</div>';
   input.value = '';
 
-  const response = await fetch('https://two00rx-io-chatbot.onrender.com', {
+try {
+  const response = await fetch('https://two00rx-io-chatbot.onrender.com/ask', {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({question: msg})
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ question: msg })
   });
+
+  if (!response.ok) throw new Error(`Server error: ${response.status}`);
   const data = await response.json();
-  chatLog.innerHTML += '<div><strong>Bot:</strong> ' + data.answer + '</div>';
+  chatLog.innerHTML += `<div><strong>Bot:</strong> ${data.answer}</div>`;
+} catch (err) {
+  chatLog.innerHTML += `<div><strong>Bot:</strong> Sorry, something went wrong. (${err.message})</div>`;
 }
+
 
 function toggleChat() {
   const box = document.getElementById('chat-box');
@@ -25,4 +31,4 @@ window.addEventListener("DOMContentLoaded", function () {
   if (launcher) {
     launcher.addEventListener("click", toggleChat);
   }
-});
+})}
