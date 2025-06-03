@@ -6,24 +6,26 @@ async function sendMessage() {
   chatLog.innerHTML += '<div><strong>You:</strong> ' + msg + '</div>';
   input.value = '';
 
-try {
-  const response = await fetch('https://two00rx-io-chatbot.onrender.com/ask', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ question: msg })
-  });
+  try {
+    const response = await fetch('https://two00rx-io-chatbot.onrender.com/ask', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ question: msg })
+    });
 
-  if (!response.ok) throw new Error(`Server error: ${response.status}`);
-  const data = await response.json();
-  chatLog.innerHTML += `<div><strong>Bot:</strong> ${data.answer}</div>`;
-} catch (err) {
-  chatLog.innerHTML += `<div><strong>Bot:</strong> Sorry, something went wrong. (${err.message})</div>`;
+    if (!response.ok) throw new Error(`Server error: ${response.status}`);
+    const data = await response.json();
+    chatLog.innerHTML += `<div><strong>Bot:</strong> ${data.answer}</div>`;
+  } catch (err) {
+    chatLog.innerHTML += `<div><strong>Bot:</strong> Sorry, something went wrong. (${err.message})</div>`;
+  }
 }
-
 
 function toggleChat() {
   const box = document.getElementById('chat-box');
-  box.style.display = box.style.display === 'none' ? 'block' : 'none';
+  if (box) {
+    box.style.display = box.style.display === 'none' ? 'block' : 'none';
+  }
 }
 
 window.addEventListener("DOMContentLoaded", function () {
@@ -31,4 +33,4 @@ window.addEventListener("DOMContentLoaded", function () {
   if (launcher) {
     launcher.addEventListener("click", toggleChat);
   }
-})}
+});
