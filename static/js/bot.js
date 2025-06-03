@@ -1,3 +1,8 @@
+function toggleChat() {
+  const box = document.getElementById('chat-box');
+  box.style.display = box.style.display === 'none' ? 'block' : 'none';
+}
+
 async function sendMessage() {
   const input = document.getElementById('chat-input');
   const chatLog = document.getElementById('chat-log');
@@ -21,16 +26,19 @@ async function sendMessage() {
   }
 }
 
-function toggleChat() {
-  const box = document.getElementById('chat-box');
-  if (box) {
-    box.style.display = box.style.display === 'none' ? 'block' : 'none';
-  }
-}
-
+// Bind enter key to send message
 window.addEventListener("DOMContentLoaded", function () {
   const launcher = document.getElementById("chat-launcher");
   if (launcher) {
     launcher.addEventListener("click", toggleChat);
+  }
+
+  const input = document.getElementById("chat-input");
+  if (input) {
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        sendMessage();
+      }
+    });
   }
 });

@@ -1,16 +1,15 @@
 <!-- Floating Chatbot Widget -->
-<div id="chat-launcher" onclick="toggleChat()">
-  💬 Questions about my experience?
-</div>
+<div id="chat-launcher">💬 Questions about my experience?</div>
 
 <div id="chat-box" style="display: none;">
-  <div id="chat-log"></div>
+  <div id="chat-log" style="max-height: 200px; overflow-y: auto; border: 1px solid #ccc; padding: 8px; margin-bottom: 8px;"></div>
   <input 
     id="chat-input" 
+    type="text"
     placeholder="Ask me something..." 
-    onkeydown="if(event.key==='Enter'){sendMessage()}" 
   />
 </div>
+
 
 <style>
   #chat-launcher {
