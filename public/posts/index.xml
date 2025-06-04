@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Ray - Systems Administrator</title>
+    <link>https://200rx.com/posts/</link>
+    <description>Recent content in Posts on Ray - Systems Administrator</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 18 Mar 2024 14:00:00 +0000</lastBuildDate><atom:link href="https://200rx.com/posts/index.xml" rel="self" type="application/rss+xml" /><item>
+      <title>Active Directory Cleanup Automation with PowerShell</title>
+      <link>https://200rx.com/posts/ad-cleanup-automation/</link>
+      <pubDate>Mon, 18 Mar 2024 14:00:00 +0000</pubDate>
+      
+      <guid>https://200rx.com/posts/ad-cleanup-automation/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Stale and unused objects in Active Directory not only clutter your environment but can also create security risks and provisioning errors. Automating cleanup ensures better hygiene and consistent identity lifecycle management. This guide walks through how to use PowerShell to audit and optionally remove inactive AD users and computers.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;core-principles&#34;&gt;Core Principles&lt;/h2&gt;
+&lt;h3 id=&#34;1-identify-inactive-users-and-computers&#34;&gt;1. Identify Inactive Users and Computers&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Users inactive for 90+ days&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$inactiveUsers = Get-ADUser -Filter * -Properties LastLogonDate |
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Where-Object { $_.Enabled &lt;span style=&#34;color:#f92672&#34;&gt;-eq&lt;/span&gt; $true &lt;span style=&#34;color:#f92672&#34;&gt;-and&lt;/span&gt; $_.LastLogonDate &lt;span style=&#34;color:#f92672&#34;&gt;-lt&lt;/span&gt; (Get-Date).AddDays(&lt;span style=&#34;color:#ae81ff&#34;&gt;-90&lt;/span&gt;) }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Computers inactive for 90+ days&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$inactiveComputers = Get-ADComputer -Filter * -Properties LastLogonDate |
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Where-Object { $_.Enabled &lt;span style=&#34;color:#f92672&#34;&gt;-eq&lt;/span&gt; $true &lt;span style=&#34;color:#f92672&#34;&gt;-and&lt;/span&gt; $_.LastLogonDate &lt;span style=&#34;color:#f92672&#34;&gt;-lt&lt;/span&gt; (Get-Date).AddDays(&lt;span style=&#34;color:#ae81ff&#34;&gt;-90&lt;/span&gt;) }
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;🔍 Use &lt;code&gt;-SearchBase&lt;/code&gt; to narrow to a specific OU&lt;br&gt;
+Example: &lt;code&gt;-SearchBase &amp;quot;OU=Workstations,DC=corp,DC=domain,DC=com&amp;quot;&lt;/code&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Remote System Health Checks with PowerShell</title>
+      <link>https://200rx.com/posts/remote-system-healthcheckpowershell/</link>
+      <pubDate>Sun, 10 Mar 2024 09:15:00 +0000</pubDate>
+      
+      <guid>https://200rx.com/posts/remote-system-healthcheckpowershell/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Ensuring system uptime and catching performance issues early is vital in any infrastructure. With PowerShell, you can automate system health checks across your environment, collect metrics, and act on anomalies before they impact operations.&lt;/p&gt;
+&lt;p&gt;This guide walks through a practical PowerShell script for remote system health monitoring, complete with optional test coverage using Pester.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;core-principles&#34;&gt;Core Principles&lt;/h2&gt;
+&lt;h3 id=&#34;1-test-system-health-remotely-with-wmi&#34;&gt;1. Test System Health Remotely with WMI&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; Test-SystemHealth {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;param&lt;/span&gt; (
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        [&lt;span style=&#34;color:#66d9ef&#34;&gt;string&lt;/span&gt;]$ComputerName
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    )
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    $result = @{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        ComputerName = $ComputerName
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Ping         = $false
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        CPU          = $null
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Memory       = $null
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        DiskSpace    = $null
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (Test-Connection -ComputerName $ComputerName -Count &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt; -Quiet) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        $result.Ping = $true
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;try&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            $sys = Get-WmiObject -Class Win32_OperatingSystem -ComputerName $ComputerName
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            $cpu = Get-WmiObject -Class Win32_Processor -ComputerName $ComputerName
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            $disk = Get-WmiObject -Class Win32_LogicalDisk -ComputerName $ComputerName -Filter &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;DriveType=3&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            $result.CPU = [&lt;span style=&#34;color:#66d9ef&#34;&gt;math&lt;/span&gt;]::Round($cpu.LoadPercentage, &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            $result.Memory = [&lt;span style=&#34;color:#66d9ef&#34;&gt;math&lt;/span&gt;]::Round((($sys.TotalVisibleMemorySize - $sys.FreePhysicalMemory) / $sys.TotalVisibleMemorySize) * &lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            $result.DiskSpace = @()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;foreach&lt;/span&gt; ($d &lt;span style=&#34;color:#66d9ef&#34;&gt;in&lt;/span&gt; $disk) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                $usedPercent = [&lt;span style=&#34;color:#66d9ef&#34;&gt;math&lt;/span&gt;]::Round((($d.Size - $d.FreeSpace) / $d.Size) * &lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                $result.DiskSpace += @{ Drive = $d.DeviceID; UsedPercent = $usedPercent }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        } &lt;span style=&#34;color:#66d9ef&#34;&gt;catch&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            Write-Warning &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Unable to gather metrics from &lt;/span&gt;$ComputerName&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; $result
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Example usage&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$computers = Get-Content -Path &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;.\computers.txt&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$healthReport = $computers | ForEach-Object { Test-SystemHealth -ComputerName $_ }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$healthReport | ConvertTo-Json | Out-File &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;.\HealthReport.json&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;### 2. Testing Strategy with Pester&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;```powershell
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Describe &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Test-SystemHealth&amp;#39;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    It &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Should return a result object with expected keys&amp;#39;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        $mockResult = Test-SystemHealth -ComputerName &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;localhost&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        $mockResult | Should &lt;span style=&#34;color:#f92672&#34;&gt;-Not&lt;/span&gt; -BeNullOrEmpty
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        $mockResult | Should -HaveProperty &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;ComputerName&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        $mockResult | Should -HaveProperty &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Ping&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        $mockResult | Should -HaveProperty &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;CPU&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        $mockResult | Should -HaveProperty &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Memory&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        $mockResult | Should -HaveProperty &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;DiskSpace&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    It &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Should show Ping as true for localhost&amp;#39;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        $mockResult = Test-SystemHealth -ComputerName &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;localhost&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        $mockResult.Ping | Should -BeTrue
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Modern Web Development Trends in 2024</title>
+      <link>https://200rx.com/posts/system-health-checks/</link>
+      <pubDate>Tue, 20 Feb 2024 14:30:00 +0000</pubDate>
+      
+      <guid>https://200rx.com/posts/system-health-checks/</guid>
+      <description>&lt;h2 id=&#34;the-evolution-of-web-development&#34;&gt;The Evolution of Web Development&lt;/h2&gt;
+&lt;p&gt;Web development continues to evolve at a rapid pace. As we progress through 2024, several key trends are shaping how we build and deploy web applications.&lt;/p&gt;
+&lt;h2 id=&#34;key-trends-for-2024&#34;&gt;Key Trends for 2024&lt;/h2&gt;
+&lt;h3 id=&#34;1-ai-powered-development-tools&#34;&gt;1. AI-Powered Development Tools&lt;/h3&gt;
+&lt;p&gt;Artificial Intelligence is revolutionizing how developers write code:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Code completion&lt;/strong&gt;: Tools like GitHub Copilot and Tabnine&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Automated testing&lt;/strong&gt;: AI-generated test cases&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Bug detection&lt;/strong&gt;: Intelligent code analysis&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Documentation&lt;/strong&gt;: Auto-generated API docs&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;2-edge-computing-and-cdns&#34;&gt;2. Edge Computing and CDNs&lt;/h3&gt;
+&lt;p&gt;Moving computation closer to users:&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Getting Started with Hugo: A Beginner&#39;s Guide</title>
+      <link>https://200rx.com/posts/getting-started-with-hugo/</link>
+      <pubDate>Mon, 15 Jan 2024 10:00:00 +0000</pubDate>
+      
+      <guid>https://200rx.com/posts/getting-started-with-hugo/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Hugo is one of the fastest static site generators available today. Built with Go, it can generate thousands of pages in seconds, making it perfect for blogs, documentation sites, and portfolios.&lt;/p&gt;
+&lt;h2 id=&#34;why-choose-hugo&#34;&gt;Why Choose Hugo?&lt;/h2&gt;
+&lt;h3 id=&#34;speed&#34;&gt;Speed&lt;/h3&gt;
+&lt;p&gt;Hugo is incredibly fast. It can build most websites in under a second, which means you can see your changes almost instantly during development.&lt;/p&gt;
+&lt;h3 id=&#34;flexibility&#34;&gt;Flexibility&lt;/h3&gt;
+&lt;p&gt;With its powerful templating system and extensive theme ecosystem, Hugo can be adapted to almost any type of website.&lt;/p&gt;</description>
+    </item>
+    
+    
+  </channel>
+</rss>

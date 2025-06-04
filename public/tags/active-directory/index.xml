@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Active Directory on Ray - Systems Administrator</title>
+    <link>https://200rx.com/tags/active-directory/</link>
+    <description>Recent content in Active Directory on Ray - Systems Administrator</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 18 Mar 2024 14:00:00 +0000</lastBuildDate><atom:link href="https://200rx.com/tags/active-directory/index.xml" rel="self" type="application/rss+xml" /><item>
+      <title>Active Directory Cleanup Automation with PowerShell</title>
+      <link>https://200rx.com/posts/ad-cleanup-automation/</link>
+      <pubDate>Mon, 18 Mar 2024 14:00:00 +0000</pubDate>
+      
+      <guid>https://200rx.com/posts/ad-cleanup-automation/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Stale and unused objects in Active Directory not only clutter your environment but can also create security risks and provisioning errors. Automating cleanup ensures better hygiene and consistent identity lifecycle management. This guide walks through how to use PowerShell to audit and optionally remove inactive AD users and computers.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;core-principles&#34;&gt;Core Principles&lt;/h2&gt;
+&lt;h3 id=&#34;1-identify-inactive-users-and-computers&#34;&gt;1. Identify Inactive Users and Computers&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Users inactive for 90+ days&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$inactiveUsers = Get-ADUser -Filter * -Properties LastLogonDate |
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Where-Object { $_.Enabled &lt;span style=&#34;color:#f92672&#34;&gt;-eq&lt;/span&gt; $true &lt;span style=&#34;color:#f92672&#34;&gt;-and&lt;/span&gt; $_.LastLogonDate &lt;span style=&#34;color:#f92672&#34;&gt;-lt&lt;/span&gt; (Get-Date).AddDays(&lt;span style=&#34;color:#ae81ff&#34;&gt;-90&lt;/span&gt;) }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Computers inactive for 90+ days&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$inactiveComputers = Get-ADComputer -Filter * -Properties LastLogonDate |
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    Where-Object { $_.Enabled &lt;span style=&#34;color:#f92672&#34;&gt;-eq&lt;/span&gt; $true &lt;span style=&#34;color:#f92672&#34;&gt;-and&lt;/span&gt; $_.LastLogonDate &lt;span style=&#34;color:#f92672&#34;&gt;-lt&lt;/span&gt; (Get-Date).AddDays(&lt;span style=&#34;color:#ae81ff&#34;&gt;-90&lt;/span&gt;) }
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;🔍 Use &lt;code&gt;-SearchBase&lt;/code&gt; to narrow to a specific OU&lt;br&gt;
+Example: &lt;code&gt;-SearchBase &amp;quot;OU=Workstations,DC=corp,DC=domain,DC=com&amp;quot;&lt;/code&gt;&lt;/p&gt;</description>
+    </item>
+    
+    
+  </channel>
+</rss>
