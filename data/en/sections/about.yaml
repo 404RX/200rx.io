@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # section information
 section:
   name: About
@@ -129,4 +130,137 @@ badges:
 # - type: soft-skill-indicator
 #   name: Example 1
 #   percentage: 75
+=======
+# section information
+section:
+  name: About
+  id: about
+  enable: true
+  weight: 1
+  showOnNavbar: true
+  template: sections/about.html
+
+# your designation
+designation: Experienced System Administrator
+# your company information
+company:
+  name: Federal Government
+  #url: "https://techcorp.example.com"
+
+# your resume. this file path should be relative to you "static" directory
+# Dreprecated. Use resourceLinks instead.
+# resume: "files/resume.pdf"
+
+# a summary about you
+summary: 'IT Administrator | Systems Thinker | Problem Solver: With over 7 years of experience in federal and enterprise environments, I help keep systems running, users productive, and technology aligned with mission-critical needs. Skilled in automation, diagnostics, and infrastructure support—driven to build resilient systems that make work easier for everyone.'
+
+# your social links
+# give as many as you want. use font-awesome for the icons.
+socialLinks:
+- name: Email
+  icon: "fas fa-envelope"
+  url: "mailto:vinnym@200rx.com"
+
+- name: GitHub
+  icon: "fab fa-github"
+  url: "https://github.com/404RX"
+
+- name: LinkedIn
+  icon: "fab fa-linkedin"
+  url: "https://www.linkedin.com/in/coreyvmiller/"
+
+#- name: Stack Overflow
+  #icon: "fab fa-stack-overflow"
+  #url: "https://stackoverflow.com/users/username"
+
+#- name: Twitter
+  #icon: "fab fa-twitter"
+  #url: "https://twitter.com/username"
+
+#- name: Medium
+  #icon: "fab fa-medium"
+  #url: "https://medium.com/@username"
+
+#- name: Website
+  #icon: "fas fa-globe"
+  #url: "https://alexjohnson.dev"
+
+# You can put custom buttons to link your relevant resources.
+# For example, you can put link for your resume.
+resourceLinks:
+#- title: "Download Resume"
+#  url: "files/alex-johnson-resume.pdf"
+ # icon: "fas fa-file-pdf"
+#- title: "View Portfolio"
+ # url: "https://alexjohnson.dev/portfolio"
+  #icon: "fas fa-briefcase"
+- title: "GitHub Projects"
+  url: "https://github.com/404RX?tab=repositories"
+  icon: "fab fa-github"
+
+# Show your badges
+# You can show your verifiable certificates from https://www.credly.com/
+# You can also show a circular bar indicating the level of expertise on a certain skill
+badges:
+- type: certification
+  name: CompTIA CySA+
+  url: "https://www.credly.com/badges/2f238d54-cc6c-4b09-aca0-efc863c6859f/public_url"
+  badge: "https://images.credly.com/size/220x220/images/dcd99b5b-da24-40a6-9364-62126d590c37/blob"
+
+- type: certification
+  name: CompTIA Network+
+  url: "https://www.credly.com/badges/7ac13d8f-b473-49e5-abf0-7fa99f21def4/public_url"
+  badge: "https://images.credly.com/size/220x220/images/c70ba73e-3c8a-46fa-9d60-4a9af94ad662/blob"
+
+- type: certification
+  name: CCNA
+  url: "https://www.credly.com/badges/7a531706-e012-4f05-b69c-4b4ae585c100/public_url"
+  badge: "https://images.credly.com/size/220x220/images/683783d8-eaac-4c37-a14d-11bd8a36321d/ccna_600.png"
+
+- type: soft-skill-indicator
+  name: Systems Thinking
+  percentage: 95
+  color: deep-purple
+
+- type: soft-skill-indicator
+  name: Adaptability
+  percentage: 92
+  color: teal
+
+- type: soft-skill-indicator
+  name: Strategic Problem Solving
+  percentage: 90
+  color: orange
+
+- type: soft-skill-indicator
+  name: Cross-Functional Communication
+  percentage: 88
+  color: blue
+
+- type: soft-skill-indicator
+  name: Initiative & Ownership
+  percentage: 87
+  color: green
+
+- type: soft-skill-indicator
+  name: Mentorship & Peer Development
+  percentage: 85
+  color: red
+
+- type: soft-skill-indicator
+  name: Operational Awareness
+  percentage: 84
+  color: amber
+
+- type: soft-skill-indicator
+  name: Conflict Navigation
+  percentage: 82
+  color: gray
+
+
+# you can also provide color code instead of the color name
+# - type: soft-skill-indicator
+#   name: Example 1
+#   percentage: 75
+>>>>>>> main
 #   color: "#00adb5"

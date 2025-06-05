@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @mixin bsBanner($file) {
   /*!
    * Bootstrap #{$file} v5.3.6 (https://getbootstrap.com/)
@@ -5,3 +6,12 @@
    * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
    */
 }
+=======
+@mixin bsBanner($file) {
+  /*!
+   * Bootstrap #{$file} v5.3.6 (https://getbootstrap.com/)
+   * Copyright 2011-2025 The Bootstrap Authors
+   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+   */
+}
+>>>>>>> main

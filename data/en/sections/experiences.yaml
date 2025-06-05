@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # section information
 section:
   name: Experiences
@@ -114,3 +115,121 @@ experiences:
     - Managed financial planning and budget allocations for operational units
     - Oversaw identity verification systems, physical access controls, and visitor screening protocols
     - Provided law enforcement, force protection, and emergency response on base
+=======
+# section information
+section:
+  name: Experiences
+  id: experiences
+  enable: true
+  weight: 3
+  showOnNavbar: true
+  # Can optionally hide the title in sections
+  # hideTitle: true
+
+# Your experiences
+experiences:
+- company:
+    name: U.S. Federal Agency
+    location: Queens, NY
+    logo: /images/sections/experiences/federal-agency.png
+    overview: Mission-critical government agency supporting national operations and security infrastructure at a major transportation hub.
+  positions:
+  - designation: IT Administrator (GS-12)
+    start: Jan 2024
+    responsibilities:
+    - Provide frontline and backend IT support across a high-security federal environment with 600+ endpoints
+    - Lead imaging, deployment, and lifecycle management of systems in time-sensitive operational zones
+    - Spearheaded initiative to align 600 devices with mandatory federal compliance standards ahead of schedule
+    - Train and mentor new technicians on procedures, tools, and process automation
+    - Troubleshoot and resolve issues related to network connectivity, group policy, access permissions, and endpoint behavior
+    - Automate recurring tasks using PowerShell and batch scripting to reduce manual workload
+
+- company:
+    name: Fortune 500 MSP (Confidential)
+    location: Remote / Hybrid
+    logo: /images/sections/experiences/fortune500.png
+    overview: Leading managed service provider offering global IT solutions to enterprise clients across various industries.
+  positions:
+  - designation: Tier 3 Systems Technician
+    start: Dec 2023
+    end: Dec 2024  
+    responsibilities:
+    - Serve as second-to-last escalation point for complex issues across networking, virtualization, and endpoint management
+    - Support clients across diverse infrastructure stacks with tailored automation and troubleshooting
+    - Develop and deploy remote PowerShell scripts for client environments to monitor, report, and self-heal IT systems
+    - Interface with specialized infrastructure teams to ensure smooth handoff of escalated cases
+    - Participate in system hardening, incident response, and maintenance of security controls across critical endpoints
+    - Document process improvements and contribute to shared knowledge bases for long-term service delivery
+
+experiences:
+- company:
+    name: United States Marine Corps
+    location: New York City Metropolitan Area
+    logo: /images/sections/experiences/usmc.png
+    overview: Elite military branch where technical excellence, operational readiness, and infrastructure reliability are mission-critical.
+  positions:
+  - designation: System Administrator (GS-9)
+    start: Jul 2022
+    end: Dec 2023
+    responsibilities:
+    - Administer, secure, and troubleshoot IT infrastructure supporting federal operations and critical communications
+    - Manage Active Directory, user provisioning, and system rollouts in a high-stakes, security-focused environment
+    - Ensure continuous availability of essential services through scripting, process standardization, and proactive maintenance
+    - Coordinate across units to resolve complex issues affecting network integrity and endpoint performance
+
+- company:
+    name: Compass Point
+    location: New York City Metropolitan Area
+    logo: /images/sections/experiences/compasspoint.png
+    overview: Full-service IT consultancy providing solutions for private and public sector clients.
+  positions:
+  - designation: System Analyst
+    start: Jun 2021
+    end: Jul 2022
+    responsibilities:
+    - Delivered Tier 2/3 support, systems analysis, and user training for enterprise clients
+    - Diagnosed software, hardware, and access control issues using a mix of scripting, logs, and monitoring tools
+    - Assisted in rollouts, migrations, and documentation across hybrid environments
+
+- company:
+    name: Leukemia & Lymphoma Society
+    location: Rye Brook, NY
+    logo: /images/sections/experiences/lls.png
+    overview: Non-profit organization focused on curing blood cancers and improving quality of life for patients.
+  positions:
+  - designation: Help Desk Specialist
+    start: Oct 2020
+    end: Jun 2021
+    responsibilities:
+    - Supported 1,300+ users in a Windows-based environment with troubleshooting and rapid issue resolution
+    - Performed Active Directory tasks (moves, adds, changes), endpoint remediation, and user onboarding
+
+- company:
+    name: NYC HRA Department of Social Services
+    location: New York City Metropolitan Area
+    logo: /images/sections/experiences/nycdss.png
+    overview: Largest municipal social services agency in the U.S., supporting millions of New Yorkers annually.
+  positions:
+  - designation: Remote Site Administrator (Internship)
+    start: Dec 2018
+    end: Oct 2020
+    responsibilities:
+    - Provided on-site and remote desktop support across satellite offices
+    - Assisted with network troubleshooting, imaging, and access control
+
+- company:
+    name: United States Air Force
+    location: Columbus, Mississippi
+    logo: /images/sections/experiences/usaf.png
+    overview: Technical and tactical branch of the U.S. Armed Forces specializing in air, space, and cyber operations.
+  positions:
+  - designation: Electronic Security Technician
+    start: Aug 2010
+    end: Dec 2017
+    responsibilities:
+    - Installed, maintained, and tested electronic security systems on military installations
+    - Handled classified communications equipment and incident response support
+    - Managed financial planning and budget allocations for operational units
+    - Oversaw identity verification systems, physical access controls, and visitor screening protocols
+    - Provided law enforcement, force protection, and emergency response on base
+>>>>>>> main

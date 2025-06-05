@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -817,3 +818,824 @@ Example: <code>-SearchBase &quot;OU=Workstations,DC=corp,DC=domain,DC=com&quot;<
 
 </body>
 </html>
+=======
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Active Directory Cleanup Automation with PowerShell</title>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+<link rel="stylesheet" href="/application.82d4e040083c0903f0d454ca75218bda8500dc1679906271dc9bbce12ec16aef.css" integrity="sha256-gtTgQAg8CQPw1FTKdSGL2oUA3BZ5kGJx3Ju84S7Bau8=" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta property="og:title" content="Ray - Systems Administrator"/>
+<meta property="og:type" content="website"/>
+<meta property="og:description" content=""/>
+<meta property="og:image" content="/images/author/self.png">
+<meta property="og:url" content="https://200rx.com/">
+
+    
+<meta name="description" content="Learn how to use PowerShell to automate cleanup of stale user and computer accounts in Active Directory" />
+
+
+
+    
+
+    
+
+
+
+
+
+    <script integrity="sha256-DO4ugzEwhTW1Id1UIWn0gUJWaebCYOypeTit6LW4QB4=">
+     let theme = localStorage.getItem('theme-scheme') || localStorage.getItem('darkmode:color-scheme') || 'light'
+if (theme === 'system') {
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    theme = 'dark'
+  } else {
+    theme = 'light'
+  }
+}
+document.documentElement.setAttribute('data-theme', theme)
+
+    </script>
+    
+  </head>
+
+  <body class="type-posts kind-page" data-bs-spy="scroll" data-bs-target="#TableOfContents" data-bs-offset="80">
+    <div class="container-fluid bg-secondary wrapper">
+      
+      
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+  
+  
+    
+      
+    
+    
+  
+
+
+
+  
+  
+    
+      
+    
+    
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+
+<nav class="navbar navbar-expand-xl top-navbar shadow " id="top-navbar">
+  <div class="container">
+    
+    <button class="navbar-toggler navbar-light" id="sidebar-toggler" type="button">
+      <i data-feather="sidebar"></i>
+    </button>
+    
+    <a class="navbar-brand" href="/">
+      
+        <img src="/images/main-logo_hu_715d6024c143d0ec.png" id="logo" alt="Logo">
+      Ray - Systems Administrator</a>
+    <button
+      class="navbar-toggler navbar-light"
+      id="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#top-nav-items"
+      aria-label="menu"
+    >
+      <i data-feather="menu"></i>
+    </button>
+
+    <div class="collapse navbar-collapse dynamic-navbar" id="top-nav-items">
+      <ul class="nav navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/#home">Home</a>
+        </li>
+        
+          
+          
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#about">About</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#skills">Skills</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#experiences">Experiences</a>
+                </li>
+              
+            
+            
+              
+              
+                <li class="nav-item">
+                  <a class="nav-link" href="/#education">Education</a>
+                </li>
+              
+            
+            
+              
+              
+            
+          
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                
+                  
+                    
+                    
+                  
+                  
+                    
+                    
+                  
+                  
+                    
+                    
+                  
+                  
+                    
+                    
+                  
+                  
+                    
+                    
+                      <a class="dropdown-item" href="/#projects">Projects</a>
+                    
+                  
+              </div>
+            </li>
+          
+        
+        
+          <div id="top-navbar-divider"></div>
+        
+        
+          <li class="nav-item">
+            <a class="nav-link" id="blog-link" href="/posts">Posts</a>
+          </li>
+        
+        
+          <li class="nav-item">
+            <a class="nav-link" id="note-link" href="/notes">Notes</a>
+          </li>
+        
+        
+        
+        
+          
+
+
+
+  
+  
+
+
+<li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle"  href="#" id="themeSelector" role="button"
+  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <img id="navbar-theme-icon-svg" class="theme-icon" src="/icons/moon-svgrepo-com.svg" width=20 alt="Dark Theme">
+</a>
+<div id="themeMenu" class="dropdown-menu dropdown-menu-icons-only" aria-labelledby="themeSelector">
+  
+  <a class="dropdown-item nav-link" href="#" data-scheme="light">
+    <img class="theme-icon" src="/icons/sun-svgrepo-com.svg" width=20 alt="Light Theme">
+  </a>
+  
+  
+  <a class="dropdown-item nav-link" href="#" data-scheme="dark">
+    <img class="theme-icon" src="/icons/moon-svgrepo-com.svg" width=20 alt="Dark Theme">
+  </a>
+  
+  
+  <a class="dropdown-item nav-link" href="#" data-scheme="system">
+    <img class="theme-icon" src="/icons/computer-svgrepo-com.svg" width=20 alt="System Theme">
+  </a>
+  
+</div>
+</li>
+
+        
+      </ul>
+    </div>
+  </div>
+  
+  
+    <img src="/images/main-logo_hu_715d6024c143d0ec.png" class="d-none" id="main-logo" alt="Logo">
+  
+  
+    <img src="/images/inverted-logo_hu_a23dc4244bee30eb.png" class="d-none" id="inverted-logo" alt="Inverted Logo">
+  
+  
+</nav>
+
+
+
+      
+      
+  <section class="sidebar-section" id="sidebar-section">
+    <div class="sidebar-holder">
+      <div class="sidebar" id="sidebar">
+        <form class="mx-auto" method="get" action="/search">
+          <input type="text" name="keyword" value="" placeholder="Search" data-search="" id="search-box" />
+        </form>
+        <div class="sidebar-tree">
+          <ul class="tree" id="tree">
+            <li id="list-heading"><a href="/posts/" data-filter="all">Posts</a></li>
+            <div class="subtree">
+                
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/getting-started-with-hugo/" title="Getting Started with Hugo">Getting Started with Hugo</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/system-health-checks/" title="Web Development Trends 2024">Web Development Trends 2024</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class=" list-link" href="/posts/remote-system-healthcheckpowershell/" title="System Health Checks">System Health Checks</a></li>
+  
+
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li><a class="active list-link" href="/posts/ad-cleanup-automation/" title="AD Cleanup Automation">AD Cleanup Automation</a></li>
+  
+
+
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+      
+      
+<section class="content-section" id="content-section">
+  <div class="content">
+    <div class="container p-0 read-area">
+      
+      <div class="hero-area col-sm-12" id="hero-area" style='background-image: url(/images/default-hero.jpg);'>
+      </div>
+
+      
+      <div class="page-content">
+        
+        <div class="author-profile ms-auto align-self-lg-center">
+          <img class="rounded-circle" src='%0a%0a%20%20%0a%0a%0a%0a%0a%0a%20%20%0a%0a%0a%0a%0a%0a%0a%0a%20%0a%20%0a%20%20%0a%0a%0a%0a%20%20%0a%20%20%0a%20%20%0a%0a' alt="Author Image">
+          <h5 class="author-name">Corey Miller</h5>
+          <p class="text-muted">Monday, March 18, 2024 | 2 minutes</p>
+        </div>
+        
+
+        <div class="title">
+          <h1>Active Directory Cleanup Automation with PowerShell</h1>
+        </div>
+
+        
+
+        
+          <div class="tags">
+  <ul style="padding-left: 0;">
+    
+    
+    <li class="rounded"><a href="/tags/powershell/" class="btn btn-sm btn-info">PowerShell</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/active-directory/" class="btn btn-sm btn-info">Active Directory</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/automation/" class="btn btn-sm btn-info">Automation</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/security/" class="btn btn-sm btn-info">Security</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/it-operations/" class="btn btn-sm btn-info">IT Operations</a></li>
+    
+  </ul>
+</div>
+
+        
+        <div class="post-content" id="post-content">
+          <h2 id="introduction">Introduction</h2>
+<p>Stale and unused objects in Active Directory not only clutter your environment but can also create security risks and provisioning errors. Automating cleanup ensures better hygiene and consistent identity lifecycle management. This guide walks through how to use PowerShell to audit and optionally remove inactive AD users and computers.</p>
+<hr>
+<h2 id="core-principles">Core Principles</h2>
+<h3 id="1-identify-inactive-users-and-computers">1. Identify Inactive Users and Computers</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#75715e"># Users inactive for 90+ days</span>
+</span></span><span style="display:flex;"><span>$inactiveUsers = Get-ADUser -Filter * -Properties LastLogonDate |
+</span></span><span style="display:flex;"><span>    Where-Object { $_.Enabled <span style="color:#f92672">-eq</span> $true <span style="color:#f92672">-and</span> $_.LastLogonDate <span style="color:#f92672">-lt</span> (Get-Date).AddDays(<span style="color:#ae81ff">-90</span>) }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Computers inactive for 90+ days</span>
+</span></span><span style="display:flex;"><span>$inactiveComputers = Get-ADComputer -Filter * -Properties LastLogonDate |
+</span></span><span style="display:flex;"><span>    Where-Object { $_.Enabled <span style="color:#f92672">-eq</span> $true <span style="color:#f92672">-and</span> $_.LastLogonDate <span style="color:#f92672">-lt</span> (Get-Date).AddDays(<span style="color:#ae81ff">-90</span>) }
+</span></span></code></pre></div><blockquote>
+<p>🔍 Use <code>-SearchBase</code> to narrow to a specific OU<br>
+Example: <code>-SearchBase &quot;OU=Workstations,DC=corp,DC=domain,DC=com&quot;</code></p></blockquote>
+<hr>
+<h3 id="2-export-for-review-before-deletion">2. Export for Review Before Deletion</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>$inactiveUsers | Select-Object Name, SamAccountName, LastLogonDate | Export-Csv <span style="color:#e6db74">&#34;.\InactiveUsers.csv&#34;</span> -NoTypeInformation
+</span></span><span style="display:flex;"><span>$inactiveComputers | Select-Object Name, LastLogonDate | Export-Csv <span style="color:#e6db74">&#34;.\InactiveComputers.csv&#34;</span> -NoTypeInformation
+</span></span></code></pre></div><hr>
+<h3 id="3-optional-remove-accounts-after-review">3. (Optional) Remove Accounts After Review</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#75715e"># Remove users (example - use caution)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#$inactiveUsers | ForEach-Object { Remove-ADUser -Identity $_ -Confirm:$false }</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Disable computers instead of deleting immediately</span>
+</span></span><span style="display:flex;"><span>$inactiveComputers | ForEach-Object { Disable-ADAccount -Identity $_ }
+</span></span></code></pre></div><blockquote>
+<p>🛡️ Always disable first, delete only after organizational approval or quarantine window.</p></blockquote>
+<hr>
+<h3 id="4-automate-via-scheduled-task">4. Automate via Scheduled Task</h3>
+<p>Create a <code>.ps1</code> script, and use Task Scheduler or your preferred RMM tool to run it monthly with log output.</p>
+<hr>
+<h2 id="summary">Summary</h2>
+<p>Cleaning up stale objects in Active Directory improves security posture, streamlines provisioning, and supports compliance requirements. With PowerShell and a cautious review process, you can automate cleanup safely and efficiently.</p>
+<hr>
+<h2 id="optional-enhancements">Optional Enhancements</h2>
+<ul>
+<li>Quarantine OU move instead of delete</li>
+<li>Email report to IT team</li>
+<li>Logging to <code>.evtx</code> or <code>.csv</code></li>
+<li>Cross-reference with HR data or asset system</li>
+</ul>
+
+        </div>
+
+        
+        <div class="row ps-3 pe-3">
+        
+          <div class="col-md-6 share-buttons">
+          
+            <strong>Share on:</strong>
+            
+            <a class="btn icon-button bg-facebook" href="https://www.facebook.com/sharer.php?u=https%3a%2f%2f200rx.com%2fposts%2fad-cleanup-automation%2f" target="_blank">
+              <i class="fab fa-facebook"></i>
+            </a>
+            
+            
+            
+            
+            
+            
+                <a class="btn icon-button bg-linkedin" href="https://www.linkedin.com/shareArticle?url=https%3a%2f%2f200rx.com%2fposts%2fad-cleanup-automation%2f&title=Active%20Directory%20Cleanup%20Automation%20with%20PowerShell" target="_blank">
+                  <i class="fab fa-linkedin"></i>
+                </a>
+            
+            
+             
+            
+            
+                <a class="btn icon-button" href="mailto:?subject=Active%20Directory%20Cleanup%20Automation%20with%20PowerShell&body=https%3a%2f%2f200rx.com%2fposts%2fad-cleanup-automation%2f" target="_blank">
+                  <i class="fas fa-envelope-open-text"></i>
+                </a>
+            
+          
+          </div>
+
+        
+        
+          
+            
+          
+          <div class="col-md-6 btn-improve-page">
+             
+               <a href="https://github.com/404RX/200rx.io/edit/main/content/posts/ad-cleanup-automation.md" title="Improve this page" target="_blank" rel="noopener">
+            
+                <i class="fas fa-code-branch"></i>
+                Improve this page
+              </a>
+          </div>
+        
+        </div>
+
+
+
+      
+      <hr />
+        
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+    
+    
+  
+  
+
+
+<div class="row next-prev-navigator">
+  
+    <div class="col-md-6 previous-article">
+      <a href="/posts/remote-system-healthcheckpowershell/" title="Remote System Health Checks with PowerShell" class="btn filled-button">
+        <div><i class="fas fa-chevron-circle-left"></i> Prev</div>
+        <div class="next-prev-text">Remote System Health Checks with PowerShell</div>
+      </a>
+    </div>
+  
+  
+</div>
+
+      <hr />
+
+      
+      
+
+      
+      
+
+      </div>
+    </div>
+  </div>
+  
+  <a id="scroll-to-top" class="btn" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Scroll to top">
+    <i class="fas fa-chevron-circle-up"></i>
+  </a>
+</section>
+
+
+      
+      
+  <section class="toc-section" id="toc-section">
+    
+    <div class="toc-holder">
+      <h5 class="text-center ps-3">Table of Contents</h5>
+      <hr>
+      <div class="toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#core-principles">Core Principles</a>
+      <ul>
+        <li><a href="#1-identify-inactive-users-and-computers">1. Identify Inactive Users and Computers</a></li>
+        <li><a href="#2-export-for-review-before-deletion">2. Export for Review Before Deletion</a></li>
+        <li><a href="#3-optional-remove-accounts-after-review">3. (Optional) Remove Accounts After Review</a></li>
+        <li><a href="#4-automate-via-scheduled-task">4. Automate via Scheduled Task</a></li>
+      </ul>
+    </li>
+    <li><a href="#summary">Summary</a></li>
+    <li><a href="#optional-enhancements">Optional Enhancements</a></li>
+  </ul>
+</nav>
+      </div>
+    </div>
+    
+  </section>
+
+    </div>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+
+  
+  
+
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+    
+  
+  
+
+  
+  
+  
+
+  <footer id="footer" class="container-fluid text-center align-content-center footer pb-2">
+    <div class="container pt-5">
+      <div class="row text-start">
+        
+        <div class="col-md-4 col-sm-12">
+          <h5>Navigation</h5>
+          
+          <ul>
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://200rx.com/#about">About</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://200rx.com/#skills">Skills</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://200rx.com/#experiences">Experiences</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://200rx.com/#education">Education</a>
+                </li>
+              
+              
+                
+                
+                  
+                
+                <li class="nav-item">
+                  <a class="smooth-scroll" href="https://200rx.com/#projects">Projects</a>
+                </li>
+              
+            
+              
+            
+          </ul>
+          
+        </div>
+        
+        
+        <div class="col-md-4 col-sm-12">
+          <h5>Contact me:</h5>
+          <ul>
+            
+              
+                <li><a href=mailto:vinnym@200rx.com target="_blank" rel="noopener">
+                  <span><i class="fas fa-envelope"></i></span> <span>vinnym@200rx.com</span>
+                </a></li>
+              
+            
+              
+                <li><span>Location: </span> <span>New York, Ny</span></li>
+              
+            
+              
+                <li><span>Website: </span> <span>https://200rx.com</span></li>
+              
+            
+          </ul>
+        </div>
+        
+        
+        
+      </div>
+    </div>
+    
+    
+    <hr />
+    <div class="container">
+      <div class="row text-start">
+        <div class="col-md-4">
+          <a id="theme" href="https://github.com/hugo-toha/toha" target="_blank" rel="noopener">
+            <img src="/images/theme-logo_hu_b3360284c55cf72d.png" alt="Toha Theme Logo">
+            Toha
+          </a>
+        </div>
+        <div class="col-md-4 text-center">© 2025 Copyright.</div>
+        <div class="col-md-4 text-end">
+          <a id="hugo" href="https://gohugo.io/" target="_blank" rel="noopener">Powered by
+          <img
+            src="/images/hugo-logo.svg"
+            alt="Hugo Logo"
+            height="18"
+          />
+          </a>
+        </div>
+      </div>
+    </div>
+    
+  </footer>
+
+
+
+
+
+
+<div id="chat-launcher">💬 Questions about my experience?</div>
+
+<div id="chat-box" style="display: none;">
+  <div id="chat-log" style="max-height: 200px; overflow-y: auto; border: 1px solid #ccc; padding: 8px; margin-bottom: 8px;"></div>
+  <input 
+    id="chat-input" 
+    type="text"
+    placeholder="Ask me something..." 
+  />
+</div>
+
+
+<style>
+  #chat-launcher {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #333;
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    z-index: 1000;
+    font-family: sans-serif;
+  }
+
+  #chat-box {
+    position: fixed;
+    bottom: 70px;
+    right: 20px;
+    width: 300px;
+    max-height: 400px;
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-family: sans-serif;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+    overflow-y: auto;
+  }
+
+  #chat-log {
+    max-height: 300px;
+    overflow-y: auto;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  #chat-input {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+</style>
+
+<script src="/js/bot.js"></script>
+    <script src="/application.8858d8e6a0df376d07dfc9651af10465f63aa8fbb28c46893c8ae7b883f32798.js" integrity="sha256-iFjY5qDfN20H38llGvEEZfY6qPuyjEaJPIrnuIPzJ5g=" defer></script>
+
+
+    
+     
+
+    
+    
+
+</body>
+</html>
+>>>>>>> main

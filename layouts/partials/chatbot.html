@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!-- Floating Chatbot Widget -->
 <div id="chat-launcher">💬 Questions about my experience?</div>
 
@@ -55,3 +56,62 @@
     font-size: 14px;
   }
 </style>
+=======
+<!-- Floating Chatbot Widget -->
+<div id="chat-launcher">💬 Questions about my experience?</div>
+
+<div id="chat-box" style="display: none;">
+  <div id="chat-log" style="max-height: 200px; overflow-y: auto; border: 1px solid #ccc; padding: 8px; margin-bottom: 8px;"></div>
+  <input 
+    id="chat-input" 
+    type="text"
+    placeholder="Ask me something..." 
+  />
+</div>
+
+
+<style>
+  #chat-launcher {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #333;
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    z-index: 1000;
+    font-family: sans-serif;
+  }
+
+  #chat-box {
+    position: fixed;
+    bottom: 70px;
+    right: 20px;
+    width: 300px;
+    max-height: 400px;
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-family: sans-serif;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+    overflow-y: auto;
+  }
+
+  #chat-log {
+    max-height: 300px;
+    overflow-y: auto;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  #chat-input {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+</style>
+>>>>>>> main
