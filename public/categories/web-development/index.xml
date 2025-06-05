@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Web Development on Ray - Systems Administrator</title>
+    <link>https://200rx.com/categories/web-development/</link>
+    <description>Recent content in Web Development on Ray - Systems Administrator</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 20 Feb 2024 14:30:00 +0000</lastBuildDate><atom:link href="https://200rx.com/categories/web-development/index.xml" rel="self" type="application/rss+xml" /><item>
+      <title>Modern Web Development Trends in 2024</title>
+      <link>https://200rx.com/posts/system-health-checks/</link>
+      <pubDate>Tue, 20 Feb 2024 14:30:00 +0000</pubDate>
+      
+      <guid>https://200rx.com/posts/system-health-checks/</guid>
+      <description>&lt;h2 id=&#34;the-evolution-of-web-development&#34;&gt;The Evolution of Web Development&lt;/h2&gt;
+&lt;p&gt;Web development continues to evolve at a rapid pace. As we progress through 2024, several key trends are shaping how we build and deploy web applications.&lt;/p&gt;
+&lt;h2 id=&#34;key-trends-for-2024&#34;&gt;Key Trends for 2024&lt;/h2&gt;
+&lt;h3 id=&#34;1-ai-powered-development-tools&#34;&gt;1. AI-Powered Development Tools&lt;/h3&gt;
+&lt;p&gt;Artificial Intelligence is revolutionizing how developers write code:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Code completion&lt;/strong&gt;: Tools like GitHub Copilot and Tabnine&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Automated testing&lt;/strong&gt;: AI-generated test cases&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Bug detection&lt;/strong&gt;: Intelligent code analysis&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Documentation&lt;/strong&gt;: Auto-generated API docs&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;2-edge-computing-and-cdns&#34;&gt;2. Edge Computing and CDNs&lt;/h3&gt;
+&lt;p&gt;Moving computation closer to users:&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Getting Started with Hugo: A Beginner&#39;s Guide</title>
+      <link>https://200rx.com/posts/getting-started-with-hugo/</link>
+      <pubDate>Mon, 15 Jan 2024 10:00:00 +0000</pubDate>
+      
+      <guid>https://200rx.com/posts/getting-started-with-hugo/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Hugo is one of the fastest static site generators available today. Built with Go, it can generate thousands of pages in seconds, making it perfect for blogs, documentation sites, and portfolios.&lt;/p&gt;
+&lt;h2 id=&#34;why-choose-hugo&#34;&gt;Why Choose Hugo?&lt;/h2&gt;
+&lt;h3 id=&#34;speed&#34;&gt;Speed&lt;/h3&gt;
+&lt;p&gt;Hugo is incredibly fast. It can build most websites in under a second, which means you can see your changes almost instantly during development.&lt;/p&gt;
+&lt;h3 id=&#34;flexibility&#34;&gt;Flexibility&lt;/h3&gt;
+&lt;p&gt;With its powerful templating system and extensive theme ecosystem, Hugo can be adapted to almost any type of website.&lt;/p&gt;</description>
+    </item>
+    
+    
+  </channel>
+</rss>

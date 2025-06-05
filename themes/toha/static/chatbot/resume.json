@@ -1,0 +1,27 @@
+{
+  "name": "Corey Miller",
+  "roles": [
+    "IT Administrator",
+    "Tier 3 Systems Technician"
+  ],
+  "skills": [
+    "PowerShell scripting",
+    "Automation",
+    "Active Directory",
+    "Compliance remediation",
+    "Remote imaging",
+    "Tier 3 support"
+  ],
+  "experience": [
+    "Over 10 years in IT across federal, nonprofit, and enterprise environments",
+    "Led 600-system compliance rollout in high-impact zone",
+    "Built remote automation toolkits for endpoint diagnostics and imaging",
+    "Mentored junior technicians and created SOPs"
+  ],
+  "projects": [
+    "Active Directory Cleanup Automation",
+    "Remote System Health Checks",
+    "Tier 3 Escalation Toolkit",
+    "Technician Onboarding System"
+  ]
+}

@@ -1,0 +1,61 @@
+# some information about you
+name: "Corey Miller"
+nickname: "Ray"
+# greeting message before your name. it will default to "Hi! I am" if not provided
+greeting: "Hello, I'm"
+image: "images/author/self.png"
+# give your some contact information. they will be used in the footer
+contactInfo:
+  email: "vinnym@200rx.com"
+  location: "New York, Ny"
+  website: "https://200rx.com"
+  
+# some summary about what you do
+summary:
+# Removed duplicate key
+  - I’m an experienced IT Administrator with a strong background in infrastructure, automation, and support operations
+  - I specialize in resolving complex system issues, scripting efficient workflows, and delivering scalable support solutions
+  - My career spans federal, nonprofit, and enterprise sectors—each shaping how I approach uptime, user needs, and system integrity
+  - I enjoy mentoring peers, building documentation, and streamlining service delivery in high-impact environments
+  - Whether deploying hundreds of machines or solving deep-rooted endpoint problems, I bring structure, speed, and calm under pressure
+
+
+
+# Additional social links
+socialLinks:
+  - name: "GitHub"
+    icon: "fab fa-github"
+    url: "https://github.com/404RX"
+  - name: "LinkedIn"
+    icon: "fab fa-linkedin"
+    url: "https://linkedin.com/in/coreyvmiller"
+  - name: "Twitter"
+    icon: "fab fa-twitter"
+    url: "https://twitter.com/username"
+  - name: "Stack Overflow"
+    icon: "fab fa-stack-overflow"
+    url: "https://stackoverflow.com/users/username"
+  - name: "Medium"
+    icon: "fab fa-medium"
+    url: "https://medium.com/@username"
+
+# Professional details
+professional:
+  currentRole: "IT Administrator"
+  currentCompany: "U.S. Federal Government"
+  yearsOfExperience: 10
+  specializations:
+    - "Systems Administration & Endpoint Management"
+    - "Automation Scripting (PowerShell, Python, Batch)"
+    - "IT Infrastructure Troubleshooting & Escalation"
+    - "Compliance & Security Standardization"
+    - "Process Documentation & Mentorship"
+    - "Multi-environment Support (Gov, Nonprofit, Enterprise)"
+
+# Personal interests
+interests:
+  - "Scripting Custom Tools for IT Automation"
+  - "AI and Cybersecurity Research"
+  - "Mentoring and Peer Training"
+  - "Building Self-sustaining Systems (Digital & Physical)"
+  - "Reading Strategy, Philosophy, and Futurism"

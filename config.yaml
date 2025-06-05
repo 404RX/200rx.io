@@ -1,0 +1,252 @@
+baseURL: https://200rx.com/
+languageCode: en-us
+title: "Ray - Systems Administrator"
+
+# Theme configuration
+theme: toha
+
+# Module configuration for npm dependencies
+module:
+  mounts:
+  - source: node_modules/bootstrap/scss
+    target: assets/bootstrap/scss
+  - source: node_modules/@fontsource/mulish
+    target: assets/@fontsource/mulish
+  - source: node_modules/include-media/dist
+    target: assets/include-media/dist
+  - source: node_modules/flag-icons/flags
+    target: static/flags
+  - source: node_modules/@fontsource/mulish/files
+    target: static/files
+  - source: node_modules/katex/dist/fonts
+    target: static/fonts
+
+# Allow raw html in markdown file
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+  tableOfContents:
+    startLevel: 2
+    endLevel: 6
+    ordered: false
+
+# At least HTML and JSON are required for the main HTML content and
+# client-side JavaScript search
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
+
+# Enable global emoji support
+enableEmoji: true
+
+# Site parameters
+params:
+  # Background image of the landing page
+  background: /images/site/background.jpg
+
+  # Provide logos for your site. The inverted logo will be used in the initial
+  # transparent navbar and the main logo will be used in the non-transparent navbar.
+  logo:
+    main: images/main-logo.png
+    inverted: images/inverted-logo.png
+
+  # GitHub repo of your site (update this with your actual repo)
+  gitRepo: https://github.com/404RX/200rx.io
+  # Default branch of your Git repo
+  gitBranch: main
+
+  # Site description for SEO
+  description: "System Administrator specializing, cloud administration, and automation. Experienced in Windows, Networking, Powershell, and DevOps practices."
+  
+  # Keywords for SEO
+  keywords: ["System Administrator", "Cloud", "IT specialist", "Powershell", "Python", "DevOps", "Cloud Architecture", "Military", "veteran", "federal"]
+  
+  # Social media and contact information
+  social:
+    github: "https://github.com/404RX"
+    linkedin: "https://www.linkedin.com/in/coreyvmiller/"
+    email: "vinnym@200rx.com"
+    
+  # Author information for structured data
+  author:
+    name: "Corey Miller"
+    image: "/images/author/avatar.png"
+    designation: "Experienced System Administrator"
+    company: "Government"
+    location: "New York, Ny"
+
+  # Configure the number of section title visible in the top navbar
+  topNavbar:
+    maxVisibleSections: 5
+
+  # Configure various features of this theme
+  features:
+    # Configure theme color settings
+    theme:
+      enable: true
+      services:
+        light: true # enable light theme
+        dark: true # enable dark theme
+        default: system # can be either light, dark or system
+
+    # Enable and configure portfolio
+    portfolio:
+      enable: true
+
+    # Enable and configure blog posts
+    blog:
+      enable: true
+      showAuthor: true
+      # Share post on different social media
+      shareButtons:
+        facebook: true
+        twitter: false
+        linkedin: true
+        reddit: false
+        whatsapp: false
+        email: true
+
+    # Enable & configure "Notes" features
+    notes:
+      enable: true
+
+    # Enable comment feature (disabled by default)
+    comment:
+      enable: false
+
+    # Enable Analytics (disabled by default)
+    analytics:
+      enabled: false
+
+    # Enable Support (disabled by default)
+    support:
+      enable: false
+
+    # specify whether you want to show Table of Contents in reading page
+    toc:
+      enable: true
+
+    # Show tags under the post title
+    tags:
+      enable: true
+      on_card: true # enables tags in post cards
+
+    # Specify whether to show flag in the language selector
+    flags:
+      enable: true
+
+    # Enable this to use custom syntax highlight
+    syntaxHighlight:
+      enable: true
+      services:
+        hljs:
+          noHighlightRe: /^no-highlight$/i
+
+    # Enables copy code button
+    copyCodeButton:
+      enable: true
+
+    # Enable reading time support in post cards and in post pages
+    readingTime:
+      enable: true
+
+  # Provide footer configuration
+  footer:
+    enable: true
+    # Show/hide navigation in the footer
+    navigation:
+      enable: true
+      customMenus: true
+    # Show/hide "Contact Me" section in the footer
+    contactMe:
+      enable: true
+    # Show/hide credentials section in the footer
+    credentials:
+      enable: true
+    # Show/hide newsletter section in the footer (disabled by default)
+    newsletter:
+      enable: false
+    # Show/hide disclaimer notice in the footer
+    disclaimer:
+      enable: false
+
+# Menu configuration
+menu:
+  main:
+    - name: "Home"
+      url: "/"
+      weight: 10
+    - name: "About"
+      url: "/#about"
+      weight: 20
+    - name: "Skills"
+      url: "/#skills"
+      weight: 30
+    - name: "Experience"
+      url: "/#experiences"
+      weight: 40
+    - name: "Education"
+      url: "/#education"
+      weight: 50
+    - name: "Projects"
+      url: "/#projects"
+      weight: 60
+    - name: "Blog"
+      url: "/posts"
+      weight: 70
+    - name: "Contact"
+      url: "/#contact"
+      weight: 80
+
+# Taxonomies
+taxonomies:
+  category: categories
+  tag: tags
+
+# Privacy configuration
+privacy:
+  googleAnalytics:
+    disable: true
+  x:
+    disable: false
+    enableDNT: true
+    simple: true
+  youtube:
+    disable: false
+    privacyEnhanced: true
+
+# Security configuration
+security:
+  enableInlineShortcodes: false
+  exec:
+    allow: ['^dart-sass-embedded$', '^go$', '^npx$', '^postcss$']
+    osEnv: ['(?i)^(PATH|PATHEXT|APPDATA|TMP|TEMP|TERM)$']
+  funcs:
+    getenv: ['^HUGO_']
+  http:
+    methods: ['(?i)GET|POST']
+    urls: ['.*']
+
+# Related content configuration
+related:
+  includeNewer: true
+  indices:
+  - name: keywords
+    weight: 100
+  - name: tags
+    weight: 80
+  - name: categories
+    weight: 60
+  - name: date
+    weight: 10
+  threshold: 80
+  toLower: false
+
+# Sitemap configuration
+sitemap:
+  changefreq: monthly
+  filename: sitemap.xml
+  priority: 0.5
