@@ -2,3 +2,6 @@
 CUSTOMIZATION.md
 DEPLOYMENT.md
 task_completion_template.json
+.env
+.env.local
+.env.*.local

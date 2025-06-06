@@ -2,6 +2,26 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+<<<<<<< HEAD
+    <loc>http://localhost:1313/posts/</loc>
+    <lastmod>2024-03-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/about/</loc>
+    <lastmod>2024-03-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/</loc>
+    <lastmod>2024-03-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/home/</loc>
+  </url><url>
+    <loc>http://localhost:1313/posts/another-post/</loc>
+  </url><url>
+    <loc>http://localhost:1313/categories/</loc>
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
+  </url><url>
+    <loc>http://localhost:1313/posts/first-post/</loc>
+=======
     <loc>https://200rx.com/search/</loc>
     <lastmod>2010-06-08T08:06:25+06:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -171,5 +191,6 @@
     <lastmod>2010-06-08T08:06:25+06:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+>>>>>>> main
   </url>
 </urlset>

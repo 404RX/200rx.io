@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
@@ -24,3 +25,31 @@
     
   </channel>
 </rss>
+=======
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tutorial on Ray - Systems Administrator</title>
+    <link>https://200rx.com/tags/tutorial/</link>
+    <description>Recent content in Tutorial on Ray - Systems Administrator</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 15 Jan 2024 10:00:00 +0000</lastBuildDate><atom:link href="https://200rx.com/tags/tutorial/index.xml" rel="self" type="application/rss+xml" /><item>
+      <title>Getting Started with Hugo: A Beginner&#39;s Guide</title>
+      <link>https://200rx.com/posts/getting-started-with-hugo/</link>
+      <pubDate>Mon, 15 Jan 2024 10:00:00 +0000</pubDate>
+      
+      <guid>https://200rx.com/posts/getting-started-with-hugo/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Hugo is one of the fastest static site generators available today. Built with Go, it can generate thousands of pages in seconds, making it perfect for blogs, documentation sites, and portfolios.&lt;/p&gt;
+&lt;h2 id=&#34;why-choose-hugo&#34;&gt;Why Choose Hugo?&lt;/h2&gt;
+&lt;h3 id=&#34;speed&#34;&gt;Speed&lt;/h3&gt;
+&lt;p&gt;Hugo is incredibly fast. It can build most websites in under a second, which means you can see your changes almost instantly during development.&lt;/p&gt;
+&lt;h3 id=&#34;flexibility&#34;&gt;Flexibility&lt;/h3&gt;
+&lt;p&gt;With its powerful templating system and extensive theme ecosystem, Hugo can be adapted to almost any type of website.&lt;/p&gt;</description>
+    </item>
+    
+    
+  </channel>
+</rss>
+>>>>>>> main

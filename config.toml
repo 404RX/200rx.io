@@ -1,0 +1,55 @@
+baseURL = "https://200rx.com/"
+languageCode = "en-us"
+title = "My Portfolio"
+theme = "congo"
+
+# Enable features
+enableGitInfo = true
+enableEmoji = true
+
+# Configure default language
+defaultContentLanguage = "en"
+defaultContentLanguageInSubdir = false
+
+# Site parameters
+[params]
+  # Enable dark mode
+  defaultAppearance = "light"
+  autoSwitchAppearance = true
+
+  # Enable search
+  enableSearch = true
+
+  # Header configuration
+  [params.header]
+    layout = "basic"
+    showTitle = true
+    showRssButton = true
+
+  # Footer configuration
+  [params.footer]
+    showScrollToTop = true
+    showAppearanceSwitcher = true
+    showCopyright = true
+
+  # Author information
+  [params.author]
+    name = "Your Name"
+    image = "avatar.jpg"
+    bio = "Your bio here"
+
+# Menu configuration
+[[menu.main]]
+  name = "Home"
+  pageRef = "/"
+  weight = 10
+
+[[menu.main]]
+  name = "Posts"
+  pageRef = "posts"
+  weight = 20
+
+[[menu.main]]
+  name = "About"
+  pageRef = "about"
+  weight = 30 

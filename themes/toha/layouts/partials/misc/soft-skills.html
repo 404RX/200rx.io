@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {{/* TODO: Delete this file in version v4+ */}}
 <div class="col-6 col-lg-4 p-2">
   {{ $predefinedColor:= true}}
@@ -24,3 +25,31 @@
     <div class="circular-progress-value">{{ .name }}</div>
   </div>
 </div>
+=======
+{{/* TODO: Delete this file in version v4+ */}}
+<div class="col-6 col-lg-4 p-2">
+  {{ $predefinedColor:= true}}
+  {{ if hasPrefix .color "#"}}
+    {{ $predefinedColor = false }}
+  {{ end }}
+  <div class="circular-progress {{if $predefinedColor}}{{ .color }}{{end}}">
+    <span class="circular-progress-left">
+      <span
+        class="circular-progress-bar circular-progress-percentage-{{ .percentage }}"
+        {{ if not $predefinedColor }}
+          style="border-color: {{.color}};"
+        {{ end }}
+      ></span>
+    </span>
+    <span class="circular-progress-right">
+      <span
+      class="circular-progress-bar"
+      {{ if not $predefinedColor }}
+          style="border-color: {{.color}};"
+      {{ end }}
+      ></span>
+    </span>
+    <div class="circular-progress-value">{{ .name }}</div>
+  </div>
+</div>
+>>>>>>> main
