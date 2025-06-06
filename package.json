@@ -27,5 +27,8 @@
     "build": "hugo --minify",
     "dev": "hugo server -D",
     "install-deps": "npm install"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.8"
   }
 }
