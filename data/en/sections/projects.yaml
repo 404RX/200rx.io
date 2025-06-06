@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # section information
 section:
   name: Projects
@@ -56,62 +55,3 @@ projects:
   timeline: "Jan 2023 – Present"
   summary: Documented core support workflows, built onboarding materials, and led mentorship for junior techs. Standardized triage, escalation, and deployment practices across teams to increase consistency and reduce ramp-up time.
   tags: ["professional","mentoring", "documentation", "training", "process-improvement", "leadership"]
-=======
-# section information
-section:
-  name: Projects
-  id: projects
-  enable: true
-  weight: 5
-  showOnNavbar: true
-  # Can optionally hide the title in sections
-  # hideTitle: true
-
-# filter buttons
-buttons:
-- name: All
-  filter: "all"
-- name: Professional
-  filter: "professional"
-- name: Active-Directory
-  filter: "activedirectory"
-- name: Automation
-  filter: "automation, powershell"
-
-# your projects
-projects:
-- name: 600-System Compliance Standardization
-  logo: /images/sections/projects/compliance.png
-  role: Project Lead / IT Administrator
-  timeline: "Jan 2023 – Nov 2023"
-  summary: Led a proactive initiative to bring 600+ federal systems into compliance with new security and configuration baselines. Created audit checklists, automated validation scripts, and coordinated with leadership to complete rollout ahead of schedule.
-  tags: ["professional", "powershell", "compliance", "endpoint-management", "leadership"]
-
-- name: Remote Imaging & Automation Toolkit
-  logo: /images/sections/projects/imaging.png
-  role: Systems Administrator
-  timeline: "Jul 2022 – Present"
-  summary: Developed a modular imaging and onboarding toolkit using PowerShell and batch scripting to automate OS deployment, app installation, and remote setup in constrained environments with limited tooling.
-  tags: ["automation", "powershell", "windows", "deployment", "scripts"]
-
-- name: Tier 3 Remote Troubleshooting Suite
-  logo: /images/sections/projects/toolkit.png
-  role: Escalation Technician
-  timeline: "Apr 2022 – Present"
-  summary: Built a suite of remote tools for enterprise clients to diagnose and resolve issues related to DNS, GPO application, service failures, and user access without logging in interactively. Improved response time and decreased recurring tickets.
-  tags: ["msp", "troubleshooting", "powershell", "scripting", "enterprise-support"]
-
-- name: Active Directory Cleanup & Optimization
-  logo: /images/sections/projects/ad.png
-  role: Systems Analyst
-  timeline: "Jun 2021 – Jan 2022"
-  summary: Audited and cleaned up AD objects across multiple OUs, eliminating stale accounts, resolving permission overlaps, and improving group membership logic with automated checks. Reduced user provisioning errors and streamlined access audits.
-  tags: ["activedirectory", "powershell", "it-ops", "identity-management"]
-
-- name: Technician SOP & Mentorship Program
-  logo: /images/sections/projects/mentorship.png
-  role: Peer Trainer / Process Owner
-  timeline: "Jan 2023 – Present"
-  summary: Documented core support workflows, built onboarding materials, and led mentorship for junior techs. Standardized triage, escalation, and deployment practices across teams to increase consistency and reduce ramp-up time.
-  tags: ["professional","mentoring", "documentation", "training", "process-improvement", "leadership"]
->>>>>>> main

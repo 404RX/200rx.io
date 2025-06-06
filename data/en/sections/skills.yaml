@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # section information
 section:
   name: Skills
@@ -60,67 +59,4 @@ skills:
 - name: Cloudflare
   logo: /images/sections/skills/cloudflare.png
   summary: "DNS and SSL/TLS management, custom domain setup, and security configurations using Cloudflare's free CDN and analytics tools."
-=======
-# section information
-section:
-  name: Skills
-  id: skills
-  enable: true
-  weight: 2
-  showOnNavbar: true
-  # Can optionally hide the title in sections
-  # hideTitle: true
-
-# Your Skills.
-# Give a summary of you each skill in the summary section.
-skills:
-- name: PowerShell
-  logo: /images/sections/skills/powershell.png
-  summary: "Advanced scripting with PowerShell for system automation, user provisioning, remote management, and log processing in enterprise environments."
-  url: "https://learn.microsoft.com/en-us/powershell/"
-
-- name: Python
-  logo: /images/sections/skills/python.png
-  summary: "Used for automation scripts, data parsing, web scraping, and backend integration with APIs. Comfortable with libraries like pandas and requests."
-  url: "https://www.python.org/"
-
-- name: Windows Server / AD
-  logo: /images/sections/skills/windows.png
-  summary: "Experienced in Active Directory, Group Policy, DNS/DHCP, user account management, and permissions within secure enterprise environments."
-  url: "https://learn.microsoft.com/en-us/windows-server/"
-
-- name: Networking (LAN/DNS/DHCP)
-  logo: /images/sections/skills/network.png
-  summary: "Skilled in diagnosing and resolving issues in LAN environments, configuring DNS/DHCP, and maintaining internal network integrity."
-  url: "https://en.wikipedia.org/wiki/Local_area_network"
-
-- name: VMware / ESXi
-  logo: /images/sections/skills/vmware.png
-  summary: "Experience with hypervisor setup, VM provisioning, snapshotting, and troubleshooting virtualized environments using vSphere and ESXi."
-  url: "https://www.vmware.com/products/esxi-and-esx.html"
-
-- name: Azure
-  logo: /images/sections/skills/azure.png
-  summary: "Familiar with cloud resource deployment, monitoring, cost estimation, and automation using the Azure portal and CLI. Studied AZ-104 curriculum."
-  url: "https://azure.microsoft.com/"
-
-- name: Git & GitHub
-  logo: /images/sections/skills/github.png
-  summary: "Version control with Git, including branching, merging, and CI/CD integration through GitHub Actions and Netlify pipelines."
-  url: "https://github.com/"
-
-- name: HTML/CSS
-  logo: /images/sections/skills/html.png
-  summary: "Comfortable building responsive layouts and tweaking templates for static site generators like Hugo, Astro, and Jekyll."
-  url: "https://developer.mozilla.org/en-US/docs/Web/HTML"
-
-- name: Hugo / Static Sites
-  logo: /images/sections/skills/hugo.png
-  summary: "Building and deploying fast static websites with Hugo, including custom theming, markdown content, and Netlify/Cloudflare integration."
-  url: "https://gohugo.io/"
-
-- name: Cloudflare
-  logo: /images/sections/skills/cloudflare.png
-  summary: "DNS and SSL/TLS management, custom domain setup, and security configurations using Cloudflare's free CDN and analytics tools."
->>>>>>> main
   url: "https://www.cloudflare.com/"

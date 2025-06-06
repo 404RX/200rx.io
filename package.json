@@ -1,28 +1,4 @@
 {
-<<<<<<< HEAD
-  "comments": {
-    "dependencies": {},
-    "devDependencies": {
-      "@zetxek/adritian-theme-helper": "github.com/zetxek/adritian-free-hugo-theme",
-      "autoprefixer": "github.com/zetxek/adritian-free-hugo-theme",
-      "bootstrap": "github.com/zetxek/adritian-free-hugo-theme",
-      "bootstrap-print-css": "github.com/zetxek/adritian-free-hugo-theme",
-      "postcss": "github.com/zetxek/adritian-free-hugo-theme",
-      "postcss-cli": "github.com/zetxek/adritian-free-hugo-theme"
-    }
-  },
-  "devDependencies": {
-    "@zetxek/adritian-theme-helper": "^1.0.4",
-    "autoprefixer": "^10.4.17",
-    "bootstrap": "^5.3.3",
-    "bootstrap-print-css": "^1.0.0",
-    "depcheck": "^1.4.7",
-    "postcss": "^8.4.35",
-    "postcss-cli": "^11.0.0"
-  },
-  "name": "portfolio",
-  "version": "0.1.0"
-=======
   "name": "200rx-io",
   "version": "1.0.0",
   "description": "Hugo website for 200rx.io",
@@ -52,5 +28,4 @@
     "dev": "hugo server -D",
     "install-deps": "npm install"
   }
->>>>>>> main
 }

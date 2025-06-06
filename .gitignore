@@ -1,10 +1,7 @@
-<<<<<<< HEAD
-.env
-.env.local
-.env.*.local
-=======
 *.roo*
 CUSTOMIZATION.md
 DEPLOYMENT.md
 task_completion_template.json
->>>>>>> main
+.env
+.env.local
+.env.*.local
