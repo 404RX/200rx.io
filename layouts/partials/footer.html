@@ -53,17 +53,23 @@
   {{ $hugoLogo := "/images/hugo-logo.svg" }}
 
   {{/* resize the logos. don't resize svg because it is not supported */}}
-  {{ $themeLogo:= resources.Get $themeLogo}}
-  {{ if and $themeLogo (ne $themeLogo.MediaType.SubType "svg") }}
-    {{ $themeLogo = $themeLogo.Resize "32x" }}
+  {{ $themeLogoResource := resources.Get $themeLogo}}
+  {{ $themeLogoURL := "" }}
+  {{ if $themeLogoResource }}
+    {{ if ne $themeLogoResource.MediaType.SubType "svg" }}
+      {{ $themeLogoResource = $themeLogoResource.Resize "32x" }}
+    {{ end }}
+    {{ $themeLogoURL = $themeLogoResource.RelPermalink }}
   {{ end }}
-  {{ $themeLogo = $themeLogo.RelPermalink}}
 
-  {{ $hugoLogo:= resources.Get $hugoLogo}}
-  {{ if and $hugoLogo (ne $hugoLogo.MediaType.SubType "svg")}}
-    {{ $hugoLogo = $hugoLogo.Resize "32x" }}
+  {{ $hugoLogoResource := resources.Get $hugoLogo}}
+  {{ $hugoLogoURL := "" }}
+  {{ if $hugoLogoResource }}
+    {{ if ne $hugoLogoResource.MediaType.SubType "svg" }}
+      {{ $hugoLogoResource = $hugoLogoResource.Resize "32x" }}
+    {{ end }}
+    {{ $hugoLogoURL = $hugoLogoResource.RelPermalink }}
   {{ end }}
-  {{ $hugoLogo = $hugoLogo.RelPermalink}}
 
   <footer id="footer" class="container-fluid text-center align-content-center footer pb-2">
     <div class="container pt-5">
@@ -198,19 +204,27 @@
     <div class="container">
       <div class="row text-start">
         <div class="col-md-4">
+          {{ if $themeLogoURL }}
           <a id="theme" href="https://github.com/hugo-toha/toha" target="_blank" rel="noopener">
-            <img src="{{ $themeLogo }}" alt="Toha Theme Logo">
+            <img src="{{ $themeLogoURL }}" alt="Toha Theme Logo">
             Toha
           </a>
+          {{ else }}
+          <a id="theme" href="https://github.com/hugo-toha/toha" target="_blank" rel="noopener">
+            Toha
+          </a>
+          {{ end }}
         </div>
         <div class="col-md-4 text-center">{{ $copyrightNotice | markdownify }}</div>
         <div class="col-md-4 text-end">
           <a id="hugo" href="https://gohugo.io/" target="_blank" rel="noopener">{{ i18n "hugoAttributionText" }}
+          {{ if $hugoLogoURL }}
           <img
-            src="{{ $hugoLogo }}"
+            src="{{ $hugoLogoURL }}"
             alt="Hugo Logo"
             height="18"
           />
+          {{ end }}
           </a>
         </div>
       </div>

@@ -1,7 +1,7 @@
 baseURL = "https://200rx.com/"
 languageCode = "en-us"
 title = "My Portfolio"
-theme = "congo"
+theme = "toha"
 
 # Enable features
 enableGitInfo = true
