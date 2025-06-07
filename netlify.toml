@@ -17,6 +17,8 @@
   NPM_FLAGS = "--legacy-peer-deps"
   # Disable secrets scanning for build output
   SECRETS_SCAN_ENABLED = "false"
+  HUGO_VERSION = "0.123.8"
+  HUGO_EXTENDED = "true"
 
 # Redirects for SPA
 [[redirects]]
