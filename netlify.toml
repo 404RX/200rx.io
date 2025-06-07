@@ -6,14 +6,13 @@
   command = "cd src && rm -rf node_modules package-lock.json && npm install && npm run build && cd .. && hugo --gc --minify"
   # Directory containing the built files
   publish = "public"
-  environment = { NODE_VERSION = "24" }
 
 # Environment variables documentation
 # These variables must be set in Netlify's dashboard:
 # Site settings > Build & deploy > Environment
 [build.environment]
   # Node version for the build
-  NODE_VERSION = "24"
+  NODE_VERSION = "18"
   # Ensure clean installs
   NPM_FLAGS = "--legacy-peer-deps"
   # Disable secrets scanning for build output
