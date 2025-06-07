@@ -19,6 +19,9 @@ theme = "toha"
   [[module.mounts]]
     source = "node_modules"
     target = "assets/js/vendor"
+  [[module.mounts]]
+    source = "themes/toha/node_modules"
+    target = "assets/js/vendor"
 
 [build]
   writeStats = true
@@ -35,6 +38,11 @@ theme = "toha"
     [js.build.resolve]
       modulesDir = ["node_modules", "themes/toha/node_modules"]
       withNodeModules = true
+      [js.build.resolve.alias]
+        mermaid = "mermaid/dist/mermaid.esm.mjs"
+        katex = "katex/dist/katex.mjs"
+        highlight = "highlight.js/lib/core"
+        plyr = "plyr/dist/plyr.esm.js"
 
 [css]
   minify = true

@@ -16,12 +16,19 @@
     "ityped": "^1.0.3",
     "katex": "^0.16.9",
     "mark.js": "^8.11.1",
-    "plyr": "^3.7.8"
+    "mermaid": "^10.8.0",
+    "plyr": "^3.7.8",
+    "flag-icons": "^7.2.3"
   },
   "devDependencies": {
     "@fontsource/mulish": "^4.5.13",
     "autoprefixer": "^10.4.17",
     "postcss": "^8.4.35",
-    "postcss-cli": "^11.0.0"
+    "postcss-cli": "^11.0.0",
+    "eslint": "^8.56.0",
+    "eslint-plugin-promise": "^6.1.1"
+  },
+  "resolutions": {
+    "mermaid": "^10.8.0"
   }
 }
