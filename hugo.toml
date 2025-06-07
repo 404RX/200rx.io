@@ -16,6 +16,9 @@ theme = "toha"
   [[module.mounts]]
     source = "themes/toha/static"
     target = "static"
+  [[module.mounts]]
+    source = "node_modules"
+    target = "assets/js/vendor"
 
 [build]
   writeStats = true
@@ -30,9 +33,14 @@ theme = "toha"
     minify = true
     sourceMap = "inline"
     [js.build.resolve]
-      modulesDir = ["themes/toha/node_modules", "node_modules"]
+      modulesDir = ["node_modules", "themes/toha/node_modules"]
+      withNodeModules = true
 
 [css]
   minify = true
   [css.postcss]
-    noMap = true 
+    noMap = true
+  [css.build]
+    [css.build.resolve]
+      modulesDir = ["node_modules", "themes/toha/node_modules"]
+      withNodeModules = true 

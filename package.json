@@ -3,10 +3,25 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.5.1",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.2",
     "bootstrap-icons": "^1.11.2",
-    "@fortawesome/fontawesome-free": "^6.5.1",
-    "feather-icons": "^4.29.1"
+    "feather-icons": "^4.29.1",
+    "filterizr": "^2.2.4",
+    "fuse.js": "^6.6.2",
+    "highlight.js": "^11.9.0",
+    "imagesloaded": "^5.0.0",
+    "include-media": "^1.4.10",
+    "ityped": "^1.0.3",
+    "katex": "^0.16.9",
+    "mark.js": "^8.11.1",
+    "plyr": "^3.7.8"
+  },
+  "devDependencies": {
+    "@fontsource/mulish": "^4.5.13",
+    "autoprefixer": "^10.4.17",
+    "postcss": "^8.4.35",
+    "postcss-cli": "^11.0.0"
   }
 }
