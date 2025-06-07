@@ -35,11 +35,13 @@
     }
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.5.1",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.2",
-    "bootstrap-icons": "^1.11.2"
+    "bootstrap-icons": "^1.11.2",
+    "feather-icons": "^4.29.1"
   },
-  "description": "A [Hugo](https://gohugo.io/) theme for a personal portfolio with minimalist design and responsiveness.",
+  "description": "A Hugo theme for personal portfolio",
   "devDependencies": {
     "@fontsource/mulish": "4.5.13",
     "@fortawesome/fontawesome-free": "^6.6.0",
@@ -52,7 +54,6 @@
     "eslint-plugin-n": "^15.6.0",
     "eslint-plugin-no-jquery": "^2.7.0",
     "eslint-plugin-promise": "^6.1.1",
-    "feather-icons": "^4.29.1",
     "filterizr": "^2.2.4",
     "flag-icons": "^7.2.3",
     "fuse.js": "^6.6.2",
@@ -64,11 +65,15 @@
     "mark.js": "^8.11.1",
     "mermaid": "^11.6.0",
     "plyr": "^3.7.2",
-    "popper.js": "^1.16.1",
     "postcss": "^8.4.41",
     "postcss-cli": "^11.0.0"
   },
   "homepage": "https://github.com/hugo-toha/toha#readme",
+  "keywords": [
+    "hugo",
+    "theme",
+    "portfolio"
+  ],
   "license": "MIT",
   "main": "index.js",
   "name": "toha",
@@ -82,5 +87,5 @@
     "lint:fix": "eslint --fix .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "version": "1.0.0"
+  "version": "4.0.0"
 }
