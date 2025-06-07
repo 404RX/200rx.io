@@ -2,10 +2,21 @@
 export default {
   content: [
     "./index.html",
-    "./**/*.{js,ts,jsx,tsx}",
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: {
+          DEFAULT: '#007bff',
+          dark: '#0056b3',
+        },
+      },
+    },
   },
   plugins: [],
+  // Ensure Tailwind's base styles don't conflict with existing styles
+  corePlugins: {
+    preflight: false,
+  },
 } 

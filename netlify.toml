@@ -3,7 +3,7 @@
 
 [build]
   # Build command for the React application
-  command = "cd src && npm install && npm run build"
+  command = "cd src && rm -rf node_modules package-lock.json && npm install && npm run build"
   # Directory containing the built files
   publish = "static"
 
@@ -13,6 +13,8 @@
 [build.environment]
   # Node version for the build
   NODE_VERSION = "18"
+  # Ensure clean installs
+  NPM_FLAGS = "--legacy-peer-deps"
 
 # Redirects for SPA
 [[redirects]]
