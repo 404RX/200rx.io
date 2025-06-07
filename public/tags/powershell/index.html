@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -7,14 +6,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-<link rel="stylesheet" href="/application.82d4e040083c0903f0d454ca75218bda8500dc1679906271dc9bbce12ec16aef.css" integrity="sha256-gtTgQAg8CQPw1FTKdSGL2oUA3BZ5kGJx3Ju84S7Bau8=" />
+<link rel="stylesheet" href="/application.2fc4cfe7d8e612ccc7ee98a8da8d6b5485d943580b9dd3d034d648b7c254977a.css" integrity="sha256-L8TP59jmEszH7pio2o1rVIXZQ1gLndPQNNZIt8JUl3o=" />
 
 
 
 
 
 
-<link rel="alternate" type="application/rss+xml" href="https://200rx.com/tags/powershell/index.xml" title="Ray - Systems Administrator">
+<link rel="alternate" type="application/rss+xml" href="https://200rx.com/tags/powershell/index.xml" title="My Portfolio">
 
 
 
@@ -23,15 +22,13 @@
 
 
 
-<meta property="og:title" content="Ray - Systems Administrator"/>
+<meta property="og:title" content="My Portfolio"/>
 <meta property="og:type" content="website"/>
 <meta property="og:description" content=""/>
 <meta property="og:image" content="/images/author/self.png">
 <meta property="og:url" content="https://200rx.com/">
 
      
-
-    
 
     
 
@@ -75,32 +72,12 @@ document.documentElement.setAttribute('data-theme', theme)
 
 
 
-  
-
-
-  
 
 
 
 
 
-  
-  
-    
-      
-    
-    
-  
 
-
-
-  
-  
-    
-      
-    
-    
-  
 
 
 
@@ -129,9 +106,7 @@ document.documentElement.setAttribute('data-theme', theme)
     </button>
     
     <a class="navbar-brand" href="/">
-      
-        <img src="/images/main-logo_hu_715d6024c143d0ec.png" id="logo" alt="Logo">
-      Ray - Systems Administrator</a>
+      My Portfolio</a>
     <button
       class="navbar-toggler navbar-light"
       id="navbar-toggler"
@@ -220,63 +195,16 @@ document.documentElement.setAttribute('data-theme', theme)
           
         
         
-          <div id="top-navbar-divider"></div>
-        
-        
-          <li class="nav-item">
-            <a class="nav-link" id="blog-link" href="/posts">Posts</a>
-          </li>
-        
-        
-          <li class="nav-item">
-            <a class="nav-link" id="note-link" href="/notes">Notes</a>
-          </li>
         
         
         
         
-          
-
-
-
-  
-  
-
-
-<li class="nav-item dropdown">
-<a class="nav-link dropdown-toggle"  href="#" id="themeSelector" role="button"
-  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-  <img id="navbar-theme-icon-svg" class="theme-icon" src="/icons/moon-svgrepo-com.svg" width=20 alt="Dark Theme">
-</a>
-<div id="themeMenu" class="dropdown-menu dropdown-menu-icons-only" aria-labelledby="themeSelector">
-  
-  <a class="dropdown-item nav-link" href="#" data-scheme="light">
-    <img class="theme-icon" src="/icons/sun-svgrepo-com.svg" width=20 alt="Light Theme">
-  </a>
-  
-  
-  <a class="dropdown-item nav-link" href="#" data-scheme="dark">
-    <img class="theme-icon" src="/icons/moon-svgrepo-com.svg" width=20 alt="Dark Theme">
-  </a>
-  
-  
-  <a class="dropdown-item nav-link" href="#" data-scheme="system">
-    <img class="theme-icon" src="/icons/computer-svgrepo-com.svg" width=20 alt="System Theme">
-  </a>
-  
-</div>
-</li>
-
         
       </ul>
     </div>
   </div>
   
   
-    <img src="/images/main-logo_hu_715d6024c143d0ec.png" class="d-none" id="main-logo" alt="Logo">
-  
-  
-    <img src="/images/inverted-logo_hu_a23dc4244bee30eb.png" class="d-none" id="inverted-logo" alt="Inverted Logo">
   
   
 </nav>
@@ -423,33 +351,11 @@ Example: -SearchBase &quot;OU=Workstations,DC=corp,DC=domain,DC=com&quot;
 </p>
       </a>
       
-        <div class="tags">
-  <ul style="padding-left: 0;">
-    
-    
-    <li class="rounded"><a href="/tags/powershell/" class="btn btn-sm btn-info">PowerShell</a></li>
-    
-    
-    <li class="rounded"><a href="/tags/active-directory/" class="btn btn-sm btn-info">Active Directory</a></li>
-    
-    
-    <li class="rounded"><a href="/tags/automation/" class="btn btn-sm btn-info">Automation</a></li>
-    
-    
-    <li class="rounded"><a href="/tags/security/" class="btn btn-sm btn-info">Security</a></li>
-    
-    
-    <li class="rounded"><a href="/tags/it-operations/" class="btn btn-sm btn-info">IT Operations</a></li>
-    
-  </ul>
-</div>
-
-      
     </div>
     <div class="card-footer">
       <span class="float-start">
           Monday, March 18, 2024
-           | 2 minutes </span>
+          </span>
       <a
       href="/posts/ad-cleanup-automation/"
       class="float-end btn btn-outline-info btn-sm">Read</a>
@@ -475,33 +381,11 @@ This guide walks through a practical PowerShell script for remote system health 
 Core Principles 1. Test System Health Remotely with WMI function Test-SystemHealth { param ( [string]$ComputerName ) $result = @{ ComputerName = $ComputerName Ping = $false CPU = $null Memory = $null DiskSpace = $null } if (Test-Connection -ComputerName $ComputerName -Count 2 -Quiet) { $result.Ping = $true try { $sys = Get-WmiObject -Class Win32_OperatingSystem -ComputerName $ComputerName $cpu = Get-WmiObject -Class Win32_Processor -ComputerName $ComputerName $disk = Get-WmiObject -Class Win32_LogicalDisk -ComputerName $ComputerName -Filter &#34;DriveType=3&#34; $result.CPU = [math]::Round($cpu.LoadPercentage, 2) $result.Memory = [math]::Round((($sys.TotalVisibleMemorySize - $sys.FreePhysicalMemory) / $sys.TotalVisibleMemorySize) * 100, 2) $result.DiskSpace = @() foreach ($d in $disk) { $usedPercent = [math]::Round((($d.Size - $d.FreeSpace) / $d.Size) * 100, 2) $result.DiskSpace += @{ Drive = $d.DeviceID; UsedPercent = $usedPercent } } } catch { Write-Warning &#34;Unable to gather metrics from $ComputerName&#34; } } return $result } # Example usage $computers = Get-Content -Path &#34;.\computers.txt&#34; $healthReport = $computers | ForEach-Object { Test-SystemHealth -ComputerName $_ } $healthReport | ConvertTo-Json | Out-File &#34;.\HealthReport.json&#34; ### 2. Testing Strategy with Pester ```powershell Describe &#39;Test-SystemHealth&#39; { It &#39;Should return a result object with expected keys&#39; { $mockResult = Test-SystemHealth -ComputerName &#34;localhost&#34; $mockResult | Should -Not -BeNullOrEmpty $mockResult | Should -HaveProperty &#39;ComputerName&#39; $mockResult | Should -HaveProperty &#39;Ping&#39; $mockResult | Should -HaveProperty &#39;CPU&#39; $mockResult | Should -HaveProperty &#39;Memory&#39; $mockResult | Should -HaveProperty &#39;DiskSpace&#39; } It &#39;Should show Ping as true for localhost&#39; { $mockResult = Test-SystemHealth -ComputerName &#34;localhost&#34; $mockResult.Ping | Should -BeTrue } } </p>
       </a>
       
-        <div class="tags">
-  <ul style="padding-left: 0;">
-    
-    
-    <li class="rounded"><a href="/tags/powershell/" class="btn btn-sm btn-info">PowerShell</a></li>
-    
-    
-    <li class="rounded"><a href="/tags/automation/" class="btn btn-sm btn-info">Automation</a></li>
-    
-    
-    <li class="rounded"><a href="/tags/scripting/" class="btn btn-sm btn-info">Scripting</a></li>
-    
-    
-    <li class="rounded"><a href="/tags/monitoring/" class="btn btn-sm btn-info">Monitoring</a></li>
-    
-    
-    <li class="rounded"><a href="/tags/infrastructure/" class="btn btn-sm btn-info">Infrastructure</a></li>
-    
-  </ul>
-</div>
-
-      
     </div>
     <div class="card-footer">
       <span class="float-start">
           Sunday, March 10, 2024
-           | 2 minutes </span>
+          </span>
       <a
       href="/posts/remote-system-healthcheckpowershell/"
       class="float-end btn btn-outline-info btn-sm">Read</a>
@@ -537,7 +421,6 @@ Core Principles 1. Test System Health Remotely with WMI function Test-SystemHeal
 
 
 
-
   
   
     
@@ -554,19 +437,7 @@ Core Principles 1. Test System Health Remotely with WMI function Test-SystemHeal
   
   
 
-
   
-  
-  
-
-  
-  
-  
-
-  
-  
-  
-    
   
   
 
@@ -658,767 +529,21 @@ Core Principles 1. Test System Health Remotely with WMI function Test-SystemHeal
         
         
         
-      </div>
-    </div>
-    
-    
-    <hr />
-    <div class="container">
-      <div class="row text-start">
-        <div class="col-md-4">
-          <a id="theme" href="https://github.com/hugo-toha/toha" target="_blank" rel="noopener">
-            <img src="/images/theme-logo_hu_b3360284c55cf72d.png" alt="Toha Theme Logo">
-            Toha
-          </a>
-        </div>
-        <div class="col-md-4 text-center">© 2025 Copyright.</div>
-        <div class="col-md-4 text-end">
-          <a id="hugo" href="https://gohugo.io/" target="_blank" rel="noopener">Powered by
-          <img
-            src="/images/hugo-logo.svg"
-            alt="Hugo Logo"
-            height="18"
-          />
-          </a>
-        </div>
-      </div>
-    </div>
-    
-  </footer>
-
-
-
-
-
-
-<div id="chat-launcher">💬 Questions about my experience?</div>
-
-<div id="chat-box" style="display: none;">
-  <div id="chat-log" style="max-height: 200px; overflow-y: auto; border: 1px solid #ccc; padding: 8px; margin-bottom: 8px;"></div>
-  <input 
-    id="chat-input" 
-    type="text"
-    placeholder="Ask me something..." 
-  />
-</div>
-
-
-<style>
-  #chat-launcher {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #333;
-    color: #fff;
-    padding: 10px 14px;
-    border-radius: 20px;
-    cursor: pointer;
-    z-index: 1000;
-    font-family: sans-serif;
-  }
-
-  #chat-box {
-    position: fixed;
-    bottom: 70px;
-    right: 20px;
-    width: 300px;
-    max-height: 400px;
-    background: #fff;
-    border: 1px solid #ccc;
-    padding: 10px;
-    font-family: sans-serif;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    z-index: 999;
-    overflow-y: auto;
-  }
-
-  #chat-log {
-    max-height: 300px;
-    overflow-y: auto;
-    font-size: 14px;
-    margin-bottom: 10px;
-  }
-
-  #chat-input {
-    width: 100%;
-    padding: 6px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
-  }
-</style>
-
-<script src="/js/bot.js"></script>
-    <script src="/application.8858d8e6a0df376d07dfc9651af10465f63aa8fbb28c46893c8ae7b883f32798.js" integrity="sha256-iFjY5qDfN20H38llGvEEZfY6qPuyjEaJPIrnuIPzJ5g=" defer></script>
-
-
-    
-     
-
-    
-    
-
-</body>
-</html>
-=======
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>PowerShell</title>
-    <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-
-<link rel="stylesheet" href="/application.82d4e040083c0903f0d454ca75218bda8500dc1679906271dc9bbce12ec16aef.css" integrity="sha256-gtTgQAg8CQPw1FTKdSGL2oUA3BZ5kGJx3Ju84S7Bau8=" />
-
-
-
-
-
-
-<link rel="alternate" type="application/rss+xml" href="https://200rx.com/tags/powershell/index.xml" title="Ray - Systems Administrator">
-
-
-
-
-
-
-
-
-<meta property="og:title" content="Ray - Systems Administrator"/>
-<meta property="og:type" content="website"/>
-<meta property="og:description" content=""/>
-<meta property="og:image" content="/images/author/self.png">
-<meta property="og:url" content="https://200rx.com/">
-
-     
-
-    
-
-    
-
-
-
-
-
-    <script integrity="sha256-DO4ugzEwhTW1Id1UIWn0gUJWaebCYOypeTit6LW4QB4=">
-     let theme = localStorage.getItem('theme-scheme') || localStorage.getItem('darkmode:color-scheme') || 'light'
-if (theme === 'system') {
-  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    theme = 'dark'
-  } else {
-    theme = 'light'
-  }
-}
-document.documentElement.setAttribute('data-theme', theme)
-
-    </script>
-    
-  </head>
-
-  <body class="type-tags kind-term" data-bs-spy="scroll" data-bs-target="#TableOfContents" data-bs-offset="80">
-    <div class="container-fluid bg-secondary wrapper">
-      
-      
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-  
-
-
-
-
-
-  
-  
-    
-      
-    
-    
-  
-
-
-
-  
-  
-    
-      
-    
-    
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-  
-
-
-<nav class="navbar navbar-expand-xl top-navbar shadow " id="top-navbar">
-  <div class="container">
-    
-    <button class="navbar-toggler navbar-light" id="sidebar-toggler" type="button">
-      <i data-feather="sidebar"></i>
-    </button>
-    
-    <a class="navbar-brand" href="/">
-      
-        <img src="/images/main-logo_hu_715d6024c143d0ec.png" id="logo" alt="Logo">
-      Ray - Systems Administrator</a>
-    <button
-      class="navbar-toggler navbar-light"
-      id="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#top-nav-items"
-      aria-label="menu"
-    >
-      <i data-feather="menu"></i>
-    </button>
-
-    <div class="collapse navbar-collapse dynamic-navbar" id="top-nav-items">
-      <ul class="nav navbar-nav ms-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="/#home">Home</a>
-        </li>
-        
           
-          
+          <div class="col-md-4 col-sm-12">
+            <p>Stay up to date with email notification</p>
             
-              
-              
-                <li class="nav-item">
-                  <a class="nav-link" href="/#about">About</a>
-                </li>
-              
-            
-            
-              
-              
-                <li class="nav-item">
-                  <a class="nav-link" href="/#skills">Skills</a>
-                </li>
-              
-            
-            
-              
-              
-                <li class="nav-item">
-                  <a class="nav-link" href="/#experiences">Experiences</a>
-                </li>
-              
-            
-            
-              
-              
-                <li class="nav-item">
-                  <a class="nav-link" href="/#education">Education</a>
-                </li>
-              
-            
-            
-              
-              
-            
-          
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More</a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                
-                
-                  
-                    
-                    
-                  
-                  
-                    
-                    
-                  
-                  
-                    
-                    
-                  
-                  
-                    
-                    
-                  
-                  
-                    
-                    
-                      <a class="dropdown-item" href="/#projects">Projects</a>
-                    
-                  
+              <form method='post' action='https://blogtrottr.com'>
+              <div class="form-group">
+              <input type='email' class="form-control" name='btr_email' placeholder="Enter email"/><br />
+              <input type='hidden' name='btr_url' value='https://200rx.com//index.xml' />
+              <input type='hidden' name='schedule_type' value='1' />
+              <small id="emailHelp" class="form-text text-muted">By entering your email address, you agree to receive the newsletter of this website.</small>
+              <button type="submit" class="btn btn-info"> Submit </button>
               </div>
-            </li>
-          
-        
-        
-          <div id="top-navbar-divider"></div>
-        
-        
-          <li class="nav-item">
-            <a class="nav-link" id="blog-link" href="/posts">Posts</a>
-          </li>
-        
-        
-          <li class="nav-item">
-            <a class="nav-link" id="note-link" href="/notes">Notes</a>
-          </li>
-        
-        
-        
-        
-          
-
-
-
-  
-  
-
-
-<li class="nav-item dropdown">
-<a class="nav-link dropdown-toggle"  href="#" id="themeSelector" role="button"
-  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-  <img id="navbar-theme-icon-svg" class="theme-icon" src="/icons/moon-svgrepo-com.svg" width=20 alt="Dark Theme">
-</a>
-<div id="themeMenu" class="dropdown-menu dropdown-menu-icons-only" aria-labelledby="themeSelector">
-  
-  <a class="dropdown-item nav-link" href="#" data-scheme="light">
-    <img class="theme-icon" src="/icons/sun-svgrepo-com.svg" width=20 alt="Light Theme">
-  </a>
-  
-  
-  <a class="dropdown-item nav-link" href="#" data-scheme="dark">
-    <img class="theme-icon" src="/icons/moon-svgrepo-com.svg" width=20 alt="Dark Theme">
-  </a>
-  
-  
-  <a class="dropdown-item nav-link" href="#" data-scheme="system">
-    <img class="theme-icon" src="/icons/computer-svgrepo-com.svg" width=20 alt="System Theme">
-  </a>
-  
-</div>
-</li>
-
-        
-      </ul>
-    </div>
-  </div>
-  
-  
-    <img src="/images/main-logo_hu_715d6024c143d0ec.png" class="d-none" id="main-logo" alt="Logo">
-  
-  
-    <img src="/images/inverted-logo_hu_a23dc4244bee30eb.png" class="d-none" id="inverted-logo" alt="Inverted Logo">
-  
-  
-</nav>
-
-
-
-      
-      
-  
-  
-
-  <section class="sidebar-section" id="sidebar-section">
-    <div class="sidebar-holder">
-      <div class="sidebar" id="sidebar">
-        <form class="mx-auto" method="get" action="/search">
-          <input type="text" name="keyword" value="" placeholder="Search" data-search="" id="search-box" />
-        </form>
-        <div class="sidebar-tree">
-          <ul class="tree" id="tree">
-            <li id="list-heading"><a href="/tags" data-filter="all">Tags</a></li>
-            <div class="subtree taxonomy-terms">
-              
-              
-
-
-
-  
-  
-        
-          
+              </form>
             
-          
-          <li><a class="taxonomy-term " href="https://200rx.com/tags/active-directory/" data-taxonomy-term="active-directory"><span class="taxonomy-label">Active Directory</span></a></li>
-        
-          
-            
-          
-          <li><a class="taxonomy-term " href="https://200rx.com/tags/ai/" data-taxonomy-term="ai"><span class="taxonomy-label">AI</span></a></li>
-        
-          
-            
-          
-          <li><a class="taxonomy-term " href="https://200rx.com/tags/automation/" data-taxonomy-term="automation"><span class="taxonomy-label">Automation</span></a></li>
-        
-          
-            
-          
-          <li><a class="taxonomy-term " href="https://200rx.com/tags/hugo/" data-taxonomy-term="hugo"><span class="taxonomy-label">Hugo</span></a></li>
-        
-          
-            
-          
-          <li><a class="taxonomy-term " href="https://200rx.com/tags/infrastructure/" data-taxonomy-term="infrastructure"><span class="taxonomy-label">Infrastructure</span></a></li>
-        
-          
-            
-          
-          <li><a class="taxonomy-term " href="https://200rx.com/tags/it-operations/" data-taxonomy-term="it-operations"><span class="taxonomy-label">IT Operations</span></a></li>
-        
-          
-            
-          
-          <li><a class="taxonomy-term " href="https://200rx.com/tags/javascript/" data-taxonomy-term="javascript"><span class="taxonomy-label">JavaScript</span></a></li>
-        
-          
-            
-          
-          <li><a class="taxonomy-term " href="https://200rx.com/tags/monitoring/" data-taxonomy-term="monitoring"><span class="taxonomy-label">Monitoring</span></a></li>
-        
-          
-            
-          
-          <li><a class="taxonomy-term " href="https://200rx.com/tags/performance/" data-taxonomy-term="performance"><span class="taxonomy-label">Performance</span></a></li>
-        
-          
-            
-          
-          <li><a class="taxonomy-term active" href="https://200rx.com/tags/powershell/" data-taxonomy-term="powershell"><span class="taxonomy-label">PowerShell</span></a></li>
-        
-          
-            
-          
-          <li><a class="taxonomy-term " href="https://200rx.com/tags/scripting/" data-taxonomy-term="scripting"><span class="taxonomy-label">Scripting</span></a></li>
-        
-          
-            
-          
-          <li><a class="taxonomy-term " href="https://200rx.com/tags/security/" data-taxonomy-term="security"><span class="taxonomy-label">Security</span></a></li>
-        
-          
-            
-          
-          <li><a class="taxonomy-term " href="https://200rx.com/tags/static-site/" data-taxonomy-term="static-site"><span class="taxonomy-label">Static Site</span></a></li>
-        
-          
-            
-          
-          <li><a class="taxonomy-term " href="https://200rx.com/tags/trends/" data-taxonomy-term="trends"><span class="taxonomy-label">Trends</span></a></li>
-        
-          
-            
-          
-          <li><a class="taxonomy-term " href="https://200rx.com/tags/tutorial/" data-taxonomy-term="tutorial"><span class="taxonomy-label">Tutorial</span></a></li>
-        
-          
-            
-          
-          <li><a class="taxonomy-term " href="https://200rx.com/tags/web-development/" data-taxonomy-term="web-development"><span class="taxonomy-label">Web Development</span></a></li>
-        
-  
-
-
-            </div>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-      
-      
-<section class="content-section" id="content-section">
-  <div class="content container-fluid" id="content">
-    <div class="container-fluid post-card-holder" id="post-card-holder">
-      
-      
-      
-      
-        
-          <div class="post-card">
-  <div class="card">
-    <div class="card-head">
-      <a href="/posts/ad-cleanup-automation/" class="post-card-link">
-        <img class="card-img-top" src='/images/default-hero.jpg' alt="Hero Image">
-      </a>
-    </div>
-    <div class="card-body">
-      <a href="/posts/ad-cleanup-automation/" class="post-card-link">
-        <h5 class="card-title">Active Directory Cleanup Automation with PowerShell</h5>
-        <p class="card-text post-summary">Introduction Stale and unused objects in Active Directory not only clutter your environment but can also create security risks and provisioning errors. Automating cleanup ensures better hygiene and consistent identity lifecycle management. This guide walks through how to use PowerShell to audit and optionally remove inactive AD users and computers.
-Core Principles 1. Identify Inactive Users and Computers # Users inactive for 90+ days $inactiveUsers = Get-ADUser -Filter * -Properties LastLogonDate | Where-Object { $_.Enabled -eq $true -and $_.LastLogonDate -lt (Get-Date).AddDays(-90) } # Computers inactive for 90+ days $inactiveComputers = Get-ADComputer -Filter * -Properties LastLogonDate | Where-Object { $_.Enabled -eq $true -and $_.LastLogonDate -lt (Get-Date).AddDays(-90) } 🔍 Use -SearchBase to narrow to a specific OU
-Example: -SearchBase &quot;OU=Workstations,DC=corp,DC=domain,DC=com&quot;
-</p>
-      </a>
-      
-        <div class="tags">
-  <ul style="padding-left: 0;">
-    
-    
-    <li class="rounded"><a href="/tags/powershell/" class="btn btn-sm btn-info">PowerShell</a></li>
-    
-    
-    <li class="rounded"><a href="/tags/active-directory/" class="btn btn-sm btn-info">Active Directory</a></li>
-    
-    
-    <li class="rounded"><a href="/tags/automation/" class="btn btn-sm btn-info">Automation</a></li>
-    
-    
-    <li class="rounded"><a href="/tags/security/" class="btn btn-sm btn-info">Security</a></li>
-    
-    
-    <li class="rounded"><a href="/tags/it-operations/" class="btn btn-sm btn-info">IT Operations</a></li>
-    
-  </ul>
-</div>
-
-      
-    </div>
-    <div class="card-footer">
-      <span class="float-start">
-          Monday, March 18, 2024
-           | 2 minutes </span>
-      <a
-      href="/posts/ad-cleanup-automation/"
-      class="float-end btn btn-outline-info btn-sm">Read</a>
-    </div>
-  </div>
-</div>
-
-        
-      
-        
-          <div class="post-card">
-  <div class="card">
-    <div class="card-head">
-      <a href="/posts/remote-system-healthcheckpowershell/" class="post-card-link">
-        <img class="card-img-top" src='/images/default-hero.jpg' alt="Hero Image">
-      </a>
-    </div>
-    <div class="card-body">
-      <a href="/posts/remote-system-healthcheckpowershell/" class="post-card-link">
-        <h5 class="card-title">Remote System Health Checks with PowerShell</h5>
-        <p class="card-text post-summary">Introduction Ensuring system uptime and catching performance issues early is vital in any infrastructure. With PowerShell, you can automate system health checks across your environment, collect metrics, and act on anomalies before they impact operations.
-This guide walks through a practical PowerShell script for remote system health monitoring, complete with optional test coverage using Pester.
-Core Principles 1. Test System Health Remotely with WMI function Test-SystemHealth { param ( [string]$ComputerName ) $result = @{ ComputerName = $ComputerName Ping = $false CPU = $null Memory = $null DiskSpace = $null } if (Test-Connection -ComputerName $ComputerName -Count 2 -Quiet) { $result.Ping = $true try { $sys = Get-WmiObject -Class Win32_OperatingSystem -ComputerName $ComputerName $cpu = Get-WmiObject -Class Win32_Processor -ComputerName $ComputerName $disk = Get-WmiObject -Class Win32_LogicalDisk -ComputerName $ComputerName -Filter &#34;DriveType=3&#34; $result.CPU = [math]::Round($cpu.LoadPercentage, 2) $result.Memory = [math]::Round((($sys.TotalVisibleMemorySize - $sys.FreePhysicalMemory) / $sys.TotalVisibleMemorySize) * 100, 2) $result.DiskSpace = @() foreach ($d in $disk) { $usedPercent = [math]::Round((($d.Size - $d.FreeSpace) / $d.Size) * 100, 2) $result.DiskSpace += @{ Drive = $d.DeviceID; UsedPercent = $usedPercent } } } catch { Write-Warning &#34;Unable to gather metrics from $ComputerName&#34; } } return $result } # Example usage $computers = Get-Content -Path &#34;.\computers.txt&#34; $healthReport = $computers | ForEach-Object { Test-SystemHealth -ComputerName $_ } $healthReport | ConvertTo-Json | Out-File &#34;.\HealthReport.json&#34; ### 2. Testing Strategy with Pester ```powershell Describe &#39;Test-SystemHealth&#39; { It &#39;Should return a result object with expected keys&#39; { $mockResult = Test-SystemHealth -ComputerName &#34;localhost&#34; $mockResult | Should -Not -BeNullOrEmpty $mockResult | Should -HaveProperty &#39;ComputerName&#39; $mockResult | Should -HaveProperty &#39;Ping&#39; $mockResult | Should -HaveProperty &#39;CPU&#39; $mockResult | Should -HaveProperty &#39;Memory&#39; $mockResult | Should -HaveProperty &#39;DiskSpace&#39; } It &#39;Should show Ping as true for localhost&#39; { $mockResult = Test-SystemHealth -ComputerName &#34;localhost&#34; $mockResult.Ping | Should -BeTrue } } </p>
-      </a>
-      
-        <div class="tags">
-  <ul style="padding-left: 0;">
-    
-    
-    <li class="rounded"><a href="/tags/powershell/" class="btn btn-sm btn-info">PowerShell</a></li>
-    
-    
-    <li class="rounded"><a href="/tags/automation/" class="btn btn-sm btn-info">Automation</a></li>
-    
-    
-    <li class="rounded"><a href="/tags/scripting/" class="btn btn-sm btn-info">Scripting</a></li>
-    
-    
-    <li class="rounded"><a href="/tags/monitoring/" class="btn btn-sm btn-info">Monitoring</a></li>
-    
-    
-    <li class="rounded"><a href="/tags/infrastructure/" class="btn btn-sm btn-info">Infrastructure</a></li>
-    
-  </ul>
-</div>
-
-      
-    </div>
-    <div class="card-footer">
-      <span class="float-start">
-          Sunday, March 10, 2024
-           | 2 minutes </span>
-      <a
-      href="/posts/remote-system-healthcheckpowershell/"
-      class="float-end btn btn-outline-info btn-sm">Read</a>
-    </div>
-  </div>
-</div>
-
-        
-      
-    </div>
-    <div class="paginator">
-      
-    </div>
-  </div>
-</section>
-
-
-      
-       
-    </div>
-
-    
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    
-  
-
-  
-  
-    
-  
-
-  
-  
-
-  
-  
-
-
-  
-  
-  
-
-  
-  
-  
-
-  
-  
-  
-    
-  
-  
-
-  
-  
-  
-
-  <footer id="footer" class="container-fluid text-center align-content-center footer pb-2">
-    <div class="container pt-5">
-      <div class="row text-start">
-        
-        <div class="col-md-4 col-sm-12">
-          <h5>Navigation</h5>
-          
-          <ul>
-              
-                
-                
-                  
-                
-                <li class="nav-item">
-                  <a class="smooth-scroll" href="https://200rx.com/#about">About</a>
-                </li>
-              
-              
-                
-                
-                  
-                
-                <li class="nav-item">
-                  <a class="smooth-scroll" href="https://200rx.com/#skills">Skills</a>
-                </li>
-              
-              
-                
-                
-                  
-                
-                <li class="nav-item">
-                  <a class="smooth-scroll" href="https://200rx.com/#experiences">Experiences</a>
-                </li>
-              
-              
-                
-                
-                  
-                
-                <li class="nav-item">
-                  <a class="smooth-scroll" href="https://200rx.com/#education">Education</a>
-                </li>
-              
-              
-                
-                
-                  
-                
-                <li class="nav-item">
-                  <a class="smooth-scroll" href="https://200rx.com/#projects">Projects</a>
-                </li>
-              
-            
-              
-            
-          </ul>
-          
-        </div>
-        
-        
-        <div class="col-md-4 col-sm-12">
-          <h5>Contact me:</h5>
-          <ul>
-            
-              
-                <li><a href=mailto:vinnym@200rx.com target="_blank" rel="noopener">
-                  <span><i class="fas fa-envelope"></i></span> <span>vinnym@200rx.com</span>
-                </a></li>
-              
-            
-              
-                <li><span>Location: </span> <span>New York, Ny</span></li>
-              
-            
-              
-                <li><span>Website: </span> <span>https://200rx.com</span></li>
-              
-            
-          </ul>
-        </div>
-        
-        
+          </div>
         
       </div>
     </div>
@@ -1429,7 +554,7 @@ Core Principles 1. Test System Health Remotely with WMI function Test-SystemHeal
       <div class="row text-start">
         <div class="col-md-4">
           <a id="theme" href="https://github.com/hugo-toha/toha" target="_blank" rel="noopener">
-            <img src="/images/theme-logo_hu_b3360284c55cf72d.png" alt="Toha Theme Logo">
+            <img src="/images/theme-logo.png" alt="Toha Theme Logo">
             Toha
           </a>
         </div>
@@ -1448,78 +573,12 @@ Core Principles 1. Test System Health Remotely with WMI function Test-SystemHeal
     
   </footer>
 
-
-
-
-
-
-<div id="chat-launcher">💬 Questions about my experience?</div>
-
-<div id="chat-box" style="display: none;">
-  <div id="chat-log" style="max-height: 200px; overflow-y: auto; border: 1px solid #ccc; padding: 8px; margin-bottom: 8px;"></div>
-  <input 
-    id="chat-input" 
-    type="text"
-    placeholder="Ask me something..." 
-  />
-</div>
-
-
-<style>
-  #chat-launcher {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #333;
-    color: #fff;
-    padding: 10px 14px;
-    border-radius: 20px;
-    cursor: pointer;
-    z-index: 1000;
-    font-family: sans-serif;
-  }
-
-  #chat-box {
-    position: fixed;
-    bottom: 70px;
-    right: 20px;
-    width: 300px;
-    max-height: 400px;
-    background: #fff;
-    border: 1px solid #ccc;
-    padding: 10px;
-    font-family: sans-serif;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    z-index: 999;
-    overflow-y: auto;
-  }
-
-  #chat-log {
-    max-height: 300px;
-    overflow-y: auto;
-    font-size: 14px;
-    margin-bottom: 10px;
-  }
-
-  #chat-input {
-    width: 100%;
-    padding: 6px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
-  }
-</style>
-
-<script src="/js/bot.js"></script>
-    <script src="/application.8858d8e6a0df376d07dfc9651af10465f63aa8fbb28c46893c8ae7b883f32798.js" integrity="sha256-iFjY5qDfN20H38llGvEEZfY6qPuyjEaJPIrnuIPzJ5g=" defer></script>
+    <script src="/application.bad28392f29237c3ef7074e09b088509247fef5afc94f89fd2046bf8a650b836.js" integrity="sha256-utKDkvKSN8PvcHTgmwiFCSR/71r8lPif0gRr&#43;KZQuDY=" defer></script>
 
 
     
      
 
     
-    
-
 </body>
 </html>
->>>>>>> main

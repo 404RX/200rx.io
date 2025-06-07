@@ -1,7 +1,7 @@
 {
   "name": "200rx-io",
   "version": "1.0.0",
-  "description": "Toha website for 200rx.io",
+  "description": "Hugo website for 200rx.io",
   "devDependencies": {
     "@fontsource/mulish": "4.5.13",
     "@fortawesome/fontawesome-free": "^6.6.0",
@@ -27,8 +27,5 @@
     "build": "hugo --minify",
     "dev": "hugo server -D",
     "install-deps": "npm install"
-  },
-  "dependencies": {
-    "@tailwindcss/cli": "^4.1.8"
   }
 }

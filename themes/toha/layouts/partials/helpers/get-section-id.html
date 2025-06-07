@@ -1,12 +1,5 @@
-<<<<<<< HEAD
 {{ $sectionID := replace (lower .section.name) " " "-"  }}
 {{ if .section.id }}
     {{ $sectionID = .section.id }}
 {{ end }}
-=======
-{{ $sectionID := replace (lower .section.name) " " "-"  }}
-{{ if .section.id }}
-    {{ $sectionID = .section.id }}
-{{ end }}
->>>>>>> main
 {{ return $sectionID }}

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 //
 // Visually hidden
 //
@@ -7,13 +6,3 @@
 .visually-hidden-focusable:not(:focus):not(:focus-within) {
   @include visually-hidden();
 }
-=======
-//
-// Visually hidden
-//
-
-.visually-hidden,
-.visually-hidden-focusable:not(:focus):not(:focus-within) {
-  @include visually-hidden();
-}
->>>>>>> main

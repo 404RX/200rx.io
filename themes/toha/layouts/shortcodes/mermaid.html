@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 {{ $alignment:= .Get "align"}}
 {{ if not $alignment }}
     {{ $alignment = "center"}}
@@ -12,18 +11,3 @@
 <div class="mermaid" align="{{ $alignment }}" style="background-color: {{ $background }}; border-radius: 5px;">
     {{ safeHTML .Inner }}
 </div>
-=======
-{{ $alignment:= .Get "align"}}
-{{ if not $alignment }}
-    {{ $alignment = "center"}}
-{{ end }}
-
-{{ $background:= .Get "background" }}
-{{ if not $background }}
-    {{ $background = "none"}}
-{{ end }}
-
-<div class="mermaid" align="{{ $alignment }}" style="background-color: {{ $background }}; border-radius: 5px;">
-    {{ safeHTML .Inner }}
-</div>
->>>>>>> main

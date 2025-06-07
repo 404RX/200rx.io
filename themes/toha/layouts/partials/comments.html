@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 {{ if .disqus.shortName }}
     {{ partial "comments/disqus.html" . }}
 {{ else if .valine }}
@@ -10,16 +9,3 @@
 {{ else if .commento }}
     {{ partial "comments/commento.html" . }}
 {{ end }}
-=======
-{{ if .disqus.shortName }}
-    {{ partial "comments/disqus.html" . }}
-{{ else if .valine }}
-    {{ partial "comments/valine.html" . }}
-{{ else if .utteranc }}
-    {{ partial "comments/utteranc.html" . }}
-{{ else if .giscus }}
-    {{ partial "comments/giscus.html" . }}
-{{ else if .commento }}
-    {{ partial "comments/commento.html" . }}
-{{ end }}
->>>>>>> main

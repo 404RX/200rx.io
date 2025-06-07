@@ -1,4 +1,3 @@
-{{/* Toha original footer content begin */}}
 {{/*  variables for enabling/disabling parts of the footer  */}}
 {{ $footerEnabled      := site.Params.footer.enable             | default true }}
 {{ $navigationEnabled  := site.Params.footer.navigation.enable  | default true }}
@@ -41,35 +40,15 @@
     {{ end }}
   {{ end }}
 
-
   {{ $disclaimer := "" }}
   {{ $siteConfig := (index site.Data site.Language.Lang).site }}
   {{ if $siteConfig.disclaimer }}
     {{ $disclaimer = $siteConfig.disclaimer }}
   {{ end }}
 
-  {{/*  footer logos  */}}
+  {{/*  footer logos - using simple fallback approach  */}}
   {{ $themeLogo := "/images/theme-logo.png" }}
   {{ $hugoLogo := "/images/hugo-logo.svg" }}
-
-  {{/* resize the logos. don't resize svg because it is not supported */}}
-  {{ $themeLogoResource := resources.Get $themeLogo}}
-  {{ $themeLogoURL := "" }}
-  {{ if $themeLogoResource }}
-    {{ if ne $themeLogoResource.MediaType.SubType "svg" }}
-      {{ $themeLogoResource = $themeLogoResource.Resize "32x" }}
-    {{ end }}
-    {{ $themeLogoURL = $themeLogoResource.RelPermalink }}
-  {{ end }}
-
-  {{ $hugoLogoResource := resources.Get $hugoLogo}}
-  {{ $hugoLogoURL := "" }}
-  {{ if $hugoLogoResource }}
-    {{ if ne $hugoLogoResource.MediaType.SubType "svg" }}
-      {{ $hugoLogoResource = $hugoLogoResource.Resize "32x" }}
-    {{ end }}
-    {{ $hugoLogoURL = $hugoLogoResource.RelPermalink }}
-  {{ end }}
 
   <footer id="footer" class="container-fluid text-center align-content-center footer pb-2">
     <div class="container pt-5">
@@ -204,27 +183,19 @@
     <div class="container">
       <div class="row text-start">
         <div class="col-md-4">
-          {{ if $themeLogoURL }}
           <a id="theme" href="https://github.com/hugo-toha/toha" target="_blank" rel="noopener">
-            <img src="{{ $themeLogoURL }}" alt="Toha Theme Logo">
+            <img src="{{ $themeLogo }}" alt="Toha Theme Logo">
             Toha
           </a>
-          {{ else }}
-          <a id="theme" href="https://github.com/hugo-toha/toha" target="_blank" rel="noopener">
-            Toha
-          </a>
-          {{ end }}
         </div>
         <div class="col-md-4 text-center">{{ $copyrightNotice | markdownify }}</div>
         <div class="col-md-4 text-end">
           <a id="hugo" href="https://gohugo.io/" target="_blank" rel="noopener">{{ i18n "hugoAttributionText" }}
-          {{ if $hugoLogoURL }}
           <img
-            src="{{ $hugoLogoURL }}"
+            src="{{ $hugoLogo }}"
             alt="Hugo Logo"
             height="18"
           />
-          {{ end }}
           </a>
         </div>
       </div>
@@ -232,9 +203,3 @@
     {{ end }}
   </footer>
 {{end}}
-
-
-{{/* Toha original footer content end */}}
-{{/* Add chatbot partial + script */}}
-{{ partial "chatbot.html" . }}
-<script src="/js/bot.js"></script>
