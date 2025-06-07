@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>My Portfolio</title>
+    <title>Ray - Systems Administrator</title>
     <link>https://200rx.com/posts/another-post/</link>
-    <description>Recent content on My Portfolio</description>
+    <description>Recent content on Ray - Systems Administrator</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language><atom:link href="https://200rx.com/posts/another-post/index.xml" rel="self" type="application/rss+xml" />
   </channel>

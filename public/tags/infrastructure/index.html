@@ -6,14 +6,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-<link rel="stylesheet" href="/application.2fc4cfe7d8e612ccc7ee98a8da8d6b5485d943580b9dd3d034d648b7c254977a.css" integrity="sha256-L8TP59jmEszH7pio2o1rVIXZQ1gLndPQNNZIt8JUl3o=" />
+<link rel="stylesheet" href="/application.82d4e040083c0903f0d454ca75218bda8500dc1679906271dc9bbce12ec16aef.css" integrity="sha256-gtTgQAg8CQPw1FTKdSGL2oUA3BZ5kGJx3Ju84S7Bau8=" />
 
 
 
 
 
 
-<link rel="alternate" type="application/rss+xml" href="https://200rx.com/tags/infrastructure/index.xml" title="My Portfolio">
+<link rel="alternate" type="application/rss+xml" href="https://200rx.com/tags/infrastructure/index.xml" title="Ray - Systems Administrator">
 
 
 
@@ -22,13 +22,15 @@
 
 
 
-<meta property="og:title" content="My Portfolio"/>
+<meta property="og:title" content="Ray - Systems Administrator"/>
 <meta property="og:type" content="website"/>
 <meta property="og:description" content=""/>
 <meta property="og:image" content="/images/author/self.png">
 <meta property="og:url" content="https://200rx.com/">
 
      
+
+    
 
     
 
@@ -72,12 +74,32 @@ document.documentElement.setAttribute('data-theme', theme)
 
 
 
+  
+
+
+  
 
 
 
 
 
+  
+  
+    
+      
+    
+    
+  
 
+
+
+  
+  
+    
+      
+    
+    
+  
 
 
 
@@ -106,7 +128,9 @@ document.documentElement.setAttribute('data-theme', theme)
     </button>
     
     <a class="navbar-brand" href="/">
-      My Portfolio</a>
+      
+        <img src="/images/main-logo_hu_715d6024c143d0ec.png" id="logo" alt="Logo">
+      Ray - Systems Administrator</a>
     <button
       class="navbar-toggler navbar-light"
       id="navbar-toggler"
@@ -195,16 +219,63 @@ document.documentElement.setAttribute('data-theme', theme)
           
         
         
+          <div id="top-navbar-divider"></div>
+        
+        
+          <li class="nav-item">
+            <a class="nav-link" id="blog-link" href="/posts">Posts</a>
+          </li>
+        
+        
+          <li class="nav-item">
+            <a class="nav-link" id="note-link" href="/notes">Notes</a>
+          </li>
         
         
         
         
+          
+
+
+
+  
+  
+
+
+<li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle"  href="#" id="themeSelector" role="button"
+  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <img id="navbar-theme-icon-svg" class="theme-icon" src="/icons/moon-svgrepo-com.svg" width=20 alt="Dark Theme">
+</a>
+<div id="themeMenu" class="dropdown-menu dropdown-menu-icons-only" aria-labelledby="themeSelector">
+  
+  <a class="dropdown-item nav-link" href="#" data-scheme="light">
+    <img class="theme-icon" src="/icons/sun-svgrepo-com.svg" width=20 alt="Light Theme">
+  </a>
+  
+  
+  <a class="dropdown-item nav-link" href="#" data-scheme="dark">
+    <img class="theme-icon" src="/icons/moon-svgrepo-com.svg" width=20 alt="Dark Theme">
+  </a>
+  
+  
+  <a class="dropdown-item nav-link" href="#" data-scheme="system">
+    <img class="theme-icon" src="/icons/computer-svgrepo-com.svg" width=20 alt="System Theme">
+  </a>
+  
+</div>
+</li>
+
         
       </ul>
     </div>
   </div>
   
   
+    <img src="/images/main-logo_hu_715d6024c143d0ec.png" class="d-none" id="main-logo" alt="Logo">
+  
+  
+    <img src="/images/inverted-logo_hu_a23dc4244bee30eb.png" class="d-none" id="inverted-logo" alt="Inverted Logo">
   
   
 </nav>
@@ -350,11 +421,33 @@ This guide walks through a practical PowerShell script for remote system health 
 Core Principles 1. Test System Health Remotely with WMI function Test-SystemHealth { param ( [string]$ComputerName ) $result = @{ ComputerName = $ComputerName Ping = $false CPU = $null Memory = $null DiskSpace = $null } if (Test-Connection -ComputerName $ComputerName -Count 2 -Quiet) { $result.Ping = $true try { $sys = Get-WmiObject -Class Win32_OperatingSystem -ComputerName $ComputerName $cpu = Get-WmiObject -Class Win32_Processor -ComputerName $ComputerName $disk = Get-WmiObject -Class Win32_LogicalDisk -ComputerName $ComputerName -Filter &#34;DriveType=3&#34; $result.CPU = [math]::Round($cpu.LoadPercentage, 2) $result.Memory = [math]::Round((($sys.TotalVisibleMemorySize - $sys.FreePhysicalMemory) / $sys.TotalVisibleMemorySize) * 100, 2) $result.DiskSpace = @() foreach ($d in $disk) { $usedPercent = [math]::Round((($d.Size - $d.FreeSpace) / $d.Size) * 100, 2) $result.DiskSpace += @{ Drive = $d.DeviceID; UsedPercent = $usedPercent } } } catch { Write-Warning &#34;Unable to gather metrics from $ComputerName&#34; } } return $result } # Example usage $computers = Get-Content -Path &#34;.\computers.txt&#34; $healthReport = $computers | ForEach-Object { Test-SystemHealth -ComputerName $_ } $healthReport | ConvertTo-Json | Out-File &#34;.\HealthReport.json&#34; ### 2. Testing Strategy with Pester ```powershell Describe &#39;Test-SystemHealth&#39; { It &#39;Should return a result object with expected keys&#39; { $mockResult = Test-SystemHealth -ComputerName &#34;localhost&#34; $mockResult | Should -Not -BeNullOrEmpty $mockResult | Should -HaveProperty &#39;ComputerName&#39; $mockResult | Should -HaveProperty &#39;Ping&#39; $mockResult | Should -HaveProperty &#39;CPU&#39; $mockResult | Should -HaveProperty &#39;Memory&#39; $mockResult | Should -HaveProperty &#39;DiskSpace&#39; } It &#39;Should show Ping as true for localhost&#39; { $mockResult = Test-SystemHealth -ComputerName &#34;localhost&#34; $mockResult.Ping | Should -BeTrue } } </p>
       </a>
       
+        <div class="tags">
+  <ul style="padding-left: 0;">
+    
+    
+    <li class="rounded"><a href="/tags/powershell/" class="btn btn-sm btn-info">PowerShell</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/automation/" class="btn btn-sm btn-info">Automation</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/scripting/" class="btn btn-sm btn-info">Scripting</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/monitoring/" class="btn btn-sm btn-info">Monitoring</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/infrastructure/" class="btn btn-sm btn-info">Infrastructure</a></li>
+    
+  </ul>
+</div>
+
+      
     </div>
     <div class="card-footer">
       <span class="float-start">
           Sunday, March 10, 2024
-          </span>
+           | 2 minutes </span>
       <a
       href="/posts/remote-system-healthcheckpowershell/"
       class="float-end btn btn-outline-info btn-sm">Read</a>
@@ -498,22 +591,6 @@ Core Principles 1. Test System Health Remotely with WMI function Test-SystemHeal
         
         
         
-          
-          <div class="col-md-4 col-sm-12">
-            <p>Stay up to date with email notification</p>
-            
-              <form method='post' action='https://blogtrottr.com'>
-              <div class="form-group">
-              <input type='email' class="form-control" name='btr_email' placeholder="Enter email"/><br />
-              <input type='hidden' name='btr_url' value='https://200rx.com//index.xml' />
-              <input type='hidden' name='schedule_type' value='1' />
-              <small id="emailHelp" class="form-text text-muted">By entering your email address, you agree to receive the newsletter of this website.</small>
-              <button type="submit" class="btn btn-info"> Submit </button>
-              </div>
-              </form>
-            
-          </div>
-        
       </div>
     </div>
     
@@ -542,12 +619,14 @@ Core Principles 1. Test System Health Remotely with WMI function Test-SystemHeal
     
   </footer>
 
-    <script src="/application.bad28392f29237c3ef7074e09b088509247fef5afc94f89fd2046bf8a650b836.js" integrity="sha256-utKDkvKSN8PvcHTgmwiFCSR/71r8lPif0gRr&#43;KZQuDY=" defer></script>
+    <script src="/application.8858d8e6a0df376d07dfc9651af10465f63aa8fbb28c46893c8ae7b883f32798.js" integrity="sha256-iFjY5qDfN20H38llGvEEZfY6qPuyjEaJPIrnuIPzJ5g=" defer></script>
 
 
     
      
 
     
+    
+
 </body>
 </html>
