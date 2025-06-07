@@ -1,7 +1,3 @@
-*.roo*
-CUSTOMIZATION.md
-DEPLOYMENT.md
-task_completion_template.json
-.env
-.env.local
-.env.*.local
+# Existing .gitignore content
+# Add new entries below
+node_modules/

@@ -1,16 +1,7 @@
-<<<<<<< HEAD
 {
     "githubPullRequests.remotes": [
         "origin",
         "upstream",
         "https://github.com/404RX/200rx.io"
     ]
-=======
-{
-    "githubPullRequests.remotes": [
-        "origin",
-        "upstream",
-        "https://github.com/404RX/200rx.io"
-    ]
->>>>>>> main
 }

@@ -1,4 +1,6 @@
-[submodule "themes/congo"]
-	path = themes/congo
-	url = https://github.com/jpanther/congo.git
+# Removed [submodule "themes/congo"] block so that Hugo no longer looks for a 'congo' module (or submodule) (and so that the error 'module "congo" not found' is gone).
+
+[submodule "themes/toha"]
+	path = themes/toha
+	url = https://github.com/hossainemruz/toha.git
 	branch = stable

@@ -1,16 +1,7 @@
-<<<<<<< HEAD
 .vscode/
 node_modules/
 .DS_Store
 .history/
 resources/
 public/
-=======
-.vscode/
-node_modules/
-.DS_Store
-.history/
-resources/
-public/
->>>>>>> main
 .hugo_build.lock
