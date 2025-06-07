@@ -1,5 +1,5 @@
 {{ return (dict
     "outputStyle" "compressed"
     "enableSourceMap" (not hugo.IsProduction)
-    "includePaths" "node_modules"
+    "includePaths" (slice "node_modules" "themes/toha/node_modules" "themes/toha/assets/styles")
 ) }}

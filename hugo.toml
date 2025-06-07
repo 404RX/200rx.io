@@ -51,4 +51,35 @@ theme = "toha"
   [css.build]
     [css.build.resolve]
       modulesDir = ["node_modules", "themes/toha/node_modules"]
-      withNodeModules = true 
+      withNodeModules = true
+
+[params]
+  [params.style]
+    primaryColor = "#007bff"
+    secondaryColor = "#6c757d"
+    [params.style.font]
+      name = "Mulish"
+      size = "16px"
+      weight = "400"
+    [params.style.navbar]
+      transparent = true
+      glassmorphism = true
+    [params.style.sidebar]
+      width = "300px"
+      [params.style.sidebar.toggle]
+        icon = "fas fa-bars"
+        color = "#007bff"
+    [params.style.footer]
+      backgroundColor = "#f8f9fa"
+      textColor = "#6c757d"
+    [params.style.card]
+      borderRadius = "0.5rem"
+      boxShadow = "0 0.125rem 0.25rem rgba(0, 0, 0, 0.075)"
+    [params.style.button]
+      borderRadius = "0.25rem"
+      [params.style.button.primary]
+        backgroundColor = "#007bff"
+        textColor = "#ffffff"
+      [params.style.button.secondary]
+        backgroundColor = "#6c757d"
+        textColor = "#ffffff" 
