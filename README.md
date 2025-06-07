@@ -136,7 +136,7 @@ Please submit documentation issues and pull requests to the [documentation repos
 
 Please **do not use the issue queue** for questions or troubleshooting. Unless you are certain that your issue is a software defect, use the [forum].
 
-Hugo’s [forum] is an active community of users and developers who answer questions, share knowledge, and provide examples. A quick search of over 20,000 topics will often answer your question. Please be sure to read about [requesting help] before asking your first question.
+Hugo's [forum] is an active community of users and developers who answer questions, share knowledge, and provide examples. A quick search of over 20,000 topics will often answer your question. Please be sure to read about [requesting help] before asking your first question.
 
 ## Contributing
 
@@ -278,3 +278,72 @@ rsc.io/qr="v0.2.0"
 software.sslmate.com/src/go-pkcs12="v0.2.0"
 ```
 </details>
+
+# Portfolio Chatbot
+
+A React-based chatbot component for Corey Miller's portfolio website.
+
+## Local Development
+
+1. Install dependencies:
+```bash
+cd src
+npm install
+```
+
+2. Create a `.env` file in the `src` directory:
+```env
+VITE_API_URL=https://two00rx-io-chatbot.onrender.com
+VITE_API_KEY=your-api-key-here
+```
+
+3. Start the development server:
+```bash
+npm run dev
+```
+
+## Netlify Deployment
+
+The application is configured to be deployed on Netlify. Environment variables are read from Netlify's environment configuration.
+
+### Required Environment Variables
+
+Set these in Netlify's dashboard (Site settings > Build & deploy > Environment):
+
+- `VITE_API_URL`: The URL of the chatbot API
+  - Example: `https://two00rx-io-chatbot.onrender.com`
+- `VITE_API_KEY`: Your API key for authentication
+  - Note: This is exposed to the client, so use a public API key with limited permissions
+
+### Build Settings
+
+The following build settings are configured in `netlify.toml`:
+
+```toml
+[build]
+  command = "cd src && npm install && npm run build"
+  publish = "static"
+```
+
+### Deployment Process
+
+1. Push changes to your repository
+2. Netlify will automatically:
+   - Install dependencies
+   - Build the React application
+   - Deploy the built files
+   - Use environment variables from Netlify's configuration
+
+## Security Notes
+
+- Only environment variables prefixed with `VITE_` are exposed to the client-side code
+- The API key used should be a public key with limited permissions
+- All API requests are signed and authenticated
+- Rate limiting is implemented on the API side
+
+## Development Notes
+
+- The chat component is built with React and TypeScript
+- Styling is done with Tailwind CSS
+- API communication uses Axios with request signing
+- The component is built as a standalone widget that can be embedded in any page

@@ -19,8 +19,13 @@ export default defineConfig({
     rollupOptions: {
       output: {
         entryFileNames: 'chat.js',
-        assetFileNames: 'chat.[ext]'
-      }
+        assetFileNames: 'chat.[ext]',
+        globals: {
+          react: 'React',
+          'react-dom': 'ReactDOM'
+        }
+      },
+      external: ['react', 'react-dom']
     }
   },
 }); 

@@ -1,5 +1,15 @@
-import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
+import axios, { AxiosInstance, InternalAxiosRequestConfig, AxiosHeaders } from 'axios';
 import { config } from '../config/env';
+
+/**
+ * API Client Configuration
+ * 
+ * This client is configured to work with the chatbot API backend:
+ * - Handles request signing for security
+ * - Includes API key authentication
+ * - Manages CORS and headers
+ * - Provides error handling
+ */
 
 // Create a browser-compatible random string generator
 const generateNonce = () => {
@@ -40,34 +50,54 @@ const signRequest = async (request: InternalAxiosRequestConfig) => {
   const message = `${timestamp}${nonce}${JSON.stringify(request.data || '')}`;
   const signature = await generateSignature(message, config.apiKey);
 
-  request.headers = {
-    ...request.headers,
-    'X-Timestamp': timestamp.toString(),
-    'X-Nonce': nonce,
-    'X-Signature': signature,
-    'X-API-Key': config.apiKey,
-  };
+  // Create new headers instance
+  const headers = new AxiosHeaders(request.headers);
+  
+  // Add required headers for API authentication and security
+  headers.set('X-Timestamp', timestamp.toString());
+  headers.set('X-Nonce', nonce);
+  headers.set('X-Signature', signature);
+  headers.set('X-API-Key', config.apiKey);
+  headers.set('Content-Type', 'application/json');
+  headers.set('Accept', 'application/json');
 
+  request.headers = headers;
   return request;
 };
 
-// Create axios instance
+// Create axios instance with base configuration
 const apiClient: AxiosInstance = axios.create({
   baseURL: config.apiUrl,
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  withCredentials: true, // Required for CORS with credentials
+  timeout: 10000, // 10 second timeout
 });
 
-// Add request interceptor
+// Add request interceptor for signing
 apiClient.interceptors.request.use(signRequest);
 
 // Add response interceptor for error handling
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 403) {
-      console.error('API key validation failed');
+    // Handle specific error cases
+    if (error.response) {
+      switch (error.response.status) {
+        case 401:
+          console.error('Authentication failed');
+          break;
+        case 403:
+          console.error('API key validation failed');
+          break;
+        case 429:
+          console.error('Rate limit exceeded');
+          break;
+        default:
+          console.error('API request failed:', error.response.status);
+      }
+    } else if (error.request) {
+      console.error('No response received:', error.request);
+    } else {
+      console.error('Request setup failed:', error.message);
     }
     return Promise.reject(error);
   }

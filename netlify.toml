@@ -1,7 +1,31 @@
-[build]
-  command = "hugo"
-  publish = "public"
+# Netlify Configuration
+# This file configures how Netlify builds and deploys your site
 
-[context.production.environment]
-  HUGO_VERSION = "0.146.0"
-  HUGO_EXTENDED = "true"
+[build]
+  # Build command for the React application
+  command = "cd src && npm install && npm run build"
+  # Directory containing the built files
+  publish = "static"
+
+# Environment variables documentation
+# These variables must be set in Netlify's dashboard:
+# Site settings > Build & deploy > Environment
+[build.environment]
+  # Node version for the build
+  NODE_VERSION = "18"
+
+# Redirects for SPA
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Headers for security
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Content-Security-Policy = "default-src 'self' https://two00rx-io-chatbot.onrender.com; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline';"
