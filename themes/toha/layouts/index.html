@@ -25,9 +25,6 @@
     <!-- Chat Component -->
     <script src="{{ "js/chat.js" | relURL }}"></script>
     <link rel="stylesheet" href="{{ "js/chat.css" | relURL }}">
-
-    <!-- Chat Root Element -->
-    <div id="chat-root" style="position: relative; z-index: 1000;"></div>
   </head>
   <body data-bs-spy="scroll" data-bs-target="#top-navbar" data-bs-offset="100">
 
@@ -73,6 +70,9 @@
 
     <!------ ADD SUPPORT LINKS -------->
     {{- partial "misc/support.html" . -}}
+
+    <!-- Chat Root Element -->
+    <div id="chat-root" style="position: relative; z-index: 1000;"></div>
 
   </body>
 </html>
