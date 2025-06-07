@@ -3,7 +3,7 @@
 
 [build]
   # Build command for the React application
-  command = "cd src && rm -rf node_modules package-lock.json && npm install && npm run build && cd .. && hugo --gc --minify"
+  command = "cd themes/toha && npm install && cd ../../src && rm -rf node_modules package-lock.json && npm install && npm run build && cd .. && hugo --gc --minify"
   # Directory containing the built files
   publish = "public"
 

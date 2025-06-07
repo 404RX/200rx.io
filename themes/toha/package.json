@@ -34,7 +34,11 @@
       "postcss-cli": "project"
     }
   },
-  "dependencies": {},
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.2",
+    "bootstrap-icons": "^1.11.2"
+  },
   "description": "A [Hugo](https://gohugo.io/) theme for a personal portfolio with minimalist design and responsiveness.",
   "devDependencies": {
     "@fontsource/mulish": "4.5.13",
@@ -75,7 +79,8 @@
   "scripts": {
     "autoprefixer": "postcss static/css/*/*.css --use autoprefixer -r --no-map",
     "lint": "eslint .",
-    "lint:fix": "eslint --fix ."
+    "lint:fix": "eslint --fix .",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "version": "1.0.0"
 }
