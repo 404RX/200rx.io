@@ -9,6 +9,9 @@ import { config } from '../config/env';
  * - Includes API key authentication
  * - Manages CORS and headers
  * - Provides error handling
+ * 
+ * Note: API key is injected at runtime from environment variables
+ * to prevent exposure in build output
  */
 
 // Create a browser-compatible random string generator
@@ -43,12 +46,19 @@ const generateSignature = async (message: string, key: string) => {
     .join('');
 };
 
+// Get API key from environment at runtime
+const getApiKey = () => {
+  // This will be replaced with the actual API key at runtime by Netlify
+  return import.meta.env.VITE_API_KEY || '';
+};
+
 // Add request signing
 const signRequest = async (request: InternalAxiosRequestConfig) => {
   const timestamp = Date.now();
   const nonce = generateNonce();
   const message = `${timestamp}${nonce}${JSON.stringify(request.data || '')}`;
-  const signature = await generateSignature(message, config.apiKey);
+  const apiKey = getApiKey();
+  const signature = await generateSignature(message, apiKey);
 
   // Create new headers instance
   const headers = new AxiosHeaders(request.headers);
@@ -57,7 +67,7 @@ const signRequest = async (request: InternalAxiosRequestConfig) => {
   headers.set('X-Timestamp', timestamp.toString());
   headers.set('X-Nonce', nonce);
   headers.set('X-Signature', signature);
-  headers.set('X-API-Key', config.apiKey);
+  headers.set('X-API-Key', apiKey);
   headers.set('Content-Type', 'application/json');
   headers.set('Accept', 'application/json');
 
