@@ -3,9 +3,10 @@
 
 [build]
   # Build command for the React application
-  command = "cd src && rm -rf node_modules package-lock.json && npm install && npm run build"
+  command = "cd src && rm -rf node_modules package-lock.json && npm install && npm run build && cd .. && hugo --gc --minify"
   # Directory containing the built files
-  publish = "static"
+  publish = "public"
+  environment = { NODE_VERSION = "18" }
 
 # Environment variables documentation
 # These variables must be set in Netlify's dashboard:
@@ -20,9 +21,10 @@
 
 # Redirects for SPA
 [[redirects]]
-  from = "/*"
-  to = "/index.html"
+  from = "/api/*"
+  to = "https://api.200rx.com/:splat"
   status = 200
+  force = true
 
 # Headers for security
 [[headers]]
@@ -32,4 +34,5 @@
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Content-Security-Policy = "default-src 'self' https://two00rx-io-chatbot.onrender.com; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline';"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+    Content-Security-Policy = "default-src 'self' https: 'unsafe-inline' 'unsafe-eval'; img-src 'self' https: data:; connect-src 'self' https://api.200rx.com https://*.netlify.app; frame-ancestors 'none';"

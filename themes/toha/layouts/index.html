@@ -17,11 +17,17 @@
     
     <!--================= add analytics if enabled =========================-->
     {{- partial "analytics.html" . -}}
-    {{ with resources.Get "scripts/core/theme-scheme.js" | fingerprint }}
-    <script integrity="{{.Data.Integrity}}">
-     {{ .Content | safeJS }}
-    </script>
-    {{ end }}
+
+    <!-- React Dependencies -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+
+    <!-- Chat Component -->
+    <script src="{{ "js/chat.js" | relURL }}"></script>
+    <link rel="stylesheet" href="{{ "js/chat.css" | relURL }}">
+
+    <!-- Chat Root Element -->
+    <div id="chat-root" style="position: relative; z-index: 1000;"></div>
   </head>
   <body data-bs-spy="scroll" data-bs-target="#top-navbar" data-bs-offset="100">
 
@@ -67,10 +73,6 @@
 
     <!------ ADD SUPPORT LINKS -------->
     {{- partial "misc/support.html" . -}}
-
-    <!------ ADD REACT CHAT COMPONENT -------->
-    <div id="chat-root"></div>
-    <script type="module" src="/js/chat.js"></script>
 
   </body>
 </html>
