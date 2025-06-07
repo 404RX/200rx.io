@@ -1,0 +1,38 @@
+baseURL = "https://200rx.com"
+languageCode = "en-us"
+title = "200rx.com"
+theme = "toha"
+
+[module]
+  [[module.mounts]]
+    source = "assets"
+    target = "assets"
+  [[module.mounts]]
+    source = "static"
+    target = "static"
+  [[module.mounts]]
+    source = "themes/toha/assets"
+    target = "assets"
+  [[module.mounts]]
+    source = "themes/toha/static"
+    target = "static"
+
+[build]
+  writeStats = true
+
+[js]
+  minify = true
+  targetPath = "js/application.js"
+  sourceMap = "inline"
+  [js.build]
+    target = "es2015"
+    format = "esm"
+    minify = true
+    sourceMap = "inline"
+    [js.build.resolve]
+      modulesDir = ["themes/toha/node_modules", "node_modules"]
+
+[css]
+  minify = true
+  [css.postcss]
+    noMap = true 
