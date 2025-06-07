@@ -1,6 +1,10 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import { resolve } from 'path';
+import { fileURLToPath } from 'url';
+import { dirname, resolve } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 export default defineConfig({
   plugins: [react()],
@@ -8,7 +12,7 @@ export default defineConfig({
     port: 5173,
   },
   build: {
-    outDir: '../static/js',
+    outDir: '../themes/toha/static/js',
     emptyOutDir: true,
     lib: {
       entry: resolve(__dirname, 'main.tsx'),
@@ -17,15 +21,23 @@ export default defineConfig({
       formats: ['iife']
     },
     rollupOptions: {
+      external: ['react', 'react-dom'],
       output: {
         entryFileNames: 'chat.js',
-        assetFileNames: 'chat.[ext]',
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name === 'style.css') return 'chat.css';
+          return '[name][extname]';
+        },
         globals: {
           react: 'React',
           'react-dom': 'ReactDOM'
-        }
-      },
-      external: ['react', 'react-dom']
-    }
+        },
+        format: 'iife',
+        intro: 'const global = window;'
+      }
+    },
+    cssCodeSplit: true,
+    minify: 'terser',
+    sourcemap: true
   },
 }); 
