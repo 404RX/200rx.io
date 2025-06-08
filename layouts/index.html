@@ -21,6 +21,7 @@
     <!-- React Dependencies -->
     <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="{{ "js/chat.js" | relURL }}"></script>
 
   </head>
   <body data-bs-spy="scroll" data-bs-target="#top-navbar" data-bs-offset="100">
@@ -68,6 +69,7 @@
     <!------ ADD SUPPORT LINKS -------->
     {{- partial "misc/support.html" . -}}
 
+    <div id="chat-root" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999;"></div>
 
   </body>
 </html>
