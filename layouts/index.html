@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.Lang }}">
+  <head>
+    <title>{{- .Site.Title -}}</title>
+    {{ $siteDescription := .Site.Params.description }}
+    {{ if (index .Site.Data .Site.Language.Lang).site }}
+      {{ $siteConfig := (index .Site.Data .Site.Language.Lang).site }}
+      {{ if $siteConfig.description }}
+        {{ $siteDescription = $siteConfig.description }}
+      {{ end }}
+    {{ end }}
+    <meta name="description" content="{{ $siteDescription }}" />
+    
+    <!-- import common headers -->
+    {{- partial "header.html" . -}}
+    {{- partial "opengraph.html" . -}}
+    
+    <!--================= add analytics if enabled =========================-->
+    {{- partial "analytics.html" . -}}
+
+    <!-- React Dependencies -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="{{ "js/chat.js" | relURL }}"></script>
+
+  </head>
+  <body data-bs-spy="scroll" data-bs-target="#top-navbar" data-bs-offset="100">
+
+    <!--- NAVBAR ------------------------->
+    {{- partial "navigators/navbar.html" . -}}
+
+    <!--- ADD HOME SECTION ---------------->
+    {{- partial "sections/home.html" . -}}
+
+    <!--- ADD OPTIONAL SECTIONS ----------->
+    {{ $sections:= site.Data.sections }}
+    {{ if (index site.Data site.Language.Lang).sections }}
+      {{ $sections = (index site.Data site.Language.Lang).sections }}
+    {{ end }}
+
+    {{ if $sections }}
+      {{ $background:= "bg-primary"}}
+      {{ range sort $sections "section.weight" }}
+        {{ if .section.enable }}
+          <div class="container-fluid section-holder d-flex {{ $background }}">
+            {{ if .section.template }}
+              {{- partial .section.template . -}}
+            {{ else }}
+              {{- partial (printf "sections/%s.html" (replace (lower .section.id) " " "-")) . -}}
+            {{ end }}
+          </div>
+          <!--- alter background color for next section --->
+          {{ if eq $background "bg-primary" }}
+            {{ $background = "bg-secondary" }}
+          {{ else }}
+            {{ $background = "bg-primary" }}
+          {{end}}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+
+    <!--- ADD FOOTER ----------------------->
+    {{ $footerTemplate:= site.Params.footer.template | default "footer.html" }}
+    {{- partial $footerTemplate . -}}
+
+    <!--- ADD COMMON SCRIPTS --------------->
+    {{ partial "scripts.html" . }}
+
+    <!------ ADD SUPPORT LINKS -------->
+    {{- partial "misc/support.html" . -}}
+
+    <div id="chat-root" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999;"></div>
+
+  </body>
+</html>
