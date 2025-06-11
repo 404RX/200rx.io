@@ -1,0 +1,4 @@
+# config.yaml
+baseURL: "http://localhost:1313/"
+title: "Minimal Hugo Chatbot Site"
+theme: "toha"
