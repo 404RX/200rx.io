@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Static Site on Ray - Systems Administrator</title>
-    <link>https://200rx.com/tags/static-site/</link>
+    <link>http://localhost:1313/tags/static-site/</link>
     <description>Recent content in Static Site on Ray - Systems Administrator</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Jan 2024 10:00:00 +0000</lastBuildDate><atom:link href="https://200rx.com/tags/static-site/index.xml" rel="self" type="application/rss+xml" /><item>
+    <lastBuildDate>Mon, 15 Jan 2024 10:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/static-site/index.xml" rel="self" type="application/rss+xml" /><item>
       <title>Getting Started with Hugo: A Beginner&#39;s Guide</title>
-      <link>https://200rx.com/posts/getting-started-with-hugo/</link>
+      <link>http://localhost:1313/posts/getting-started-with-hugo/</link>
       <pubDate>Mon, 15 Jan 2024 10:00:00 +0000</pubDate>
       
-      <guid>https://200rx.com/posts/getting-started-with-hugo/</guid>
+      <guid>http://localhost:1313/posts/getting-started-with-hugo/</guid>
       <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;Hugo is one of the fastest static site generators available today. Built with Go, it can generate thousands of pages in seconds, making it perfect for blogs, documentation sites, and portfolios.&lt;/p&gt;
 &lt;h2 id=&#34;why-choose-hugo&#34;&gt;Why Choose Hugo?&lt;/h2&gt;

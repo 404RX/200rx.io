@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Technology on Ray - Systems Administrator</title>
-    <link>https://200rx.com/categories/technology/</link>
+    <link>http://localhost:1313/categories/technology/</link>
     <description>Recent content in Technology on Ray - Systems Administrator</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 20 Feb 2024 14:30:00 +0000</lastBuildDate><atom:link href="https://200rx.com/categories/technology/index.xml" rel="self" type="application/rss+xml" /><item>
+    <lastBuildDate>Tue, 20 Feb 2024 14:30:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/categories/technology/index.xml" rel="self" type="application/rss+xml" /><item>
       <title>Modern Web Development Trends in 2024</title>
-      <link>https://200rx.com/posts/system-health-checks/</link>
+      <link>http://localhost:1313/posts/system-health-checks/</link>
       <pubDate>Tue, 20 Feb 2024 14:30:00 +0000</pubDate>
       
-      <guid>https://200rx.com/posts/system-health-checks/</guid>
+      <guid>http://localhost:1313/posts/system-health-checks/</guid>
       <description>&lt;h2 id=&#34;the-evolution-of-web-development&#34;&gt;The Evolution of Web Development&lt;/h2&gt;
 &lt;p&gt;Web development continues to evolve at a rapid pace. As we progress through 2024, several key trends are shaping how we build and deploy web applications.&lt;/p&gt;
 &lt;h2 id=&#34;key-trends-for-2024&#34;&gt;Key Trends for 2024&lt;/h2&gt;

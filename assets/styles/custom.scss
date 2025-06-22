@@ -1,0 +1,18 @@
+#chat-wrapper {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 300px;
+  height: 600px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+#chat-wrapper input {
+  margin-top: 90;
+}

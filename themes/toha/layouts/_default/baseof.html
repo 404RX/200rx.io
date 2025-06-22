@@ -15,38 +15,19 @@
      {{ .Content | safeJS }}
     </script>
     {{ end }}
-    <script src="{{ "js/chat.js" | relURL }}"></script>
   </head>
+<body class="type-{{ .Page.Type }} kind-{{ .Page.Kind }}" data-bs-spy="scroll" data-bs-target="#TableOfContents" data-bs-offset="80">
+  <div class="container-fluid bg-secondary wrapper">
+    ...
+  </div>
 
-  <body class="type-{{ .Page.Type }} kind-{{ .Page.Kind }}" data-bs-spy="scroll" data-bs-target="#TableOfContents" data-bs-offset="80">
-    <div class="container-fluid bg-secondary wrapper">
-      <!----- ADD NAVBAR --------------->
-      {{ block "navbar" . }} {{ end }}
+  <!-- ADD FOOTER & SCRIPTS -->
+  {{ $footerTemplate:= site.Params.footer.template | default "footer.html" }}
+  {{- partial $footerTemplate . -}}
+  {{ partial "scripts.html" . }}
+  {{ block "scripts" . }} {{ end }}
+  {{- partial "misc/support.html" . -}}
 
-      <!----- ADD SIDEBAR --------------->
-      {{ block "sidebar" . }} {{ end }}
+</body>
 
-      <!----- ADD PAGE CONTENT --------->
-      {{ block "content" . }} {{ end }}
-
-      <!----- ADD TABLE OF CONTENTS ----------->
-      {{ block "toc" . }} {{ end }}
-    </div>
-
-    <!------- ADD FOOTER ------------>
-    {{ $footerTemplate:= site.Params.footer.template | default "footer.html" }}
-    {{- partial $footerTemplate . -}}
-
-    <!------- ADD COMMON SCRIPTS ------->
-    {{ partial "scripts.html" . }}
-
-    <!------- ADD PAGE SPECIFIC SCRIPTS ------>
-    {{ block "scripts" . }} {{ end }}
-
-    <!------ IF WANTED, ADD SUPPORT LINKS -------->
-    {{- partial "misc/support.html" . -}}
-
-    <div id="chat-root" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999;"></div>
-
-  </body>
 </html>

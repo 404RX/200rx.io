@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Ray - Systems Administrator</title>
-    <link>https://200rx.com/posts/</link>
+    <link>http://localhost:1313/posts/</link>
     <description>Recent content on Ray - Systems Administrator</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 19 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://200rx.com/posts/index.xml" rel="self" type="application/rss+xml" /><item>
+    <lastBuildDate>Tue, 19 Mar 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" /><item>
       <title>About</title>
-      <link>https://200rx.com/posts/about/</link>
+      <link>http://localhost:1313/posts/about/</link>
       <pubDate>Tue, 19 Mar 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://200rx.com/posts/about/</guid>
+      <guid>http://localhost:1313/posts/about/</guid>
       <description>&lt;p&gt;Welcome to my portfolio! This is a sample about page.&lt;/p&gt;
 &lt;h2 id=&#34;about-me&#34;&gt;About Me&lt;/h2&gt;
 &lt;p&gt;Hello! I&amp;rsquo;m a developer passionate about creating beautiful and functional websites. This portfolio showcases my work and thoughts on various topics.&lt;/p&gt;
@@ -32,10 +32,10 @@
     
     <item>
       <title>Active Directory Cleanup Automation with PowerShell</title>
-      <link>https://200rx.com/posts/ad-cleanup-automation/</link>
+      <link>http://localhost:1313/posts/ad-cleanup-automation/</link>
       <pubDate>Mon, 18 Mar 2024 14:00:00 +0000</pubDate>
       
-      <guid>https://200rx.com/posts/ad-cleanup-automation/</guid>
+      <guid>http://localhost:1313/posts/ad-cleanup-automation/</guid>
       <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;Stale and unused objects in Active Directory not only clutter your environment but can also create security risks and provisioning errors. Automating cleanup ensures better hygiene and consistent identity lifecycle management. This guide walks through how to use PowerShell to audit and optionally remove inactive AD users and computers.&lt;/p&gt;
 &lt;hr&gt;
@@ -55,10 +55,10 @@ Example: &lt;code&gt;-SearchBase &amp;quot;OU=Workstations,DC=corp,DC=domain,DC=
     
     <item>
       <title>Remote System Health Checks with PowerShell</title>
-      <link>https://200rx.com/posts/remote-system-healthcheckpowershell/</link>
+      <link>http://localhost:1313/posts/remote-system-healthcheckpowershell/</link>
       <pubDate>Sun, 10 Mar 2024 09:15:00 +0000</pubDate>
       
-      <guid>https://200rx.com/posts/remote-system-healthcheckpowershell/</guid>
+      <guid>http://localhost:1313/posts/remote-system-healthcheckpowershell/</guid>
       <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;Ensuring system uptime and catching performance issues early is vital in any infrastructure. With PowerShell, you can automate system health checks across your environment, collect metrics, and act on anomalies before they impact operations.&lt;/p&gt;
 &lt;p&gt;This guide walks through a practical PowerShell script for remote system health monitoring, complete with optional test coverage using Pester.&lt;/p&gt;
@@ -133,10 +133,10 @@ Example: &lt;code&gt;-SearchBase &amp;quot;OU=Workstations,DC=corp,DC=domain,DC=
     
     <item>
       <title>Modern Web Development Trends in 2024</title>
-      <link>https://200rx.com/posts/system-health-checks/</link>
+      <link>http://localhost:1313/posts/system-health-checks/</link>
       <pubDate>Tue, 20 Feb 2024 14:30:00 +0000</pubDate>
       
-      <guid>https://200rx.com/posts/system-health-checks/</guid>
+      <guid>http://localhost:1313/posts/system-health-checks/</guid>
       <description>&lt;h2 id=&#34;the-evolution-of-web-development&#34;&gt;The Evolution of Web Development&lt;/h2&gt;
 &lt;p&gt;Web development continues to evolve at a rapid pace. As we progress through 2024, several key trends are shaping how we build and deploy web applications.&lt;/p&gt;
 &lt;h2 id=&#34;key-trends-for-2024&#34;&gt;Key Trends for 2024&lt;/h2&gt;
@@ -154,10 +154,10 @@ Example: &lt;code&gt;-SearchBase &amp;quot;OU=Workstations,DC=corp,DC=domain,DC=
     
     <item>
       <title>Getting Started with Hugo: A Beginner&#39;s Guide</title>
-      <link>https://200rx.com/posts/getting-started-with-hugo/</link>
+      <link>http://localhost:1313/posts/getting-started-with-hugo/</link>
       <pubDate>Mon, 15 Jan 2024 10:00:00 +0000</pubDate>
       
-      <guid>https://200rx.com/posts/getting-started-with-hugo/</guid>
+      <guid>http://localhost:1313/posts/getting-started-with-hugo/</guid>
       <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;Hugo is one of the fastest static site generators available today. Built with Go, it can generate thousands of pages in seconds, making it perfect for blogs, documentation sites, and portfolios.&lt;/p&gt;
 &lt;h2 id=&#34;why-choose-hugo&#34;&gt;Why Choose Hugo?&lt;/h2&gt;
@@ -169,10 +169,10 @@ Example: &lt;code&gt;-SearchBase &amp;quot;OU=Workstations,DC=corp,DC=domain,DC=
     
     <item>
       <title>Welcome</title>
-      <link>https://200rx.com/posts/first-post/</link>
+      <link>http://localhost:1313/posts/first-post/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://200rx.com/posts/first-post/</guid>
+      <guid>http://localhost:1313/posts/first-post/</guid>
       <description>&lt;h1 id=&#34;welcome-to-my-portfolio&#34;&gt;Welcome to My Portfolio&lt;/h1&gt;
 &lt;p&gt;This is my personal website where I share my thoughts, projects, and experiences.&lt;/p&gt;
 &lt;h2 id=&#34;recent-posts&#34;&gt;Recent Posts&lt;/h2&gt;

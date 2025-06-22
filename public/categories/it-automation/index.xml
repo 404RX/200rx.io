@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>IT Automation on Ray - Systems Administrator</title>
-    <link>https://200rx.com/categories/it-automation/</link>
+    <link>http://localhost:1313/categories/it-automation/</link>
     <description>Recent content in IT Automation on Ray - Systems Administrator</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 10 Mar 2024 09:15:00 +0000</lastBuildDate><atom:link href="https://200rx.com/categories/it-automation/index.xml" rel="self" type="application/rss+xml" /><item>
+    <lastBuildDate>Sun, 10 Mar 2024 09:15:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/categories/it-automation/index.xml" rel="self" type="application/rss+xml" /><item>
       <title>Remote System Health Checks with PowerShell</title>
-      <link>https://200rx.com/posts/remote-system-healthcheckpowershell/</link>
+      <link>http://localhost:1313/posts/remote-system-healthcheckpowershell/</link>
       <pubDate>Sun, 10 Mar 2024 09:15:00 +0000</pubDate>
       
-      <guid>https://200rx.com/posts/remote-system-healthcheckpowershell/</guid>
+      <guid>http://localhost:1313/posts/remote-system-healthcheckpowershell/</guid>
       <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;Ensuring system uptime and catching performance issues early is vital in any infrastructure. With PowerShell, you can automate system health checks across your environment, collect metrics, and act on anomalies before they impact operations.&lt;/p&gt;
 &lt;p&gt;This guide walks through a practical PowerShell script for remote system health monitoring, complete with optional test coverage using Pester.&lt;/p&gt;

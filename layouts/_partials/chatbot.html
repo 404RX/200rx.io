@@ -1,0 +1,305 @@
+<!-- Chatbot Widget with Backend Integration -->
+<script>
+// Chatbot with backend integration
+class BackendChatbot {
+    constructor() {
+        this.isOpen = false;
+        this.messages = [];
+        this.apiUrl = 'https://two00rx-io-chatbot.onrender.com';
+        this.init();
+    }
+
+    init() {
+        this.createChatInterface();
+        this.bindEvents();
+    }
+
+    createChatInterface() {
+        // Create chat launcher
+        const launcher = document.createElement('div');
+        launcher.id = 'chat-launcher';
+        launcher.innerHTML = '💬 Questions about my experience?';
+        launcher.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #333;
+            color: #fff;
+            padding: 10px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            z-index: 1000;
+            font-family: sans-serif;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+        `;
+
+        launcher.addEventListener('mouseenter', () => {
+            launcher.style.backgroundColor = '#555';
+        });
+        
+        launcher.addEventListener('mouseleave', () => {
+            launcher.style.backgroundColor = '#333';
+        });
+
+        // Create chat box
+        const chatBox = document.createElement('div');
+        chatBox.id = 'chat-box';
+        chatBox.style.cssText = `
+            position: fixed;
+            bottom: 70px;
+            right: 20px;
+            width: 320px;
+            max-height: 400px;
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-family: sans-serif;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            display: none;
+        `;
+
+        chatBox.innerHTML = `
+            <div style="background: #333; color: white; padding: 12px; border-radius: 8px 8px 0 0; font-weight: bold; display: flex; justify-content: space-between; align-items: center;">
+                <span>Chat with Corey</span>
+                <span id="chat-close" style="cursor: pointer; font-size: 20px; line-height: 1;">&times;</span>
+            </div>
+            <div id="chat-messages" style="height: 250px; overflow-y: auto; padding: 10px; background: #f9f9f9;"></div>
+            <div style="padding: 10px; border-top: 1px solid #eee; background: white;">
+                <input id="chat-input" type="text" placeholder="Ask me something..." 
+                       style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; outline: none; font-size: 14px;">
+                <div id="connection-status" style="font-size: 11px; color: #666; margin-top: 4px;"></div>
+            </div>
+        `;
+
+        document.body.appendChild(launcher);
+        document.body.appendChild(chatBox);
+    }
+
+    bindEvents() {
+        const launcher = document.getElementById('chat-launcher');
+        const chatBox = document.getElementById('chat-box');
+        const closeBtn = document.getElementById('chat-close');
+        const input = document.getElementById('chat-input');
+
+        launcher.addEventListener('click', () => this.toggleChat());
+        closeBtn.addEventListener('click', () => this.toggleChat());
+        
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                this.sendMessage(e.target.value);
+                e.target.value = '';
+            }
+        });
+    }
+
+    async toggleChat() {
+        const chatBox = document.getElementById('chat-box');
+        this.isOpen = !this.isOpen;
+        chatBox.style.display = this.isOpen ? 'block' : 'none';
+        
+        if (this.isOpen && this.messages.length === 0) {
+            // Test backend connection when chat opens
+            await this.testConnection();
+            this.addMessage('bot', 'Hello! I\'m Corey\'s AI assistant. I can help answer questions about his experience, skills, and background. What would you like to know?');
+        }
+        
+        // Focus input when chat opens
+        if (this.isOpen) {
+            setTimeout(() => {
+                document.getElementById('chat-input').focus();
+            }, 100);
+        }
+    }
+
+    async testConnection() {
+        const statusEl = document.getElementById('connection-status');
+        try {
+            const response = await fetch(`${this.apiUrl}/health`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            if (response.ok) {
+                statusEl.textContent = '🟢 Connected to AI assistant';
+                statusEl.style.color = '#28a745';
+            } else {
+                throw new Error(`HTTP ${response.status}`);
+            }
+        } catch (error) {
+            console.warn('Backend connection test failed:', error);
+            statusEl.textContent = '🟡 Using offline mode';
+            statusEl.style.color = '#ffc107';
+        }
+    }
+
+    addMessage(sender, text) {
+        const messagesContainer = document.getElementById('chat-messages');
+        const messageDiv = document.createElement('div');
+        messageDiv.style.cssText = `
+            margin-bottom: 10px;
+            text-align: ${sender === 'user' ? 'right' : 'left'};
+        `;
+        
+        const messageBubble = document.createElement('div');
+        messageBubble.style.cssText = `
+            display: inline-block;
+            max-width: 80%;
+            padding: 8px 12px;
+            border-radius: 12px;
+            background: ${sender === 'user' ? '#007bff' : '#e9ecef'};
+            color: ${sender === 'user' ? 'white' : '#333'};
+            font-size: 14px;
+            line-height: 1.4;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            white-space: pre-wrap;
+        `;
+        messageBubble.textContent = text;
+        
+        messageDiv.appendChild(messageBubble);
+        messagesContainer.appendChild(messageDiv);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        
+        this.messages.push({ sender, text });
+    }
+
+    async sendMessage(text) {
+        if (!text.trim()) return;
+        
+        this.addMessage('user', text);
+        this.showTyping();
+        
+        try {
+            // Try backend first
+            const response = await this.queryBackend(text);
+            this.hideTyping();
+            this.addMessage('bot', response);
+        } catch (error) {
+            console.warn('Backend request failed, using fallback:', error);
+            this.hideTyping();
+            // Fallback to local responses
+            const fallbackResponse = this.generateFallbackResponse(text);
+            this.addMessage('bot', fallbackResponse);
+            
+            // Update status
+            const statusEl = document.getElementById('connection-status');
+            statusEl.textContent = '🟡 Backend unavailable, using offline responses';
+            statusEl.style.color = '#ffc107';
+        }
+    }
+    
+    async queryBackend(question) {
+        // Try different possible endpoints
+        const endpoints = [
+            '/ask',
+            '/chat',
+            '/api/chat',
+            '/api/ask'
+        ];
+        
+        for (const endpoint of endpoints) {
+            try {
+                const response = await fetch(`${this.apiUrl}${endpoint}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        question: question,
+                        message: question,
+                        query: question 
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    // Try different possible response field names
+                    return data.answer || data.response || data.reply || data.message || 'I received your question but got an unexpected response format.';
+                } else if (response.status === 404) {
+                    // Try next endpoint
+                    continue;
+                } else {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+            } catch (error) {
+                if (endpoints.indexOf(endpoint) === endpoints.length - 1) {
+                    // Last endpoint failed
+                    throw error;
+                }
+                // Try next endpoint
+                continue;
+            }
+        }
+        
+        throw new Error('No working endpoints found');
+    }
+    
+    showTyping() {
+        const messagesContainer = document.getElementById('chat-messages');
+        const typingDiv = document.createElement('div');
+        typingDiv.id = 'typing-indicator';
+        typingDiv.style.cssText = `
+            margin-bottom: 10px;
+            text-align: left;
+        `;
+        
+        typingDiv.innerHTML = `
+            <div style="display: inline-block; padding: 8px 12px; border-radius: 12px; background: #e9ecef; color: #666; font-size: 14px; font-style: italic;">
+                <span class="typing-dots">Thinking</span><span class="dots">...</span>
+            </div>
+        `;
+        
+        messagesContainer.appendChild(typingDiv);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        
+        // Animate dots
+        let dotCount = 0;
+        this.typingInterval = setInterval(() => {
+            const dotsEl = typingDiv.querySelector('.dots');
+            if (dotsEl) {
+                dotCount = (dotCount + 1) % 4;
+                dotsEl.textContent = '.'.repeat(dotCount);
+            }
+        }, 500);
+    }
+    
+    hideTyping() {
+        const typing = document.getElementById('typing-indicator');
+        if (typing) {
+            typing.remove();
+        }
+        if (this.typingInterval) {
+            clearInterval(this.typingInterval);
+            this.typingInterval = null;
+        }
+    }
+
+    generateFallbackResponse(question) {
+        const q = question.toLowerCase();
+        
+        // Fallback responses when backend is unavailable
+        if (q.includes('hello') || q.includes('hi') || q.includes('hey')) {
+            return 'Hello! I\'m experiencing some connectivity issues, but I can still help with basic questions about Corey\'s background and experience. What would you like to know?';
+        } else if (q.includes('experience') || q.includes('work') || q.includes('job')) {
+            return 'Corey has extensive experience as a System Administrator with expertise in cloud administration, PowerShell, Python, and DevOps practices. He has worked in both government and private sector environments.';
+        } else if (q.includes('skill') || q.includes('technology') || q.includes('tech')) {
+            return 'Corey\'s key skills include: Windows Server Administration, Cloud Architecture (AWS/Azure), PowerShell scripting, Python development, Network Administration, and DevOps practices.';
+        } else if (q.includes('contact') || q.includes('reach') || q.includes('email')) {
+            return 'You can reach Corey at vinnym@200rx.com or connect with him on LinkedIn at https://www.linkedin.com/in/coreyvmiller/';
+        } else {
+            return 'I\'m currently running in offline mode due to connectivity issues. For detailed questions about Corey\'s experience, please reach out directly at vinnym@200rx.com or check out his full profile above.';
+        }
+    }
+}
+
+// Initialize chatbot when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('Initializing backend-integrated chatbot...');
+    new BackendChatbot();
+});
+</script>

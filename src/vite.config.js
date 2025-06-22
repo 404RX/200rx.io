@@ -8,36 +8,33 @@ const __dirname = dirname(__filename);
 
 export default defineConfig({
   plugins: [react()],
-  server: {
-    port: 5173,
-  },
   build: {
-    outDir: '../themes/toha/static/js',
+    outDir: '../static/js', // or wherever you host Hugo static files
     emptyOutDir: true,
     lib: {
       entry: resolve(__dirname, 'main.tsx'),
       name: 'chat',
       fileName: 'chat',
-      formats: ['iife']
+      formats: ['iife'] // must be IIFE to use global React from CDN
     },
     rollupOptions: {
-      external: ['react', 'react-dom'],
+      external: ['react', 'react-dom'], // Tell Rollup not to bundle them
       output: {
-        entryFileNames: 'chat.js',
-        assetFileNames: (assetInfo) => {
-          if (assetInfo.name === 'style.css') return 'chat.css';
-          return '[name][extname]';
-        },
         globals: {
           react: 'React',
           'react-dom': 'ReactDOM'
         },
+        entryFileNames: 'chat.js',
+        assetFileNames: 'chat.css',
         format: 'iife',
-        intro: 'const global = window;'
+        intro: 'const global = window;' // required by some tools/libs
       }
     },
     cssCodeSplit: true,
     minify: 'terser',
     sourcemap: true
   },
-}); 
+  define: {
+    "process.env.NODE_ENV": JSON.stringify("development") // Update accordingly
+  }
+});

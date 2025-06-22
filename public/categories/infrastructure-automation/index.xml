@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Infrastructure Automation on Ray - Systems Administrator</title>
-    <link>https://200rx.com/categories/infrastructure-automation/</link>
+    <link>http://localhost:1313/categories/infrastructure-automation/</link>
     <description>Recent content in Infrastructure Automation on Ray - Systems Administrator</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 Mar 2024 14:00:00 +0000</lastBuildDate><atom:link href="https://200rx.com/categories/infrastructure-automation/index.xml" rel="self" type="application/rss+xml" /><item>
+    <lastBuildDate>Mon, 18 Mar 2024 14:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/categories/infrastructure-automation/index.xml" rel="self" type="application/rss+xml" /><item>
       <title>Active Directory Cleanup Automation with PowerShell</title>
-      <link>https://200rx.com/posts/ad-cleanup-automation/</link>
+      <link>http://localhost:1313/posts/ad-cleanup-automation/</link>
       <pubDate>Mon, 18 Mar 2024 14:00:00 +0000</pubDate>
       
-      <guid>https://200rx.com/posts/ad-cleanup-automation/</guid>
+      <guid>http://localhost:1313/posts/ad-cleanup-automation/</guid>
       <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;Stale and unused objects in Active Directory not only clutter your environment but can also create security risks and provisioning errors. Automating cleanup ensures better hygiene and consistent identity lifecycle management. This guide walks through how to use PowerShell to audit and optionally remove inactive AD users and computers.&lt;/p&gt;
 &lt;hr&gt;

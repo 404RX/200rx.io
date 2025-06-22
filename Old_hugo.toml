@@ -1,6 +1,6 @@
 baseURL = "https://200rx.com"
 languageCode = "en-us"
-title = "200rx.com"
+title = "Ray - Systems Administrator"
 theme = "toha"
 
 [module]
@@ -22,6 +22,27 @@ theme = "toha"
   [[module.mounts]]
     source = "themes/toha/node_modules"
     target = "assets/js/vendor"
+  [[module.mounts]]
+    source = "node_modules/bootstrap/scss"
+    target = "assets/bootstrap/scss"
+  [[module.mounts]]
+    source = "node_modules/@fontsource/mulish"
+    target = "assets/@fontsource/mulish"
+  [[module.mounts]]
+    source = "node_modules/include-media/dist"
+    target = "assets/include-media/dist"
+  [[module.mounts]]
+    source = "node_modules/flag-icons/flags"
+    target = "static/flags"
+  [[module.mounts]]
+    source = "node_modules/@fontsource/mulish/files"
+    target = "static/flags"
+  [[module.mounts]]
+    source = "node_modules/katex/dist/fonts"
+    target = "static/flags"
+
+
+  
 
 [build]
   writeStats = true
@@ -83,3 +104,5 @@ theme = "toha"
       [params.style.button.secondary]
         backgroundColor = "#6c757d"
         textColor = "#ffffff" 
+[params.assets]
+  customSCSS = ["scss/custom.scss"]

@@ -1,45 +1,39 @@
-function toggleChat() {
-    const box = document.getElementById('chat-box');
-    box.style.display = box.style.display === 'none' ? 'block' : 'none';
+window.addEventListener("DOMContentLoaded", () => {
+  const root = document.getElementById("chat-root");
+  if (!root) return;
+
+  root.innerHTML = `
+    <div id="chat-launcher">💬 Questions about my experience?</div>
+    <div id="chat-box" style="display: none;">
+      <div id="chat-log"></div>
+      <input id="chat-input" placeholder="Ask me something..." onkeydown="if(event.key==='Enter'){sendMessage()}" />
+    </div>
+  `;
+
+  document.getElementById("chat-launcher").onclick = () => {
+    const box = document.getElementById("chat-box");
+    box.style.display = box.style.display === "none" ? "block" : "none";
+  };
+});
+
+async function sendMessage() {
+  const input = document.getElementById("chat-input");
+  const log = document.getElementById("chat-log");
+  const userMessage = input.value;
+  if (!userMessage) return;
+
+  log.innerHTML += `<div><strong>You:</strong> ${userMessage}</div>`;
+  input.value = "";
+
+  try {
+    const res = await fetch("https://two00rx-io-chatbot.onrender.com/ask", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question: userMessage })
+    });
+    const data = await res.json();
+    log.innerHTML += `<div><strong>Bot:</strong> ${data.answer}</div>`;
+  } catch (err) {
+    log.innerHTML += `<div><strong>Bot:</strong> Sorry, something went wrong. (${err.message})</div>`;
   }
-  
-  async function sendMessage() {
-    const input = document.getElementById('chat-input');
-    const chatLog = document.getElementById('chat-log');
-    const msg = input.value;
-    if (!msg) return;
-    chatLog.innerHTML += '<div><strong>You:</strong> ' + msg + '</div>';
-    input.value = '';
-  
-    try {
-      const response = await fetch('https://two00rx-io-chatbot.onrender.com/ask', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question: msg })
-      });
-  
-      if (!response.ok) throw new Error(`Server error: ${response.status}`);
-      const data = await response.json();
-      chatLog.innerHTML += `<div><strong>Bot:</strong> ${data.answer}</div>`;
-    } catch (err) {
-      chatLog.innerHTML += `<div><strong>Bot:</strong> Sorry, something went wrong. (${err.message})</div>`;
-    }
-  }
-  
-  // Bind enter key to send message
-  window.addEventListener("DOMContentLoaded", function () {
-    const launcher = document.getElementById("chat-launcher");
-    if (launcher) {
-      launcher.addEventListener("click", toggleChat);
-    }
-  
-    const input = document.getElementById("chat-input");
-    if (input) {
-      input.addEventListener("keydown", function (e) {
-        if (e.key === "Enter") {
-          sendMessage();
-        }
-      });
-    }
-  });
-  
+}

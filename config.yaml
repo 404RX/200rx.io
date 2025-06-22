@@ -5,6 +5,13 @@ title: "Ray - Systems Administrator"
 # Theme configuration
 theme: toha
 
+
+#Custom CSS
+params:
+  assets:
+    customSCSS:
+      - scss/custom.scss
+
 # Module configuration for npm dependencies
 module:
   mounts:

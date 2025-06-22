@@ -1,11 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { createRoot } from 'react-dom/client'
 import { App } from './App';
 import './index.css';
 
-// Wait for DOM to be ready
+// Wait for DOM to be rea
+
 document.addEventListener('DOMContentLoaded', () => {
   const rootElement = document.getElementById('chat-root');
+
   
   if (!rootElement) {
     console.error('Chat root element not found');
