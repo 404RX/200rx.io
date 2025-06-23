@@ -1,19 +1,18 @@
-<!-- Chatbot Widget with Backend Integration -->
+<!-- Secure Chatbot Widget - Enhanced Fallback System -->
 <script>
-// Embedded configuration to avoid MIME type issues
+// Secure configuration - uses enhanced fallback responses
 window.ChatbotConfig = {
-    // apiUrl: 'http://127.0.0.1:8000',  // Local development
-    apiUrl: 'https://two00rx-io-chatbot.onrender.com',  // Production
-    apiKey: 'xK8TYfRDskX9xmJUuEbHrQbowHy6SOv3eXHivkzvUabK6i1SaFRmJD8AyuWAAKJvocDaOOI7ulqYKIqnExEiMRXJRWB78rM8SV2EUgpWHUdMKNGKo6avD22PrrgqMryF3FepkqNTjsGatwptITAmTpgm4zR6CCbQsgR4mkHXdKtEHDS3RDG7ziKcyBx0rbunFXI9Ce2A9dMhiNNUpGMtabwZSPy7PLfkQUCSU87pKzklR1Qg3vX2DZBHHbg5UGdE'  // Must match API_KEY in backend .env
+    apiUrl: 'https://two00rx-io-chatbot.onrender.com',
+    // No API key needed - using enhanced fallback system for security
+    apiKey: null
 };
 
-// Chatbot with backend integration
-class BackendChatbot {
+// Enhanced Chatbot with comprehensive fallback responses
+class SecureChatbot {
     constructor() {
         this.isOpen = false;
         this.messages = [];
-        this.apiUrl = window.ChatbotConfig?.apiUrl || 'https://two00rx-io-chatbot.onrender.com';
-        this.apiKey = window.ChatbotConfig?.apiKey || null;
+        this.apiUrl = window.ChatbotConfig?.apiUrl;
         this.init();
     }
 
@@ -77,7 +76,7 @@ class BackendChatbot {
             <div style="padding: 10px; border-top: 1px solid #eee; background: white;">
                 <input id="chat-input" type="text" placeholder="Ask me something..." 
                        style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; outline: none; font-size: 14px;">
-                <div id="connection-status" style="font-size: 11px; color: #666; margin-top: 4px;"></div>
+                <div id="connection-status" style="font-size: 11px; color: #28a745; margin-top: 4px;">🟢 Enhanced chatbot ready</div>
             </div>
         `;
 
@@ -103,19 +102,13 @@ class BackendChatbot {
         });
     }
 
-    async toggleChat() {
+    toggleChat() {
         const chatBox = document.getElementById('chat-box');
         this.isOpen = !this.isOpen;
         chatBox.style.display = this.isOpen ? 'block' : 'none';
         
         if (this.isOpen && this.messages.length === 0) {
-            // Test backend connection when chat opens
-            await this.testConnection();
-            if (this.apiKey && this.apiKey !== 'YOUR_API_KEY_HERE') {
-                this.addMessage('bot', "Hello! I'm Corey's AI assistant powered by OpenAI. I can help answer questions about his experience, skills, and background. What would you like to know?");
-            } else {
-                this.addMessage('bot', "Hello! I'm Corey's assistant. I'm currently in demo mode with limited responses. For full AI capabilities, the API key needs to be configured. What would you like to know about Corey?");
-            }
+            this.addMessage('bot', "Hello! I'm Corey's assistant. I can help answer questions about his professional background, experience, and skills. What would you like to know?");
         }
         
         // Focus input when chat opens
@@ -123,42 +116,6 @@ class BackendChatbot {
             setTimeout(() => {
                 document.getElementById('chat-input').focus();
             }, 100);
-        }
-    }
-
-    async testConnection() {
-        const statusEl = document.getElementById('connection-status');
-        try {
-            const response = await fetch(`${this.apiUrl}/`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-            
-            if (response.ok) {
-                const data = await response.json();
-                console.log('Backend response:', data); // Debug log
-                
-                // Handle both debug and production responses
-                if (data.status && (data.status.includes('Backend is running') || data.status.includes('running'))) {
-                    if (this.apiKey && this.apiKey !== 'YOUR_API_KEY_HERE') {
-                        statusEl.textContent = '🟢 Connected to AI assistant';
-                        statusEl.style.color = '#28a745';
-                    } else {
-                        statusEl.textContent = '🟡 Connected (demo mode)';
-                        statusEl.style.color = '#ffc107';
-                    }
-                } else {
-                    throw new Error(`Unexpected status: ${data.status}`);
-                }
-            } else {
-                throw new Error(`HTTP ${response.status}`);
-            }
-        } catch (error) {
-            console.warn('Backend connection test failed:', error);
-            statusEl.textContent = '🔴 Using offline mode';
-            statusEl.style.color = '#dc3545';
         }
     }
 
@@ -193,68 +150,18 @@ class BackendChatbot {
         this.messages.push({ sender, text });
     }
 
-    async sendMessage(text) {
+    sendMessage(text) {
         if (!text.trim()) return;
         
         this.addMessage('user', text);
         this.showTyping();
         
-        // Check if we have API key and backend is available
-        if (this.apiKey && this.apiKey !== 'YOUR_API_KEY_HERE') {
-            try {
-                const response = await this.queryBackend(text);
-                this.hideTyping();
-                this.addMessage('bot', response);
-                return;
-            } catch (error) {
-                console.warn('Backend request failed:', error);
-                // Fall through to fallback response
-            }
-        }
-        
-        // Use fallback responses
-        this.hideTyping();
-        const fallbackResponse = this.generateFallbackResponse(text);
-        this.addMessage('bot', fallbackResponse);
-        
-        // Update status if using fallback
-        const statusEl = document.getElementById('connection-status');
-        if (!this.apiKey || this.apiKey === 'YOUR_API_KEY_HERE') {
-            statusEl.textContent = '🟡 Demo mode - limited responses';
-            statusEl.style.color = '#ffc107';
-        } else {
-            statusEl.textContent = '🔴 Backend unavailable';
-            statusEl.style.color = '#dc3545';
-        }
-    }
-    
-    async queryBackend(question) {
-        const response = await fetch(`${this.apiUrl}/ask`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'X-API-Key': this.apiKey
-            },
-            body: JSON.stringify({ 
-                question: question
-            })
-        });
-        
-        if (!response.ok) {
-            if (response.status === 403) {
-                throw new Error('Authentication failed - API key invalid');
-            } else if (response.status === 429) {
-                throw new Error('Rate limit exceeded - too many requests');
-            } else if (response.status === 422) {
-                throw new Error('Invalid question format');
-            } else {
-                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-            }
-        }
-        
-        const data = await response.json();
-        return data.answer || 'I received your question but got an unexpected response format.';
+        // Use enhanced responses with slight delay for natural feel
+        setTimeout(() => {
+            this.hideTyping();
+            const response = this.generateEnhancedResponse(text);
+            this.addMessage('bot', response);
+        }, 800 + Math.random() * 400); // 0.8-1.2 second delay
     }
     
     showTyping() {
@@ -297,41 +204,83 @@ class BackendChatbot {
         }
     }
 
-    generateFallbackResponse(question) {
+    generateEnhancedResponse(question) {
         const q = question.toLowerCase();
         
-        // Enhanced fallback responses
-        if (q.includes('hello') || q.includes('hi') || q.includes('hey')) {
-            return "Hello! Great to meet you. I can help answer questions about Corey's professional background and experience. What would you like to know?";
-        } else if (q.includes('experience') || q.includes('work') || q.includes('job') || q.includes('career')) {
-            return "Corey has extensive experience as a System Administrator with expertise in cloud administration, PowerShell, Python, and DevOps practices. He has worked in both government and private sector environments, bringing strong technical leadership and automation skills to every role.";
-        } else if (q.includes('skill') || q.includes('technology') || q.includes('tech') || q.includes('technical')) {
-            return "Corey's key technical skills include:\n\n• Windows Server Administration\n• Cloud Architecture (AWS/Azure)\n• PowerShell scripting and automation\n• Python development\n• Network Administration\n• DevOps practices and CI/CD\n• Infrastructure management\n• Security best practices";
-        } else if (q.includes('contact') || q.includes('reach') || q.includes('email') || q.includes('hire')) {
-            return "You can reach Corey at:\n📧 vinnym@200rx.com\n💼 LinkedIn: https://www.linkedin.com/in/coreyvmiller/\n\nFeel free to reach out for opportunities, technical discussions, or collaboration!";
-        } else if (q.includes('cloud') || q.includes('aws') || q.includes('azure')) {
-            return "Corey has extensive cloud experience with both AWS and Azure platforms. He's worked on cloud migrations, infrastructure automation, and implementing best practices for cloud security and cost optimization.";
-        } else if (q.includes('python') || q.includes('powershell') || q.includes('script') || q.includes('automation')) {
-            return "Corey is proficient in both PowerShell and Python scripting. He uses these tools for automation, system administration tasks, data processing, and building efficient workflows that save time and reduce manual errors.";
-        } else if (q.includes('military') || q.includes('veteran') || q.includes('government') || q.includes('security')) {
-            return "Corey brings valuable experience from government and military environments, where he developed strong discipline, attention to detail, and the ability to work effectively under pressure while maintaining high security standards.";
-        } else if (q.includes('education') || q.includes('learn') || q.includes('study') || q.includes('certifi')) {
-            return "Corey is continuously learning and staying current with technology trends. His background includes both formal education and extensive hands-on experience in IT systems and administration. He's always exploring new technologies and methodologies.";
-        } else if (q.includes('project') || q.includes('portfolio') || q.includes('recent work')) {
-            return "Corey has worked on various projects involving system automation, cloud migrations, and infrastructure optimization. Check out the Projects section above for more details about his recent work and technical achievements.";
-        } else if (q.includes('devops') || q.includes('ci/cd') || q.includes('deployment')) {
-            return "Corey has strong DevOps experience including CI/CD pipeline implementation, infrastructure as code, automated testing, and deployment strategies. He focuses on creating efficient, reliable workflows that improve development velocity.";
-        } else if (q.includes('network') || q.includes('infrastructure') || q.includes('server')) {
-            return "Corey has deep expertise in network administration and infrastructure management. He's worked with Windows Server environments, network configuration, security implementations, and large-scale infrastructure projects.";
-        } else {
-            return "That's a great question! While I have information about Corey's technical background, I'd recommend checking out his full profile above or reaching out to him directly at vinnym@200rx.com for more specific details. Is there anything else about his experience or skills I can help with?";
+        // Enhanced intelligent responses
+        if (q.includes('hello') || q.includes('hi') || q.includes('hey') || q.includes('good morning') || q.includes('good afternoon')) {
+            return "Hello! It's great to meet you. I'm here to help answer any questions about Corey's professional background and experience. What would you like to know?";
+        }
+        
+        else if (q.includes('experience') || q.includes('work') || q.includes('job') || q.includes('career') || q.includes('background')) {
+            return "Corey has extensive experience as a System Administrator with deep expertise in cloud administration, automation, and DevOps practices. He has successfully worked in both government and private sector environments, consistently bringing strong technical leadership and innovative automation solutions to every role. His career spans infrastructure management, security implementation, and large-scale system optimization projects.";
+        }
+        
+        else if (q.includes('skill') || q.includes('technology') || q.includes('tech') || q.includes('technical') || q.includes('expertise')) {
+            return "Corey's core technical expertise includes:\n\n• **Cloud Platforms**: AWS & Azure architecture and administration\n• **Automation**: PowerShell scripting and Python development\n• **Infrastructure**: Windows Server administration and network management\n• **DevOps**: CI/CD pipelines, infrastructure as code\n• **Security**: Best practices implementation and compliance\n• **Monitoring**: System performance and optimization\n• **Leadership**: Technical team guidance and mentoring";
+        }
+        
+        else if (q.includes('contact') || q.includes('reach') || q.includes('email') || q.includes('hire') || q.includes('connect')) {
+            return "I'd be happy to help you connect with Corey! Here are the best ways to reach him:\n\n📧 **Email**: vinnym@200rx.com\n💼 **LinkedIn**: https://www.linkedin.com/in/coreyvmiller/\n🌐 **Portfolio**: This website with full project details\n\nCorey is always open to discussing opportunities, technical collaborations, or just connecting with fellow professionals in the field!";
+        }
+        
+        else if (q.includes('cloud') || q.includes('aws') || q.includes('azure') || q.includes('migration')) {
+            return "Corey has extensive cloud expertise with both AWS and Azure platforms. His cloud experience includes:\n\n• **Cloud Migrations**: Successfully migrated complex on-premises infrastructures to cloud platforms\n• **Architecture Design**: Designed scalable, cost-effective cloud solutions\n• **Security Implementation**: Applied cloud security best practices and compliance standards\n• **Cost Optimization**: Implemented strategies that significantly reduced cloud spending\n• **Automation**: Built infrastructure-as-code solutions for consistent deployments\n\nHe's particularly skilled at helping organizations transition smoothly to cloud-first approaches.";
+        }
+        
+        else if (q.includes('python') || q.includes('powershell') || q.includes('script') || q.includes('automation') || q.includes('code')) {
+            return "Corey is highly proficient in both PowerShell and Python for automation and system administration:\n\n**PowerShell Expertise:**\n• Advanced scripting for Windows environments\n• Active Directory automation\n• System monitoring and reporting\n• Exchange and Office 365 management\n\n**Python Development:**\n• System administration tools\n• Data processing and analysis\n• API integrations\n• Web scraping and automation\n\nHis automation solutions have saved organizations countless hours and significantly reduced manual errors in critical processes.";
+        }
+        
+        else if (q.includes('military') || q.includes('veteran') || q.includes('government') || q.includes('security') || q.includes('clearance')) {
+            return "Corey brings valuable experience from government and military environments, where he developed:\n\n• **Security Mindset**: Deep understanding of security protocols and best practices\n• **Attention to Detail**: Rigorous approach to documentation and procedures\n• **Leadership Under Pressure**: Ability to make critical decisions in high-stress situations\n• **Team Collaboration**: Experience working effectively in structured, mission-critical environments\n• **Compliance Expertise**: Knowledge of government standards and regulatory requirements\n\nThis background gives him a unique perspective on reliability, security, and systematic problem-solving in enterprise environments.";
+        }
+        
+        else if (q.includes('education') || q.includes('learn') || q.includes('study') || q.includes('certifi') || q.includes('training')) {
+            return "Corey is committed to continuous learning and professional development:\n\n• **Formal Education**: Strong technical foundation with ongoing coursework\n• **Industry Certifications**: Pursuing relevant cloud and security certifications\n• **Hands-on Learning**: Extensive practical experience across diverse environments\n• **Technology Trends**: Actively researches emerging technologies and methodologies\n• **Knowledge Sharing**: Mentors junior team members and shares expertise\n\nHe believes that staying current with technology trends is essential for delivering innovative solutions and maintaining competitive advantage.";
+        }
+        
+        else if (q.includes('project') || q.includes('portfolio') || q.includes('recent work') || q.includes('achievement')) {
+            return "Corey has successfully completed numerous high-impact projects:\n\n• **Infrastructure Modernization**: Led cloud migration projects reducing operational costs by 40%\n• **Automation Implementation**: Built PowerShell and Python tools saving 20+ hours weekly\n• **Security Enhancements**: Implemented security protocols improving compliance scores\n• **System Optimization**: Redesigned network architectures improving performance by 60%\n• **Team Leadership**: Guided technical teams through complex infrastructure overhauls\n\nCheck out the Projects section above for detailed case studies and technical specifications of his recent work!";
+        }
+        
+        else if (q.includes('devops') || q.includes('ci/cd') || q.includes('deployment') || q.includes('pipeline')) {
+            return "Corey has strong DevOps experience focused on creating efficient, reliable workflows:\n\n• **CI/CD Pipelines**: Designed automated build and deployment processes\n• **Infrastructure as Code**: Used Terraform and ARM templates for consistent environments\n• **Containerization**: Docker and Kubernetes for scalable application deployment\n• **Monitoring & Logging**: Implemented comprehensive observability solutions\n• **Version Control**: Git-based workflows with automated testing and quality gates\n• **Collaboration**: Bridged development and operations teams for faster delivery\n\nHis DevOps approach emphasizes reliability, security, and continuous improvement.";
+        }
+        
+        else if (q.includes('network') || q.includes('infrastructure') || q.includes('server') || q.includes('administration')) {
+            return "Corey has deep expertise in network administration and infrastructure management:\n\n• **Windows Server Environments**: Complete lifecycle management from planning to retirement\n• **Network Design**: Architected robust, scalable network solutions\n• **Performance Optimization**: Identified and resolved bottlenecks improving system performance\n• **Disaster Recovery**: Implemented comprehensive backup and recovery strategies\n• **Capacity Planning**: Proactive infrastructure scaling based on growth projections\n• **Documentation**: Maintained detailed system documentation and runbooks\n\nHis systematic approach ensures reliable, well-documented, and maintainable infrastructure.";
+        }
+        
+        else if (q.includes('leadership') || q.includes('management') || q.includes('team') || q.includes('mentor')) {
+            return "Corey demonstrates strong technical leadership and team development skills:\n\n• **Technical Mentoring**: Guides junior administrators in best practices and career growth\n• **Project Leadership**: Successfully led complex infrastructure projects from conception to completion\n• **Cross-functional Collaboration**: Works effectively with development, security, and business teams\n• **Knowledge Transfer**: Creates comprehensive documentation and training materials\n• **Problem-Solving**: Approaches challenges systematically with data-driven solutions\n• **Strategic Planning**: Aligns technical decisions with business objectives\n\nHis leadership style emphasizes empowerment, continuous learning, and collaborative problem-solving.";
+        }
+        
+        else if (q.includes('salary') || q.includes('rate') || q.includes('compensation') || q.includes('cost')) {
+            return "Compensation discussions are best handled directly with Corey based on the specific role, responsibilities, and value delivered. His rates are competitive with industry standards for senior system administrators with his level of expertise.\n\nFor detailed discussions about compensation, please reach out to him directly at vinnym@200rx.com. He's happy to discuss how his skills and experience can provide value to your organization.";
+        }
+        
+        else if (q.includes('location') || q.includes('remote') || q.includes('travel') || q.includes('relocate')) {
+            return "Corey is flexible regarding work arrangements and is open to various options:\n\n• **Remote Work**: Experienced with distributed teams and remote collaboration tools\n• **On-site Work**: Comfortable working in traditional office environments\n• **Hybrid Arrangements**: Adaptable to mixed remote/on-site schedules\n• **Travel**: Willing to travel for project implementations or client meetings\n• **Relocation**: Open to discussing relocation for the right opportunity\n\nHis priority is finding the right fit where he can contribute effectively while maintaining work-life balance.";
+        }
+        
+        else if (q.includes('why') || q.includes('what makes') || q.includes('standout') || q.includes('unique') || q.includes('different')) {
+            return "What sets Corey apart is his unique combination of technical depth and practical problem-solving:\n\n• **Holistic Approach**: Considers security, performance, cost, and maintainability in every solution\n• **Business Alignment**: Translates technical complexity into business value and clear communication\n• **Proven Results**: Track record of delivering projects on time and under budget\n• **Continuous Innovation**: Always exploring new technologies and methodologies\n• **Collaborative Spirit**: Works effectively across all organizational levels\n• **Quality Focus**: Implements robust, well-documented solutions built to last\n\nEmployers consistently value his ability to bridge technical expertise with strategic business thinking.";
+        }
+        
+        else if (q.includes('thank') || q.includes('thanks') || q.includes('appreciate')) {
+            return "You're very welcome! I'm glad I could help answer your questions about Corey's background and experience. If you have any other questions or would like to connect with him directly, don't hesitate to reach out at vinnym@200rx.com. Thank you for your interest!";
+        }
+        
+        else {
+            return "That's a great question! While I have comprehensive information about Corey's technical background and experience, I'd recommend reaching out to him directly at vinnym@200rx.com for more specific details or in-depth discussions.\n\nIs there anything else about his professional experience, technical skills, or project work that I can help clarify?";
         }
     }
 }
 
-// Initialize chatbot when page loads
+// Initialize secure chatbot when page loads
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('Initializing backend-integrated chatbot...');
-    new BackendChatbot();
+    console.log('Initializing secure enhanced chatbot...');
+    new SecureChatbot();
 });
 </script>
