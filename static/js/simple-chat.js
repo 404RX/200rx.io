@@ -142,11 +142,11 @@ class SimpleChatbot {
         } else if (q.includes('education') || q.includes('learn') || q.includes('study')) {
             return 'Corey is continuously learning and staying current with technology trends. His background includes both formal education and extensive hands-on experience in IT systems and administration.';
         } else if (q.includes('contact') || q.includes('reach') || q.includes('email')) {
-            return 'You can reach Corey at vinnym@200rx.com or connect with him on LinkedIn. Feel free to reach out for opportunities or technical discussions!';
+            return 'You can reach Corey at ray@200rx.com or connect with him on LinkedIn. Feel free to reach out for opportunities or technical discussions!';
         } else if (q.includes('project') || q.includes('portfolio') || q.includes('work')) {
             return 'Corey has worked on various projects involving system automation, cloud migrations, and infrastructure optimization. Check out the Projects section above for more details about his recent work.';
         } else {
-            return 'That\'s a great question! While I have limited information, I\'d recommend checking out Corey\'s full profile above or reaching out to him directly at vinnym@200rx.com for more specific details.';
+            return 'That\'s a great question! While I have limited information, I\'d recommend checking out Corey\'s full profile above or reaching out to him directly at ray@200rx.com for more specific details.';
         }
     }
 }

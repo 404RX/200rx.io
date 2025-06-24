@@ -3,7 +3,7 @@
 // Professional chatbot configuration
 window.ChatbotConfig = {
     // Replace with your actual Render backend URL after deployment
-    apiUrl: 'https://corey-portfolio-ai-backend.onrender.com/api',
+    apiUrl: 'https://portfolio-ai-backend-1zyj.onrender.com',
     retryAttempts: 3,
     timeout: 10000 // 10 seconds
 };
@@ -328,7 +328,7 @@ class ProfessionalChatbot {
         } catch (error) {
             this.hideTyping();
             console.error('Chat error:', error);
-            this.addMessage('assistant', "I apologize, but I'm experiencing some technical difficulties. Please feel free to contact Corey directly at vinnym@200rx.com for any questions about his background and experience.");
+            this.addMessage('assistant', "I apologize, but I'm experiencing some technical difficulties. Please feel free to contact Corey directly at ray@200rx.com for any questions about his background and experience.");
             
             const statusEl = document.getElementById('connection-status');
             statusEl.textContent = '🔴 Connection Error';
