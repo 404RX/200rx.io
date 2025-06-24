@@ -36,24 +36,38 @@ class ProfessionalChatbot {
         const statusEl = document.getElementById('connection-status');
         
         try {
-            const response = await fetch(`${this.apiUrl}/health`, {
+            // Test the test endpoint first
+            console.log('Testing basic connectivity...');
+            const testResponse = await fetch(`${this.apiUrl}/api/test`, {
                 method: 'GET',
-                headers: { 'Content-Type': 'application/json' },
-                signal: AbortSignal.timeout(5000)
+                headers: { 'Content-Type': 'application/json' }
             });
             
-            if (response.ok) {
-                const health = await response.json();
-                if (health.ai_available) {
-                    statusEl.textContent = '🤖 AI Assistant Ready';
-                    statusEl.style.color = '#28a745';
+            if (testResponse.ok) {
+                console.log('✅ Test endpoint working');
+                
+                // Now test health endpoint
+                const response = await fetch(`${this.apiUrl}/api/health`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' },
+                    signal: AbortSignal.timeout(5000)
+                });
+                
+                if (response.ok) {
+                    const health = await response.json();
+                    if (health.ai_available) {
+                        statusEl.textContent = '🤖 AI Assistant Ready';
+                        statusEl.style.color = '#28a745';
+                    } else {
+                        statusEl.textContent = '🟡 Enhanced Assistant Ready';
+                        statusEl.style.color = '#ffc107';
+                    }
+                    console.log('Backend health:', health);
                 } else {
-                    statusEl.textContent = '🟡 Enhanced Assistant Ready';
-                    statusEl.style.color = '#ffc107';
+                    throw new Error(`Backend unhealthy: ${response.status}`);
                 }
-                console.log('Backend health:', health);
             } else {
-                throw new Error(`Backend unhealthy: ${response.status}`);
+                throw new Error(`Test endpoint failed: ${testResponse.status}`);
             }
         } catch (error) {
             console.warn('Backend health check failed:', error);
@@ -342,7 +356,7 @@ class ProfessionalChatbot {
                 const controller = new AbortController();
                 const timeoutId = setTimeout(() => controller.abort(), this.timeout);
                 
-                const response = await fetch(`${this.apiUrl}/chat`, {
+                const response = await fetch(`${this.apiUrl}/api/chat`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
