@@ -1,87 +1,177 @@
-<!-- Secure Chatbot Widget - Enhanced Fallback System -->
+<!-- Professional AI Chatbot with Backend Integration -->
 <script>
-// Secure configuration - uses enhanced fallback responses
+// Professional chatbot configuration
 window.ChatbotConfig = {
-    apiUrl: 'https://two00rx-io-chatbot.onrender.com',
-    // No API key needed - using enhanced fallback system for security
-    apiKey: null
+    // Replace with your actual Render backend URL after deployment
+    apiUrl: 'https://corey-portfolio-ai-backend.onrender.com/api',
+    retryAttempts: 3,
+    timeout: 10000 // 10 seconds
 };
 
-// Enhanced Chatbot with comprehensive fallback responses
-class SecureChatbot {
+class ProfessionalChatbot {
     constructor() {
         this.isOpen = false;
         this.messages = [];
-        this.apiUrl = window.ChatbotConfig?.apiUrl;
+        this.sessionId = this.generateSessionId();
+        this.apiUrl = window.ChatbotConfig.apiUrl;
+        this.retryAttempts = window.ChatbotConfig.retryAttempts;
+        this.timeout = window.ChatbotConfig.timeout;
+        this.isTyping = false;
         this.init();
     }
 
-    init() {
+    generateSessionId() {
+        return 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    }
+
+    async init() {
         this.createChatInterface();
         this.bindEvents();
+        
+        // Check backend health on initialization
+        await this.checkBackendHealth();
+    }
+
+    async checkBackendHealth() {
+        const statusEl = document.getElementById('connection-status');
+        
+        try {
+            const response = await fetch(`${this.apiUrl}/health`, {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+                signal: AbortSignal.timeout(5000)
+            });
+            
+            if (response.ok) {
+                const health = await response.json();
+                if (health.ai_available) {
+                    statusEl.textContent = '🤖 AI Assistant Ready';
+                    statusEl.style.color = '#28a745';
+                } else {
+                    statusEl.textContent = '🟡 Enhanced Assistant Ready';
+                    statusEl.style.color = '#ffc107';
+                }
+                console.log('Backend health:', health);
+            } else {
+                throw new Error(`Backend unhealthy: ${response.status}`);
+            }
+        } catch (error) {
+            console.warn('Backend health check failed:', error);
+            statusEl.textContent = '🔴 Offline Mode';
+            statusEl.style.color = '#dc3545';
+        }
     }
 
     createChatInterface() {
-        // Create chat launcher
+        // Enhanced chat launcher with professional styling
         const launcher = document.createElement('div');
         launcher.id = 'chat-launcher';
-        launcher.innerHTML = '💬 Questions about my experience?';
+        launcher.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 18px;">🤖</span>
+                <span>Ask about my experience</span>
+            </div>
+        `;
         launcher.style.cssText = `
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background: #333;
-            color: #fff;
-            padding: 10px 14px;
-            border-radius: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 25px;
             cursor: pointer;
             z-index: 1000;
-            font-family: sans-serif;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.3s ease;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            border: none;
+            min-width: 200px;
+            text-align: center;
         `;
 
         launcher.addEventListener('mouseenter', () => {
-            launcher.style.backgroundColor = '#555';
+            launcher.style.transform = 'translateY(-2px)';
+            launcher.style.boxShadow = '0 6px 25px rgba(102, 126, 234, 0.5)';
         });
         
         launcher.addEventListener('mouseleave', () => {
-            launcher.style.backgroundColor = '#333';
+            launcher.style.transform = 'translateY(0)';
+            launcher.style.boxShadow = '0 4px 20px rgba(102, 126, 234, 0.4)';
         });
 
-        // Create chat box
+        // Professional chat interface
         const chatBox = document.createElement('div');
         chatBox.id = 'chat-box';
         chatBox.style.cssText = `
             position: fixed;
-            bottom: 70px;
+            bottom: 85px;
             right: 20px;
-            width: 320px;
-            max-height: 400px;
-            background: #fff;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-family: sans-serif;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            width: 380px;
+            height: 500px;
+            background: white;
+            border-radius: 16px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
             z-index: 999;
             display: none;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.1);
         `;
 
         chatBox.innerHTML = `
-            <div style="background: #333; color: white; padding: 12px; border-radius: 8px 8px 0 0; font-weight: bold; display: flex; justify-content: space-between; align-items: center;">
-                <span>Chat with Corey</span>
-                <span id="chat-close" style="cursor: pointer; font-size: 20px; line-height: 1;">&times;</span>
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 16px; display: flex; justify-content: space-between; align-items: center; border-radius: 16px 16px 0 0;">
+                <div>
+                    <div style="font-weight: 600; font-size: 16px;">Corey's AI Assistant</div>
+                    <div style="font-size: 12px; opacity: 0.9;">Powered by OpenAI</div>
+                </div>
+                <button id="chat-close" style="background: rgba(255,255,255,0.2); border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; transition: background 0.2s;">&times;</button>
             </div>
-            <div id="chat-messages" style="height: 250px; overflow-y: auto; padding: 10px; background: #f9f9f9;"></div>
-            <div style="padding: 10px; border-top: 1px solid #eee; background: white;">
-                <input id="chat-input" type="text" placeholder="Ask me something..." 
-                       style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; outline: none; font-size: 14px;">
-                <div id="connection-status" style="font-size: 11px; color: #28a745; margin-top: 4px;">🟢 Enhanced chatbot ready</div>
+            
+            <div id="chat-messages" style="height: 350px; overflow-y: auto; padding: 20px; background: #f8f9fa; scrollbar-width: thin;"></div>
+            
+            <div style="padding: 16px; border-top: 1px solid #e9ecef; background: white; border-radius: 0 0 16px 16px;">
+                <div style="display: flex; gap: 8px; align-items: flex-end;">
+                    <input id="chat-input" type="text" placeholder="Ask me about Corey's experience..." 
+                           style="flex: 1; padding: 12px 16px; border: 2px solid #e9ecef; border-radius: 20px; outline: none; font-size: 14px; transition: border-color 0.2s; resize: none;"
+                           maxlength="1000">
+                    <button id="send-button" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.2s;">
+                        <span style="font-size: 16px;">→</span>
+                    </button>
+                </div>
+                <div id="connection-status" style="font-size: 11px; color: #6c757d; margin-top: 8px; text-align: center;">Checking connection...</div>
             </div>
         `;
 
         document.body.appendChild(launcher);
         document.body.appendChild(chatBox);
+
+        // Style scrollbar
+        const style = document.createElement('style');
+        style.textContent = `
+            #chat-messages::-webkit-scrollbar {
+                width: 6px;
+            }
+            #chat-messages::-webkit-scrollbar-track {
+                background: #f1f1f1;
+            }
+            #chat-messages::-webkit-scrollbar-thumb {
+                background: #c1c1c1;
+                border-radius: 3px;
+            }
+            #chat-input:focus {
+                border-color: #667eea !important;
+            }
+            #send-button:hover {
+                transform: scale(1.05);
+            }
+            #chat-close:hover {
+                background: rgba(255,255,255,0.3) !important;
+            }
+        `;
+        document.head.appendChild(style);
     }
 
     bindEvents() {
@@ -89,29 +179,35 @@ class SecureChatbot {
         const chatBox = document.getElementById('chat-box');
         const closeBtn = document.getElementById('chat-close');
         const input = document.getElementById('chat-input');
+        const sendBtn = document.getElementById('send-button');
 
         launcher.addEventListener('click', () => this.toggleChat());
         closeBtn.addEventListener('click', () => this.toggleChat());
+        sendBtn.addEventListener('click', () => this.sendMessage());
         
         input.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
+            if (e.key === 'Enter' && !e.shiftKey && !this.isTyping) {
                 e.preventDefault();
-                this.sendMessage(e.target.value);
-                e.target.value = '';
+                this.sendMessage();
             }
+        });
+
+        // Auto-resize input
+        input.addEventListener('input', (e) => {
+            e.target.style.height = 'auto';
+            e.target.style.height = Math.min(e.target.scrollHeight, 120) + 'px';
         });
     }
 
-    toggleChat() {
+    async toggleChat() {
         const chatBox = document.getElementById('chat-box');
         this.isOpen = !this.isOpen;
         chatBox.style.display = this.isOpen ? 'block' : 'none';
         
         if (this.isOpen && this.messages.length === 0) {
-            this.addMessage('bot', "Hello! I'm Corey's assistant. I can help answer questions about his professional background, experience, and skills. What would you like to know?");
+            this.addMessage('assistant', "Hello! I'm Corey's AI assistant. I can provide detailed information about his professional background, technical expertise, and project experience. What would you like to know?");
         }
         
-        // Focus input when chat opens
         if (this.isOpen) {
             setTimeout(() => {
                 document.getElementById('chat-input').focus();
@@ -119,168 +215,172 @@ class SecureChatbot {
         }
     }
 
-    addMessage(sender, text) {
+    addMessage(sender, text, typing = false) {
         const messagesContainer = document.getElementById('chat-messages');
         const messageDiv = document.createElement('div');
+        const isUser = sender === 'user';
+        
         messageDiv.style.cssText = `
-            margin-bottom: 10px;
-            text-align: ${sender === 'user' ? 'right' : 'left'};
+            margin-bottom: 16px;
+            display: flex;
+            ${isUser ? 'justify-content: flex-end' : 'justify-content: flex-start'};
         `;
         
         const messageBubble = document.createElement('div');
         messageBubble.style.cssText = `
-            display: inline-block;
             max-width: 80%;
-            padding: 8px 12px;
-            border-radius: 12px;
-            background: ${sender === 'user' ? '#007bff' : '#f8f9fa'};
-            color: ${sender === 'user' ? 'white' : '#212529'};
-            border: ${sender === 'user' ? 'none' : '1px solid #dee2e6'};
+            padding: 12px 16px;
+            border-radius: ${isUser ? '18px 18px 4px 18px' : '18px 18px 18px 4px'};
+            background: ${isUser ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : '#ffffff'};
+            color: ${isUser ? 'white' : '#2c3e50'};
+            border: ${isUser ? 'none' : '1px solid #e9ecef'};
             font-size: 14px;
-            line-height: 1.4;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            line-height: 1.5;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             white-space: pre-wrap;
+            word-wrap: break-word;
+            position: relative;
         `;
-        messageBubble.textContent = text;
+
+        if (typing) {
+            messageBubble.id = 'typing-indicator';
+            messageBubble.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <div style="display: flex; gap: 4px;">
+                        <div class="typing-dot" style="width: 8px; height: 8px; border-radius: 50%; background: #6c757d; animation: typing 1.4s infinite ease-in-out;"></div>
+                        <div class="typing-dot" style="width: 8px; height: 8px; border-radius: 50%; background: #6c757d; animation: typing 1.4s infinite ease-in-out 0.2s;"></div>
+                        <div class="typing-dot" style="width: 8px; height: 8px; border-radius: 50%; background: #6c757d; animation: typing 1.4s infinite ease-in-out 0.4s;"></div>
+                    </div>
+                    <span style="color: #6c757d; font-style: italic; font-size: 12px;">AI is thinking...</span>
+                </div>
+            `;
+            
+            // Add typing animation
+            if (!document.getElementById('typing-animation')) {
+                const style = document.createElement('style');
+                style.id = 'typing-animation';
+                style.textContent = `
+                    @keyframes typing {
+                        0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+                        30% { transform: translateY(-10px); opacity: 1; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+        } else {
+            messageBubble.textContent = text;
+        }
         
         messageDiv.appendChild(messageBubble);
         messagesContainer.appendChild(messageDiv);
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
         
-        this.messages.push({ sender, text });
+        if (!typing) {
+            this.messages.push({ sender, text, timestamp: new Date().toISOString() });
+        }
     }
 
-    sendMessage(text) {
-        if (!text.trim()) return;
-        
-        this.addMessage('user', text);
-        this.showTyping();
-        
-        // Use enhanced responses with slight delay for natural feel
-        setTimeout(() => {
-            this.hideTyping();
-            const response = this.generateEnhancedResponse(text);
-            this.addMessage('bot', response);
-        }, 800 + Math.random() * 400); // 0.8-1.2 second delay
-    }
-    
     showTyping() {
-        const messagesContainer = document.getElementById('chat-messages');
-        const typingDiv = document.createElement('div');
-        typingDiv.id = 'typing-indicator';
-        typingDiv.style.cssText = `
-            margin-bottom: 10px;
-            text-align: left;
-        `;
-        
-        typingDiv.innerHTML = `
-            <div style="display: inline-block; padding: 8px 12px; border-radius: 12px; background: #f8f9fa; color: #6c757d; border: 1px solid #dee2e6; font-size: 14px; font-style: italic;">
-                <span class="typing-dots">Thinking</span><span class="dots">...</span>
-            </div>
-        `;
-        
-        messagesContainer.appendChild(typingDiv);
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        
-        // Animate dots
-        let dotCount = 0;
-        this.typingInterval = setInterval(() => {
-            const dotsEl = typingDiv.querySelector('.dots');
-            if (dotsEl) {
-                dotCount = (dotCount + 1) % 4;
-                dotsEl.textContent = '.'.repeat(dotCount);
-            }
-        }, 500);
+        this.addMessage('assistant', '', true);
+        this.isTyping = true;
     }
     
     hideTyping() {
         const typing = document.getElementById('typing-indicator');
         if (typing) {
-            typing.remove();
+            typing.parentElement.remove();
         }
-        if (this.typingInterval) {
-            clearInterval(this.typingInterval);
-            this.typingInterval = null;
-        }
+        this.isTyping = false;
     }
 
-    generateEnhancedResponse(question) {
-        const q = question.toLowerCase();
+    async sendMessage() {
+        const input = document.getElementById('chat-input');
+        const message = input.value.trim();
         
-        // Enhanced intelligent responses
-        if (q.includes('hello') || q.includes('hi') || q.includes('hey') || q.includes('good morning') || q.includes('good afternoon')) {
-            return "Hello! It's great to meet you. I'm here to help answer any questions about Corey's professional background and experience. What would you like to know?";
+        if (!message || this.isTyping) return;
+        
+        // Add user message
+        this.addMessage('user', message);
+        input.value = '';
+        input.style.height = 'auto';
+        
+        // Show typing indicator
+        this.showTyping();
+        
+        try {
+            const response = await this.queryBackend(message);
+            this.hideTyping();
+            this.addMessage('assistant', response.response);
+            
+            // Update status based on response source
+            const statusEl = document.getElementById('connection-status');
+            if (response.source === 'ai') {
+                statusEl.textContent = '🤖 AI Response';
+                statusEl.style.color = '#28a745';
+            } else if (response.source === 'cache') {
+                statusEl.textContent = '⚡ Cached Response';
+                statusEl.style.color = '#17a2b8';
+            } else {
+                statusEl.textContent = '🔧 Enhanced Response';
+                statusEl.style.color = '#ffc107';
+            }
+            
+        } catch (error) {
+            this.hideTyping();
+            console.error('Chat error:', error);
+            this.addMessage('assistant', "I apologize, but I'm experiencing some technical difficulties. Please feel free to contact Corey directly at vinnym@200rx.com for any questions about his background and experience.");
+            
+            const statusEl = document.getElementById('connection-status');
+            statusEl.textContent = '🔴 Connection Error';
+            statusEl.style.color = '#dc3545';
         }
-        
-        else if (q.includes('experience') || q.includes('work') || q.includes('job') || q.includes('career') || q.includes('background')) {
-            return "Corey has extensive experience as a System Administrator with deep expertise in cloud administration, automation, and DevOps practices. He has successfully worked in both government and private sector environments, consistently bringing strong technical leadership and innovative automation solutions to every role. His career spans infrastructure management, security implementation, and large-scale system optimization projects.";
-        }
-        
-        else if (q.includes('skill') || q.includes('technology') || q.includes('tech') || q.includes('technical') || q.includes('expertise')) {
-            return "Corey's core technical expertise includes:\n\n• **Cloud Platforms**: AWS & Azure architecture and administration\n• **Automation**: PowerShell scripting and Python development\n• **Infrastructure**: Windows Server administration and network management\n• **DevOps**: CI/CD pipelines, infrastructure as code\n• **Security**: Best practices implementation and compliance\n• **Monitoring**: System performance and optimization\n• **Leadership**: Technical team guidance and mentoring";
-        }
-        
-        else if (q.includes('contact') || q.includes('reach') || q.includes('email') || q.includes('hire') || q.includes('connect')) {
-            return "I'd be happy to help you connect with Corey! Here are the best ways to reach him:\n\n📧 **Email**: vinnym@200rx.com\n💼 **LinkedIn**: https://www.linkedin.com/in/coreyvmiller/\n🌐 **Portfolio**: This website with full project details\n\nCorey is always open to discussing opportunities, technical collaborations, or just connecting with fellow professionals in the field!";
-        }
-        
-        else if (q.includes('cloud') || q.includes('aws') || q.includes('azure') || q.includes('migration')) {
-            return "Corey has extensive cloud expertise with both AWS and Azure platforms. His cloud experience includes:\n\n• **Cloud Migrations**: Successfully migrated complex on-premises infrastructures to cloud platforms\n• **Architecture Design**: Designed scalable, cost-effective cloud solutions\n• **Security Implementation**: Applied cloud security best practices and compliance standards\n• **Cost Optimization**: Implemented strategies that significantly reduced cloud spending\n• **Automation**: Built infrastructure-as-code solutions for consistent deployments\n\nHe's particularly skilled at helping organizations transition smoothly to cloud-first approaches.";
-        }
-        
-        else if (q.includes('python') || q.includes('powershell') || q.includes('script') || q.includes('automation') || q.includes('code')) {
-            return "Corey is highly proficient in both PowerShell and Python for automation and system administration:\n\n**PowerShell Expertise:**\n• Advanced scripting for Windows environments\n• Active Directory automation\n• System monitoring and reporting\n• Exchange and Office 365 management\n\n**Python Development:**\n• System administration tools\n• Data processing and analysis\n• API integrations\n• Web scraping and automation\n\nHis automation solutions have saved organizations countless hours and significantly reduced manual errors in critical processes.";
-        }
-        
-        else if (q.includes('military') || q.includes('veteran') || q.includes('government') || q.includes('security') || q.includes('clearance')) {
-            return "Corey brings valuable experience from government and military environments, where he developed:\n\n• **Security Mindset**: Deep understanding of security protocols and best practices\n• **Attention to Detail**: Rigorous approach to documentation and procedures\n• **Leadership Under Pressure**: Ability to make critical decisions in high-stress situations\n• **Team Collaboration**: Experience working effectively in structured, mission-critical environments\n• **Compliance Expertise**: Knowledge of government standards and regulatory requirements\n\nThis background gives him a unique perspective on reliability, security, and systematic problem-solving in enterprise environments.";
-        }
-        
-        else if (q.includes('education') || q.includes('learn') || q.includes('study') || q.includes('certifi') || q.includes('training')) {
-            return "Corey is committed to continuous learning and professional development:\n\n• **Formal Education**: Strong technical foundation with ongoing coursework\n• **Industry Certifications**: Pursuing relevant cloud and security certifications\n• **Hands-on Learning**: Extensive practical experience across diverse environments\n• **Technology Trends**: Actively researches emerging technologies and methodologies\n• **Knowledge Sharing**: Mentors junior team members and shares expertise\n\nHe believes that staying current with technology trends is essential for delivering innovative solutions and maintaining competitive advantage.";
-        }
-        
-        else if (q.includes('project') || q.includes('portfolio') || q.includes('recent work') || q.includes('achievement')) {
-            return "Corey has successfully completed numerous high-impact projects:\n\n• **Infrastructure Modernization**: Led cloud migration projects reducing operational costs by 40%\n• **Automation Implementation**: Built PowerShell and Python tools saving 20+ hours weekly\n• **Security Enhancements**: Implemented security protocols improving compliance scores\n• **System Optimization**: Redesigned network architectures improving performance by 60%\n• **Team Leadership**: Guided technical teams through complex infrastructure overhauls\n\nCheck out the Projects section above for detailed case studies and technical specifications of his recent work!";
-        }
-        
-        else if (q.includes('devops') || q.includes('ci/cd') || q.includes('deployment') || q.includes('pipeline')) {
-            return "Corey has strong DevOps experience focused on creating efficient, reliable workflows:\n\n• **CI/CD Pipelines**: Designed automated build and deployment processes\n• **Infrastructure as Code**: Used Terraform and ARM templates for consistent environments\n• **Containerization**: Docker and Kubernetes for scalable application deployment\n• **Monitoring & Logging**: Implemented comprehensive observability solutions\n• **Version Control**: Git-based workflows with automated testing and quality gates\n• **Collaboration**: Bridged development and operations teams for faster delivery\n\nHis DevOps approach emphasizes reliability, security, and continuous improvement.";
-        }
-        
-        else if (q.includes('network') || q.includes('infrastructure') || q.includes('server') || q.includes('administration')) {
-            return "Corey has deep expertise in network administration and infrastructure management:\n\n• **Windows Server Environments**: Complete lifecycle management from planning to retirement\n• **Network Design**: Architected robust, scalable network solutions\n• **Performance Optimization**: Identified and resolved bottlenecks improving system performance\n• **Disaster Recovery**: Implemented comprehensive backup and recovery strategies\n• **Capacity Planning**: Proactive infrastructure scaling based on growth projections\n• **Documentation**: Maintained detailed system documentation and runbooks\n\nHis systematic approach ensures reliable, well-documented, and maintainable infrastructure.";
-        }
-        
-        else if (q.includes('leadership') || q.includes('management') || q.includes('team') || q.includes('mentor')) {
-            return "Corey demonstrates strong technical leadership and team development skills:\n\n• **Technical Mentoring**: Guides junior administrators in best practices and career growth\n• **Project Leadership**: Successfully led complex infrastructure projects from conception to completion\n• **Cross-functional Collaboration**: Works effectively with development, security, and business teams\n• **Knowledge Transfer**: Creates comprehensive documentation and training materials\n• **Problem-Solving**: Approaches challenges systematically with data-driven solutions\n• **Strategic Planning**: Aligns technical decisions with business objectives\n\nHis leadership style emphasizes empowerment, continuous learning, and collaborative problem-solving.";
-        }
-        
-        else if (q.includes('salary') || q.includes('rate') || q.includes('compensation') || q.includes('cost')) {
-            return "Compensation discussions are best handled directly with Corey based on the specific role, responsibilities, and value delivered. His rates are competitive with industry standards for senior system administrators with his level of expertise.\n\nFor detailed discussions about compensation, please reach out to him directly at vinnym@200rx.com. He's happy to discuss how his skills and experience can provide value to your organization.";
-        }
-        
-        else if (q.includes('location') || q.includes('remote') || q.includes('travel') || q.includes('relocate')) {
-            return "Corey is flexible regarding work arrangements and is open to various options:\n\n• **Remote Work**: Experienced with distributed teams and remote collaboration tools\n• **On-site Work**: Comfortable working in traditional office environments\n• **Hybrid Arrangements**: Adaptable to mixed remote/on-site schedules\n• **Travel**: Willing to travel for project implementations or client meetings\n• **Relocation**: Open to discussing relocation for the right opportunity\n\nHis priority is finding the right fit where he can contribute effectively while maintaining work-life balance.";
-        }
-        
-        else if (q.includes('why') || q.includes('what makes') || q.includes('standout') || q.includes('unique') || q.includes('different')) {
-            return "What sets Corey apart is his unique combination of technical depth and practical problem-solving:\n\n• **Holistic Approach**: Considers security, performance, cost, and maintainability in every solution\n• **Business Alignment**: Translates technical complexity into business value and clear communication\n• **Proven Results**: Track record of delivering projects on time and under budget\n• **Continuous Innovation**: Always exploring new technologies and methodologies\n• **Collaborative Spirit**: Works effectively across all organizational levels\n• **Quality Focus**: Implements robust, well-documented solutions built to last\n\nEmployers consistently value his ability to bridge technical expertise with strategic business thinking.";
-        }
-        
-        else if (q.includes('thank') || q.includes('thanks') || q.includes('appreciate')) {
-            return "You're very welcome! I'm glad I could help answer your questions about Corey's background and experience. If you have any other questions or would like to connect with him directly, don't hesitate to reach out at vinnym@200rx.com. Thank you for your interest!";
-        }
-        
-        else {
-            return "That's a great question! While I have comprehensive information about Corey's technical background and experience, I'd recommend reaching out to him directly at vinnym@200rx.com for more specific details or in-depth discussions.\n\nIs there anything else about his professional experience, technical skills, or project work that I can help clarify?";
+    }
+    
+    async queryBackend(message) {
+        for (let attempt = 1; attempt <= this.retryAttempts; attempt++) {
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), this.timeout);
+                
+                const response = await fetch(`${this.apiUrl}/chat`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        sessionId: this.sessionId
+                    }),
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeoutId);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                return data;
+                
+            } catch (error) {
+                console.warn(`Attempt ${attempt} failed:`, error.message);
+                
+                if (attempt === this.retryAttempts) {
+                    throw error;
+                }
+                
+                // Wait before retry (exponential backoff)
+                await new Promise(resolve => setTimeout(resolve, Math.pow(2, attempt) * 1000));
+            }
         }
     }
 }
 
-// Initialize secure chatbot when page loads
+// Initialize professional chatbot when page loads
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('Initializing secure enhanced chatbot...');
-    new SecureChatbot();
+    console.log('🚀 Initializing Professional AI Chatbot...');
+    new ProfessionalChatbot();
 });
 </script>

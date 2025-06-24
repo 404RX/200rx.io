@@ -21,6 +21,7 @@ out/
 .env.development.local
 .env.test.local
 .env.production.local
+SECURITY.md
 
 # Chatbot configuration (contains API keys)
 static/js/chatbot-config.js
