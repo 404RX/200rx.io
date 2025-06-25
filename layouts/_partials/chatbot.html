@@ -1,4 +1,4 @@
-<!-- Professional AI Chatbot with Backend Integration -->
+<!-- Professional AI Chatbot with Contact Form Integration -->
 <script>
 // Professional chatbot configuration
 window.ChatbotConfig = {
@@ -11,6 +11,7 @@ window.ChatbotConfig = {
 class ProfessionalChatbot {
     constructor() {
         this.isOpen = false;
+        this.isContactFormOpen = false;
         this.messages = [];
         this.sessionId = this.generateSessionId();
         this.apiUrl = window.ChatbotConfig.apiUrl;
@@ -77,7 +78,7 @@ class ProfessionalChatbot {
     }
 
     createChatInterface() {
-        // Enhanced chat launcher with professional styling
+        // Enhanced chat launcher
         const launcher = document.createElement('div');
         launcher.id = 'chat-launcher';
         launcher.innerHTML = `
@@ -116,7 +117,7 @@ class ProfessionalChatbot {
             launcher.style.boxShadow = '0 4px 20px rgba(102, 126, 234, 0.4)';
         });
 
-        // Edge Copilot-style side panel
+        // Edge Copilot-style side panel with contact form
         const chatPanel = document.createElement('div');
         chatPanel.id = 'chat-panel';
         chatPanel.style.cssText = `
@@ -158,58 +159,111 @@ class ProfessionalChatbot {
                         <span style="font-size: 16px; transform: rotate(-45deg);">➤</span>
                     </button>
                 </div>
-                <div id="connection-status" style="font-size: 11px; color: #6c757d; margin-top: 8px; text-align: center;">Checking connection...</div>
+                <div style="display: flex; gap: 8px; margin-top: 8px; align-items: center;">
+                    <div id="connection-status" style="font-size: 11px; color: #6c757d; flex: 1;">Checking connection...</div>
+                    <button id="contact-trigger" style="background: transparent; border: 1px solid #667eea; color: #667eea; padding: 6px 12px; border-radius: 6px; font-size: 11px; cursor: pointer; transition: all 0.2s;">Contact Corey</button>
+                </div>
+            </div>
+            
+            <!-- Contact Form -->
+            <div id="contact-form" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: white; transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 10;">
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; min-height: 60px; box-sizing: border-box;">
+                    <div>
+                        <div style="font-weight: 600; font-size: 16px; margin-bottom: 4px;">Contact Corey</div>
+                        <div style="font-size: 12px; opacity: 0.9;">Get in touch directly</div>
+                    </div>
+                    <button id="contact-back" style="background: rgba(255,255,255,0.2); border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; transition: background 0.2s;">←</button>
+                </div>
+                
+                <div style="padding: 20px; height: calc(100% - 92px); overflow-y: auto;">
+                    <form id="contact-form-data" style="display: flex; flex-direction: column; gap: 16px;">
+                        <div>
+                            <label style="display: block; margin-bottom: 6px; font-weight: 500; color: #2c3e50;">Your Name *</label>
+                            <input type="text" id="contact-name" required style="width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 14px; outline: none; transition: border-color 0.2s; box-sizing: border-box;" placeholder="John Smith">
+                        </div>
+                        
+                        <div>
+                            <label style="display: block; margin-bottom: 6px; font-weight: 500; color: #2c3e50;">Email Address *</label>
+                            <input type="email" id="contact-email" required style="width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 14px; outline: none; transition: border-color 0.2s; box-sizing: border-box;" placeholder="john@company.com">
+                        </div>
+                        
+                        <div>
+                            <label style="display: block; margin-bottom: 6px; font-weight: 500; color: #2c3e50;">Company/Organization</label>
+                            <input type="text" id="contact-company" style="width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 14px; outline: none; transition: border-color 0.2s; box-sizing: border-box;" placeholder="Your Company">
+                        </div>
+                        
+                        <div>
+                            <label style="display: block; margin-bottom: 6px; font-weight: 500; color: #2c3e50;">Phone Number</label>
+                            <input type="tel" id="contact-phone" style="width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 14px; outline: none; transition: border-color 0.2s; box-sizing: border-box;" placeholder="(555) 123-4567">
+                        </div>
+                        
+                        <div>
+                            <label style="display: block; margin-bottom: 6px; font-weight: 500; color: #2c3e50;">Subject *</label>
+                            <select id="contact-subject" required style="width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 14px; outline: none; transition: border-color 0.2s; box-sizing: border-box; background: white;">
+                                <option value="">Select a topic...</option>
+                                <option value="job-opportunity">Job Opportunity</option>
+                                <option value="consultation">Technical Consultation</option>
+                                <option value="project-collaboration">Project Collaboration</option>
+                                <option value="networking">Professional Networking</option>
+                                <option value="speaking">Speaking Engagement</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label style="display: block; margin-bottom: 6px; font-weight: 500; color: #2c3e50;">Message *</label>
+                            <textarea id="contact-message" required rows="4" style="width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 14px; outline: none; transition: border-color 0.2s; resize: vertical; min-height: 100px; font-family: inherit; box-sizing: border-box;" placeholder="Tell Corey about your opportunity, project, or how you'd like to connect..."></textarea>
+                        </div>
+                        
+                        <div style="margin-top: 8px;">
+                            <button type="submit" id="contact-submit" style="width: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 14px; border-radius: 8px; font-size: 16px; font-weight: 500; cursor: pointer; transition: transform 0.2s;">Send Message to Corey</button>
+                        </div>
+                        
+                        <div style="text-align: center; margin-top: 16px; padding-top: 16px; border-top: 1px solid #e1e5e9;">
+                            <p style="margin: 0 0 8px 0; font-size: 13px; color: #6c757d;">Or reach out directly:</p>
+                            <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                                <a href="mailto:Ray@200rx.com" style="color: #667eea; text-decoration: none; font-size: 13px; font-weight: 500;">📧 Ray@200rx.com</a>
+                                <a href="https://www.linkedin.com/in/coreyvmiller/" target="_blank" style="color: #667eea; text-decoration: none; font-size: 13px; font-weight: 500;">💼 LinkedIn</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         `;
 
-        // Overlay for mobile/small screens
-        const overlay = document.createElement('div');
-        overlay.id = 'chat-overlay';
-        overlay.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.3);
-            z-index: 999998;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        `;
+        // Auto-resize textarea
+        setTimeout(() => {
+            const textarea = document.getElementById('chat-input');
+            if (textarea) {
+                textarea.addEventListener('input', function() {
+                    this.style.height = 'auto';
+                    this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+                });
+            }
+        }, 100);
 
-        document.body.appendChild(overlay);
+        // Add to page
         document.body.appendChild(chatPanel);
         document.body.appendChild(launcher);
 
-        // Auto-resize textarea
-        const textarea = document.getElementById('chat-input');
-        textarea.addEventListener('input', function() {
-            this.style.height = 'auto';
-            this.style.height = Math.min(this.scrollHeight, 120) + 'px';
-        });
+        // Add styles
+        this.addStyles();
+    }
 
-        // Style scrollbar
+    addStyles() {
         const style = document.createElement('style');
         style.textContent = `
-            #chat-messages::-webkit-scrollbar {
-                width: 6px;
+            #contact-trigger:hover {
+                background: #667eea !important;
+                color: white !important;
             }
-            #chat-messages::-webkit-scrollbar-track {
-                background: #f1f1f1;
-            }
-            #chat-messages::-webkit-scrollbar-thumb {
-                background: #c1c1c1;
-                border-radius: 3px;
-            }
-            #chat-input:focus {
+            #contact-form input:focus,
+            #contact-form select:focus,
+            #contact-form textarea:focus {
                 border-color: #667eea !important;
             }
-            #send-button:hover {
-                transform: scale(1.05);
-            }
-            #chat-close:hover {
-                background: rgba(255,255,255,0.3) !important;
+            #contact-submit:hover {
+                transform: translateY(-1px);
             }
             @media (max-width: 768px) {
                 #chat-panel {
@@ -219,23 +273,6 @@ class ProfessionalChatbot {
                 #chat-panel.open {
                     right: 0 !important;
                 }
-                #chat-launcher {
-                    bottom: 20px !important;
-                    right: 20px !important;
-                    min-width: 180px !important;
-                }
-            }
-            @media (max-width: 480px) {
-                #chat-panel {
-                    width: 100vw !important;
-                }
-                #chat-launcher {
-                    min-width: 160px !important;
-                    font-size: 13px !important;
-                }
-            }
-            body.chat-open {
-                overflow: hidden;
             }
         `;
         document.head.appendChild(style);
@@ -244,15 +281,19 @@ class ProfessionalChatbot {
     bindEvents() {
         const launcher = document.getElementById('chat-launcher');
         const chatPanel = document.getElementById('chat-panel');
-        const overlay = document.getElementById('chat-overlay');
         const closeBtn = document.getElementById('chat-close');
         const input = document.getElementById('chat-input');
         const sendBtn = document.getElementById('send-button');
+        const contactTrigger = document.getElementById('contact-trigger');
+        const contactBack = document.getElementById('contact-back');
+        const contactForm = document.getElementById('contact-form-data');
 
         launcher.addEventListener('click', () => this.toggleChat());
         closeBtn.addEventListener('click', () => this.toggleChat());
-        overlay.addEventListener('click', () => this.toggleChat());
         sendBtn.addEventListener('click', () => this.sendMessage());
+        contactTrigger.addEventListener('click', () => this.showContactForm());
+        contactBack.addEventListener('click', () => this.hideContactForm());
+        contactForm.addEventListener('submit', (e) => this.handleContactSubmit(e));
         
         input.addEventListener('keypress', (e) => {
             if (e.key === 'Enter' && !e.shiftKey && !this.isTyping) {
@@ -261,63 +302,132 @@ class ProfessionalChatbot {
             }
         });
 
-        // Handle Escape key to close panel
+        // Handle Escape key
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && this.isOpen) {
-                this.toggleChat();
+            if (e.key === 'Escape') {
+                if (this.isContactFormOpen) {
+                    this.hideContactForm();
+                } else if (this.isOpen) {
+                    this.toggleChat();
+                }
             }
         });
     }
 
+    // Contact form methods
+    showContactForm() {
+        const contactFormEl = document.getElementById('contact-form');
+        contactFormEl.style.transform = 'translateX(0)';
+        this.isContactFormOpen = true;
+        
+        setTimeout(() => {
+            document.getElementById('contact-name').focus();
+        }, 300);
+    }
+
+    hideContactForm() {
+        const contactFormEl = document.getElementById('contact-form');
+        contactFormEl.style.transform = 'translateX(100%)';
+        this.isContactFormOpen = false;
+    }
+
+    async handleContactSubmit(e) {
+        e.preventDefault();
+        
+        const formData = {
+            name: document.getElementById('contact-name').value,
+            email: document.getElementById('contact-email').value,
+            company: document.getElementById('contact-company').value,
+            phone: document.getElementById('contact-phone').value,
+            subject: document.getElementById('contact-subject').value,
+            message: document.getElementById('contact-message').value
+        };
+        
+        if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+            alert('Please fill in all required fields.');
+            return;
+        }
+        
+        const submitBtn = document.getElementById('contact-submit');
+        submitBtn.textContent = 'Sending...';
+        submitBtn.disabled = true;
+        
+        try {
+            const emailBody = this.formatEmailBody(formData);
+            const mailtoLink = `mailto:Ray@200rx.com?subject=${encodeURIComponent(`Contact Form: ${formData.subject}`)}&body=${encodeURIComponent(emailBody)}`;
+            
+            window.location.href = mailtoLink;
+            
+            this.hideContactForm();
+            this.addMessage('assistant', `Thank you ${formData.name}! Your email client should have opened with a pre-filled message to Corey. If it didn't open automatically, please email Ray@200rx.com directly.`);
+            
+            document.getElementById('contact-form-data').reset();
+            
+        } catch (error) {
+            console.error('Contact form error:', error);
+            alert('There was an issue. Please email Ray@200rx.com directly.');
+        } finally {
+            submitBtn.textContent = 'Send Message to Corey';
+            submitBtn.disabled = false;
+        }
+    }
+
+    formatEmailBody(formData) {
+        return `Hi Corey,
+
+I'm reaching out regarding: ${formData.subject}
+
+Name: ${formData.name}
+Email: ${formData.email}
+${formData.company ? `Company: ${formData.company}\n` : ''}${formData.phone ? `Phone: ${formData.phone}\n` : ''}
+
+Message:
+${formData.message}
+
+Best regards,
+${formData.name}
+
+---
+Sent via your portfolio contact form`;
+    }
+
+    // Enhanced message detection for contact form triggers
+    detectContactIntent(message) {
+        const contactKeywords = [
+            'contact', 'email', 'reach out', 'get in touch', 'hire', 'job', 
+            'opportunity', 'work together', 'collaborate', 'consultation',
+            'speak with', 'talk to', 'connect with', 'meeting', 'call',
+            'interview', 'position', 'role', 'employment'
+        ];
+        
+        const msg = message.toLowerCase();
+        return contactKeywords.some(keyword => msg.includes(keyword));
+    }
+
     async toggleChat() {
         const chatPanel = document.getElementById('chat-panel');
-        const overlay = document.getElementById('chat-overlay');
         const launcher = document.getElementById('chat-launcher');
         
         this.isOpen = !this.isOpen;
         
         if (this.isOpen) {
-            // Open panel
             chatPanel.style.right = '0';
             chatPanel.classList.add('open');
-            
-            // Show overlay and prevent body scroll on mobile
-            if (window.innerWidth <= 768) {
-                overlay.style.opacity = '1';
-                overlay.style.visibility = 'visible';
-                document.body.classList.add('chat-open');
-            }
-            
-            // Hide launcher with animation
             launcher.style.opacity = '0';
             launcher.style.visibility = 'hidden';
-            launcher.style.transform = 'translateY(10px)';
             
-            // Add initial message if needed
             if (this.messages.length === 0) {
                 this.addMessage('assistant', "Hello! I'm Corey's AI assistant. I can provide detailed information about his professional background, technical expertise, and project experience. What would you like to know?");
             }
             
-            // Focus input with slight delay for animation
             setTimeout(() => {
                 document.getElementById('chat-input').focus();
             }, 300);
         } else {
-            // Close panel
             chatPanel.style.right = window.innerWidth <= 768 ? '-100vw' : '-400px';
             chatPanel.classList.remove('open');
-            
-            // Hide overlay and restore body scroll
-            overlay.style.opacity = '0';
-            overlay.style.visibility = 'hidden';
-            document.body.classList.remove('chat-open');
-            
-            // Show launcher with animation
-            setTimeout(() => {
-                launcher.style.opacity = '1';
-                launcher.style.visibility = 'visible';
-                launcher.style.transform = 'translateY(0)';
-            }, 100);
+            launcher.style.opacity = '1';
+            launcher.style.visibility = 'visible';
         }
     }
 
@@ -360,19 +470,6 @@ class ProfessionalChatbot {
                     <span style="color: #6c757d; font-style: italic; font-size: 12px;">AI is thinking...</span>
                 </div>
             `;
-            
-            // Add typing animation
-            if (!document.getElementById('typing-animation')) {
-                const style = document.createElement('style');
-                style.id = 'typing-animation';
-                style.textContent = `
-                    @keyframes typing {
-                        0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
-                        30% { transform: translateY(-10px); opacity: 1; }
-                    }
-                `;
-                document.head.appendChild(style);
-            }
         } else {
             messageBubble.textContent = text;
         }
@@ -410,6 +507,14 @@ class ProfessionalChatbot {
         input.value = '';
         input.style.height = 'auto';
         
+        // Check if this is a contact-related message
+        if (this.detectContactIntent(message)) {
+            setTimeout(() => {
+                this.addMessage('assistant', `I'd be happy to help you get in touch with Corey! You can either continue our conversation here, or click the "Contact Corey" button below to open a contact form for a direct message. What would you prefer?`);
+            }, 500);
+            return;
+        }
+        
         // Show typing indicator
         this.showTyping();
         
@@ -434,7 +539,7 @@ class ProfessionalChatbot {
         } catch (error) {
             this.hideTyping();
             console.error('Chat error:', error);
-            this.addMessage('assistant', "I apologize, but I'm experiencing some technical difficulties. Please feel free to contact Corey directly at ray@200rx.com for any questions about his background and experience.");
+            this.addMessage('assistant', "I apologize, but I'm experiencing some technical difficulties. Please feel free to contact Corey directly at Ray@200rx.com for any questions about his background and experience.");
             
             const statusEl = document.getElementById('connection-status');
             statusEl.textContent = '🔴 Connection Error';
@@ -486,7 +591,7 @@ class ProfessionalChatbot {
 
 // Initialize professional chatbot when page loads
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('🚀 Initializing Professional AI Chatbot...');
+    console.log('🚀 Initializing Professional AI Chatbot with Contact Form...');
     new ProfessionalChatbot();
 });
 </script>
