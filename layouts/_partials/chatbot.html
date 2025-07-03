@@ -269,12 +269,39 @@ class ProfessionalChatbot {
                     
                     /* Ensure input area is above iOS URL bar */
                     #chat-panel > div:last-child {
-                        position: relative !important;
-                        bottom: env(safe-area-inset-bottom) !important;
-                        padding-bottom: calc(20px + env(safe-area-inset-bottom)) !important;
+                        position: fixed !important;
+                        bottom: calc(50px + env(safe-area-inset-bottom)) !important; /* Positioned closer to URL bar */
+                        left: 0 !important;
+                        right: 0 !important;
+                        width: 100% !important;
                         background: white !important;
                         border-top: 1px solid #e1e5e9 !important;
                         margin-bottom: 0 !important;
+                        padding: 12px 16px calc(12px + env(safe-area-inset-bottom)) 16px !important;
+                        box-shadow: 0 -2px 10px rgba(0,0,0,0.1) !important;
+                        z-index: 1000001 !important;
+                        max-height: 120px !important;
+                        min-height: 80px !important;
+                    }
+                    
+                    /* Smaller iPhone models (iPhone SE, etc.) */
+                    @media screen and (max-height: 667px) {
+                        #chat-panel > div:last-child {
+                            bottom: calc(40px + env(safe-area-inset-bottom)) !important;
+                            padding: 10px 16px calc(10px + env(safe-area-inset-bottom)) 16px !important;
+                        }
+                    }
+                    
+                    /* Larger iPhone models */
+                    @media screen and (min-height: 812px) {
+                        #chat-panel > div:last-child {
+                            bottom: calc(60px + env(safe-area-inset-bottom)) !important;
+                        }
+                    }
+                    
+                    /* Adjust messages area to account for fixed input */
+                    #chat-messages {
+                        padding-bottom: calc(100px + env(safe-area-inset-bottom)) !important;
                     }
                 }
             }
@@ -606,17 +633,34 @@ document.addEventListener('DOMContentLoaded', () => {
         if (chatInput) {
             chatInput.addEventListener('focus', () => {
                 if (window.innerWidth <= 768) {
+                    // For iOS, ensure the input is positioned correctly when keyboard appears
                     setTimeout(() => {
-                        // Scroll the input into view above the iOS URL bar
-                        const viewportHeight = window.innerHeight;
-                        const inputRect = chatInput.getBoundingClientRect();
-                        const urlBarHeight = 44; // Approximate iOS URL bar height
-                        
-                        if (inputRect.bottom > (viewportHeight - urlBarHeight)) {
-                            window.scrollBy(0, inputRect.bottom - (viewportHeight - urlBarHeight - 20));
+                        const inputArea = document.querySelector('#chat-panel > div:last-child');
+                        if (inputArea) {
+                            // Dynamically adjust position based on current viewport
+                            const viewportHeight = window.innerHeight;
+                            const urlBarHeight = 44;
+                            const keyboardBuffer = 20;
+                            
+                            // Position input just above URL bar with some buffer
+                            inputArea.style.bottom = `${urlBarHeight + keyboardBuffer}px`;
+                            
+                            // Ensure the input area stays visible
+                            window.scrollTo(0, document.body.scrollHeight);
                         }
-                        
-                        chatInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 300);
+                }
+            });
+            
+            // Reset position when input loses focus
+            chatInput.addEventListener('blur', () => {
+                if (window.innerWidth <= 768) {
+                    setTimeout(() => {
+                        const inputArea = document.querySelector('#chat-panel > div:last-child');
+                        if (inputArea) {
+                            // Reset to default position
+                            inputArea.style.bottom = `calc(44px + env(safe-area-inset-bottom))`;
+                        }
                     }, 300);
                 }
             });
