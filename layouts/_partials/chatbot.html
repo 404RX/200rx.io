@@ -36,11 +36,16 @@ class ProfessionalChatbot {
     async checkBackendHealth() {
         const statusEl = document.getElementById('connection-status');
         try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 5000);
+            
             const response = await fetch(`${this.apiUrl}/api/health`, {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
-                signal: AbortSignal.timeout(5000)
+                signal: controller.signal
             });
+            
+            clearTimeout(timeoutId);
             
             if (response.ok) {
                 const health = await response.json();
@@ -58,11 +63,16 @@ class ProfessionalChatbot {
     async checkCrmHealth() {
         const crmStatusEl = document.getElementById('crm-status');
         try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 5000);
+            
             const response = await fetch(`${this.crmApiUrl}/api/health`, {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
-                signal: AbortSignal.timeout(5000)
+                signal: controller.signal
             });
+            
+            clearTimeout(timeoutId);
             
             if (response.ok) {
                 crmStatusEl.textContent = '📊 CRM Active';
@@ -204,23 +214,92 @@ class ProfessionalChatbot {
         const style = document.createElement('style');
         style.textContent = `
             @keyframes typing { 0%, 60%, 100% { transform: translateY(0); opacity: 0.4; } 30% { transform: translateY(-10px); opacity: 1; } }
-            @media (max-width: 768px) { #chat-panel { width: 100vw !important; right: -100vw !important; } #chat-panel.open { right: 0 !important; } }
+            
+            /* Mobile-specific chatbot styles */
+            @media (max-width: 768px) { 
+                #chat-launcher {
+                    bottom: 15px !important;
+                    right: 15px !important;
+                    min-width: 180px !important;
+                    padding: 10px 14px !important;
+                    font-size: 13px !important;
+                }
+                
+                #chat-panel { 
+                    width: 100vw !important; 
+                    right: -100vw !important;
+                    height: 100vh !important;
+                    top: 0 !important;
+                } 
+                
+                #chat-panel.open { 
+                    right: 0 !important; 
+                }
+                
+                #chat-messages {
+                    padding: 15px !important;
+                }
+                
+                #chat-input {
+                    font-size: 16px !important; /* Prevents zoom on iOS */
+                }
+            }
+            
+            /* Enhanced touch targets for mobile */
+            @media (max-width: 768px) {
+                #chat-launcher, #chat-close, #send-button, #contact-trigger, #contact-back {
+                    touch-action: manipulation;
+                    -webkit-touch-callout: none;
+                    -webkit-user-select: none;
+                    user-select: none;
+                }
+            }
         `;
         document.head.appendChild(style);
     }
 
     bindEvents() {
-        document.getElementById('chat-launcher').addEventListener('click', () => this.toggleChat());
-        document.getElementById('chat-close').addEventListener('click', () => this.toggleChat());
-        document.getElementById('send-button').addEventListener('click', () => this.sendMessage());
-        document.getElementById('contact-trigger').addEventListener('click', () => this.showContactForm());
-        document.getElementById('contact-back').addEventListener('click', () => this.hideContactForm());
+        // Enhanced event binding for mobile compatibility
+        this.addClickHandler('chat-launcher', () => this.toggleChat());
+        this.addClickHandler('chat-close', () => this.toggleChat());
+        this.addClickHandler('send-button', () => this.sendMessage());
+        this.addClickHandler('contact-trigger', () => this.showContactForm());
+        this.addClickHandler('contact-back', () => this.hideContactForm());
+        
         document.getElementById('contact-form-data').addEventListener('submit', (e) => this.handleContactSubmit(e));
         
         document.getElementById('chat-input').addEventListener('keypress', (e) => {
             if (e.key === 'Enter' && !e.shiftKey && !this.isTyping) {
                 e.preventDefault();
                 this.sendMessage();
+            }
+        });
+    }
+
+    addClickHandler(elementId, handler) {
+        const element = document.getElementById(elementId);
+        if (!element) return;
+        
+        // Add both click and touchstart for mobile compatibility
+        element.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            handler();
+        });
+        
+        // Separate touchstart handler to prevent double-firing
+        let touchStarted = false;
+        element.addEventListener('touchstart', (e) => {
+            touchStarted = true;
+            setTimeout(() => { touchStarted = false; }, 300);
+        });
+        
+        element.addEventListener('touchend', (e) => {
+            if (touchStarted) {
+                e.preventDefault();
+                e.stopPropagation();
+                handler();
+                touchStarted = false;
             }
         });
     }
@@ -264,12 +343,17 @@ class ProfessionalChatbot {
         submitBtn.disabled = true;
         
         try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 10000);
+            
             const response = await fetch(`${this.crmApiUrl}/api/leads`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData),
-                signal: AbortSignal.timeout(10000)
+                signal: controller.signal
             });
+            
+            clearTimeout(timeoutId);
             
             if (response.ok) {
                 const result = await response.json();
@@ -344,19 +428,40 @@ ${new Date().toLocaleString()}`;
         this.isOpen = !this.isOpen;
         
         if (this.isOpen) {
+            chatPanel.classList.add('open');
             chatPanel.style.right = '0';
             launcher.style.opacity = '0';
             launcher.style.visibility = 'hidden';
+            
+            // Prevent body scrolling on mobile when chat is open
+            if (window.innerWidth <= 768) {
+                document.body.style.overflow = 'hidden';
+            }
             
             if (this.messages.length === 0) {
                 this.addMessage('assistant', "Hello! I'm Corey's AI assistant. I can provide detailed information about his professional background, technical expertise, and project experience. What would you like to know?");
             }
             
-            setTimeout(() => document.getElementById('chat-input').focus(), 300);
+            setTimeout(() => {
+                const chatInput = document.getElementById('chat-input');
+                if (chatInput) {
+                    chatInput.focus();
+                    // Prevent keyboard from hiding chat on mobile
+                    if (window.innerWidth <= 768) {
+                        chatInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }
+            }, 300);
         } else {
+            chatPanel.classList.remove('open');
             chatPanel.style.right = window.innerWidth <= 768 ? '-100vw' : '-400px';
             launcher.style.opacity = '1';
             launcher.style.visibility = 'visible';
+            
+            // Restore body scrolling on mobile
+            if (window.innerWidth <= 768) {
+                document.body.style.overflow = '';
+            }
         }
     }
 
@@ -403,12 +508,17 @@ ${new Date().toLocaleString()}`;
         this.isTyping = true;
         
         try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), this.timeout);
+            
             const response = await fetch(`${this.apiUrl}/api/chat`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ message, sessionId: this.sessionId }),
-                signal: AbortSignal.timeout(this.timeout)
+                signal: controller.signal
             });
+            
+            clearTimeout(timeoutId);
             
             document.getElementById('typing-indicator').parentElement.remove();
             this.isTyping = false;
