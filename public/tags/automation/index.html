@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  
- <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <title>Automation</title>
     <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -55,12 +54,359 @@ document.documentElement.setAttribute('data-theme', theme)
   </head>
 <body class="type-tags kind-term" data-bs-spy="scroll" data-bs-target="#TableOfContents" data-bs-offset="80">
   <div class="container-fluid bg-secondary wrapper">
-    ...
+    
+    
+    
+    <nav class="navbar navbar-expand-xl top-navbar shadow " id="top-navbar">
+  <div class="container">
+    
+    <button class="navbar-toggler navbar-light" id="sidebar-toggler" type="button">
+      <i data-feather="sidebar"></i>
+    </button>
+    
+    <a class="navbar-brand" href="/">Ray - Systems Administrator</a>
+    <button
+      class="navbar-toggler navbar-light"
+      id="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#top-nav-items"
+      aria-label="menu"
+    >
+      <i data-feather="menu"></i>
+    </button>
+
+    <div class="collapse navbar-collapse dynamic-navbar" id="top-nav-items">
+      <ul class="nav navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/#home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/#about">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/#skills">Skills</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/#experiences">Experience</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/#education">Education</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/#projects">Projects</a>
+        </li>
+        
+          <li class="nav-item">
+            <a class="nav-link" id="blog-link" href="/posts">Blog</a>
+          </li>
+        
+        
+            
+              <li class="nav-item">
+                <a class="nav-link" href="/contact">Contact</a>
+              </li>
+            
+        
+        
+        
+          
+
+
+
+  
+  
+
+
+<li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle"  href="#" id="themeSelector" role="button"
+  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <img id="navbar-theme-icon-svg" class="theme-icon" src="/icons/moon-svgrepo-com.svg" width=20 alt="Dark Theme">
+</a>
+<div id="themeMenu" class="dropdown-menu dropdown-menu-icons-only" aria-labelledby="themeSelector">
+  
+  <a class="dropdown-item nav-link" href="#" data-scheme="light">
+    <img class="theme-icon" src="/icons/sun-svgrepo-com.svg" width=20 alt="Light Theme">
+  </a>
+  
+  
+  <a class="dropdown-item nav-link" href="#" data-scheme="dark">
+    <img class="theme-icon" src="/icons/moon-svgrepo-com.svg" width=20 alt="Dark Theme">
+  </a>
+  
+  
+  <a class="dropdown-item nav-link" href="#" data-scheme="system">
+    <img class="theme-icon" src="/icons/computer-svgrepo-com.svg" width=20 alt="System Theme">
+  </a>
+  
+</div>
+</li>
+
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+    
+    
+  
+  
+
+  <section class="sidebar-section" id="sidebar-section">
+    <div class="sidebar-holder">
+      <div class="sidebar" id="sidebar">
+        <form class="mx-auto" method="get" action="/search">
+          <input type="text" name="keyword" value="" placeholder="Search" data-search="" id="search-box" />
+        </form>
+        <div class="sidebar-tree">
+          <ul class="tree" id="tree">
+            <li id="list-heading"><a href="/tags" data-filter="all">Tags</a></li>
+            <div class="subtree taxonomy-terms">
+              
+              
+
+
+
+  
+  
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="http://localhost:1313/tags/about/" data-taxonomy-term="about"><span class="taxonomy-label">About</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="http://localhost:1313/tags/active-directory/" data-taxonomy-term="active-directory"><span class="taxonomy-label">Active Directory</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="http://localhost:1313/tags/ai/" data-taxonomy-term="ai"><span class="taxonomy-label">AI</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term active" href="http://localhost:1313/tags/automation/" data-taxonomy-term="automation"><span class="taxonomy-label">Automation</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="http://localhost:1313/tags/hugo/" data-taxonomy-term="hugo"><span class="taxonomy-label">Hugo</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="http://localhost:1313/tags/infrastructure/" data-taxonomy-term="infrastructure"><span class="taxonomy-label">Infrastructure</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="http://localhost:1313/tags/intro/" data-taxonomy-term="intro"><span class="taxonomy-label">Intro</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="http://localhost:1313/tags/it-operations/" data-taxonomy-term="it-operations"><span class="taxonomy-label">IT Operations</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="http://localhost:1313/tags/javascript/" data-taxonomy-term="javascript"><span class="taxonomy-label">JavaScript</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="http://localhost:1313/tags/monitoring/" data-taxonomy-term="monitoring"><span class="taxonomy-label">Monitoring</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="http://localhost:1313/tags/performance/" data-taxonomy-term="performance"><span class="taxonomy-label">Performance</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="http://localhost:1313/tags/portfolio/" data-taxonomy-term="portfolio"><span class="taxonomy-label">Portfolio</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="http://localhost:1313/tags/powershell/" data-taxonomy-term="powershell"><span class="taxonomy-label">PowerShell</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="http://localhost:1313/tags/scripting/" data-taxonomy-term="scripting"><span class="taxonomy-label">Scripting</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="http://localhost:1313/tags/security/" data-taxonomy-term="security"><span class="taxonomy-label">Security</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="http://localhost:1313/tags/static-site/" data-taxonomy-term="static-site"><span class="taxonomy-label">Static Site</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="http://localhost:1313/tags/trends/" data-taxonomy-term="trends"><span class="taxonomy-label">Trends</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="http://localhost:1313/tags/tutorial/" data-taxonomy-term="tutorial"><span class="taxonomy-label">Tutorial</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="http://localhost:1313/tags/web-development/" data-taxonomy-term="web-development"><span class="taxonomy-label">Web Development</span></a></li>
+        
+          
+            
+          
+          <li><a class="taxonomy-term " href="http://localhost:1313/tags/welcome/" data-taxonomy-term="welcome"><span class="taxonomy-label">Welcome</span></a></li>
+        
+  
+
+
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    
+<section class="content-section" id="content-section">
+  <div class="content container-fluid" id="content">
+    <div class="container-fluid post-card-holder" id="post-card-holder">
+      
+      
+      
+      
+        
+          <div class="post-card">
+  <div class="card">
+    <div class="card-head">
+      <a href="/posts/ad-cleanup-automation/" class="post-card-link">
+        <img class="card-img-top" src='/images/default-hero.jpg' alt="Hero Image">
+      </a>
+    </div>
+    <div class="card-body">
+      <a href="/posts/ad-cleanup-automation/" class="post-card-link">
+        <h5 class="card-title">Active Directory Cleanup Automation with PowerShell</h5>
+        <p class="card-text post-summary">Introduction Stale and unused objects in Active Directory not only clutter your environment but can also create security risks and provisioning errors. Automating cleanup ensures better hygiene and consistent identity lifecycle management. This guide walks through how to use PowerShell to audit and optionally remove inactive AD users and computers.
+Core Principles 1. Identify Inactive Users and Computers # Users inactive for 90+ days $inactiveUsers = Get-ADUser -Filter * -Properties LastLogonDate | Where-Object { $_.Enabled -eq $true -and $_.LastLogonDate -lt (Get-Date).AddDays(-90) } # Computers inactive for 90+ days $inactiveComputers = Get-ADComputer -Filter * -Properties LastLogonDate | Where-Object { $_.Enabled -eq $true -and $_.LastLogonDate -lt (Get-Date).AddDays(-90) } 🔍 Use -SearchBase to narrow to a specific OU
+Example: -SearchBase &quot;OU=Workstations,DC=corp,DC=domain,DC=com&quot;
+</p>
+      </a>
+      
+        <div class="tags">
+  <ul style="padding-left: 0;">
+    
+    
+    <li class="rounded"><a href="/tags/powershell/" class="btn btn-sm btn-info">PowerShell</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/active-directory/" class="btn btn-sm btn-info">Active Directory</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/automation/" class="btn btn-sm btn-info">Automation</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/security/" class="btn btn-sm btn-info">Security</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/it-operations/" class="btn btn-sm btn-info">IT Operations</a></li>
+    
+  </ul>
+</div>
+
+      
+    </div>
+    <div class="card-footer">
+      <span class="float-start">
+          Monday, March 18, 2024
+           | 2 minutes </span>
+      <a
+      href="/posts/ad-cleanup-automation/"
+      class="float-end btn btn-outline-info btn-sm">Read</a>
+    </div>
+  </div>
+</div>
+
+        
+      
+        
+          <div class="post-card">
+  <div class="card">
+    <div class="card-head">
+      <a href="/posts/remote-system-healthcheckpowershell/" class="post-card-link">
+        <img class="card-img-top" src='/images/default-hero.jpg' alt="Hero Image">
+      </a>
+    </div>
+    <div class="card-body">
+      <a href="/posts/remote-system-healthcheckpowershell/" class="post-card-link">
+        <h5 class="card-title">Remote System Health Checks with PowerShell</h5>
+        <p class="card-text post-summary">Introduction Ensuring system uptime and catching performance issues early is vital in any infrastructure. With PowerShell, you can automate system health checks across your environment, collect metrics, and act on anomalies before they impact operations.
+This guide walks through a practical PowerShell script for remote system health monitoring, complete with optional test coverage using Pester.
+Core Principles 1. Test System Health Remotely with WMI function Test-SystemHealth { param ( [string]$ComputerName ) $result = @{ ComputerName = $ComputerName Ping = $false CPU = $null Memory = $null DiskSpace = $null } if (Test-Connection -ComputerName $ComputerName -Count 2 -Quiet) { $result.Ping = $true try { $sys = Get-WmiObject -Class Win32_OperatingSystem -ComputerName $ComputerName $cpu = Get-WmiObject -Class Win32_Processor -ComputerName $ComputerName $disk = Get-WmiObject -Class Win32_LogicalDisk -ComputerName $ComputerName -Filter &#34;DriveType=3&#34; $result.CPU = [math]::Round($cpu.LoadPercentage, 2) $result.Memory = [math]::Round((($sys.TotalVisibleMemorySize - $sys.FreePhysicalMemory) / $sys.TotalVisibleMemorySize) * 100, 2) $result.DiskSpace = @() foreach ($d in $disk) { $usedPercent = [math]::Round((($d.Size - $d.FreeSpace) / $d.Size) * 100, 2) $result.DiskSpace += @{ Drive = $d.DeviceID; UsedPercent = $usedPercent } } } catch { Write-Warning &#34;Unable to gather metrics from $ComputerName&#34; } } return $result } # Example usage $computers = Get-Content -Path &#34;.\computers.txt&#34; $healthReport = $computers | ForEach-Object { Test-SystemHealth -ComputerName $_ } $healthReport | ConvertTo-Json | Out-File &#34;.\HealthReport.json&#34; ### 2. Testing Strategy with Pester ```powershell Describe &#39;Test-SystemHealth&#39; { It &#39;Should return a result object with expected keys&#39; { $mockResult = Test-SystemHealth -ComputerName &#34;localhost&#34; $mockResult | Should -Not -BeNullOrEmpty $mockResult | Should -HaveProperty &#39;ComputerName&#39; $mockResult | Should -HaveProperty &#39;Ping&#39; $mockResult | Should -HaveProperty &#39;CPU&#39; $mockResult | Should -HaveProperty &#39;Memory&#39; $mockResult | Should -HaveProperty &#39;DiskSpace&#39; } It &#39;Should show Ping as true for localhost&#39; { $mockResult = Test-SystemHealth -ComputerName &#34;localhost&#34; $mockResult.Ping | Should -BeTrue } } </p>
+      </a>
+      
+        <div class="tags">
+  <ul style="padding-left: 0;">
+    
+    
+    <li class="rounded"><a href="/tags/powershell/" class="btn btn-sm btn-info">PowerShell</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/automation/" class="btn btn-sm btn-info">Automation</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/scripting/" class="btn btn-sm btn-info">Scripting</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/monitoring/" class="btn btn-sm btn-info">Monitoring</a></li>
+    
+    
+    <li class="rounded"><a href="/tags/infrastructure/" class="btn btn-sm btn-info">Infrastructure</a></li>
+    
+  </ul>
+</div>
+
+      
+    </div>
+    <div class="card-footer">
+      <span class="float-start">
+          Sunday, March 10, 2024
+           | 2 minutes </span>
+      <a
+      href="/posts/remote-system-healthcheckpowershell/"
+      class="float-end btn btn-outline-info btn-sm">Read</a>
+    </div>
+  </div>
+</div>
+
+        
+      
+    </div>
+    <div class="paginator">
+      
+    </div>
+  </div>
+</section>
+
+    
+
   </div>
 
   
-
-  
   
 
 
@@ -88,6 +434,9 @@ document.documentElement.setAttribute('data-theme', theme)
   
 
   
+  
+    
+    
   
 
   
@@ -106,52 +455,27 @@ document.documentElement.setAttribute('data-theme', theme)
           <h5>Navigation</h5>
           
           <ul>
-              
-                
-                
-                  
-                
-                <li class="nav-item">
-                  <a class="smooth-scroll" href="http://localhost:1313/#about">About</a>
-                </li>
-              
-              
-                
-                
-                  
-                
-                <li class="nav-item">
-                  <a class="smooth-scroll" href="http://localhost:1313/#skills">Skills</a>
-                </li>
-              
-              
-                
-                
-                  
-                
-                <li class="nav-item">
-                  <a class="smooth-scroll" href="http://localhost:1313/#experiences">Experiences</a>
-                </li>
-              
-              
-                
-                
-                  
-                
-                <li class="nav-item">
-                  <a class="smooth-scroll" href="http://localhost:1313/#education">Education</a>
-                </li>
-              
-              
-                
-                
-                  
-                
-                <li class="nav-item">
-                  <a class="smooth-scroll" href="http://localhost:1313/#projects">Projects</a>
-                </li>
-              
             
+            <li class="nav-item">
+              <a class="smooth-scroll" href="http://localhost:1313/#about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="smooth-scroll" href="http://localhost:1313/#skills">Skills</a>
+            </li>
+            <li class="nav-item">
+              <a class="smooth-scroll" href="http://localhost:1313/#experiences">Experience</a>
+            </li>
+            <li class="nav-item">
+              <a class="smooth-scroll" href="http://localhost:1313/#projects">Projects</a>
+            </li>
+            
+            <li class="nav-item">
+              <a href="http://localhost:1313/posts">Blog</a>
+            </li>
+            
+            
+              
+                
               
             
           </ul>
@@ -164,8 +488,8 @@ document.documentElement.setAttribute('data-theme', theme)
           <ul>
             
               
-                <li><a href=mailto:vinnym@200rx.com target="_blank" rel="noopener">
-                  <span><i class="fas fa-envelope"></i></span> <span>vinnym@200rx.com</span>
+                <li><a href=mailto:ray@200rx.com target="_blank" rel="noopener">
+                  <span><i class="fas fa-envelope"></i></span> <span>ray@200rx.com</span>
                 </a></li>
               
             
@@ -208,349 +532,10 @@ document.documentElement.setAttribute('data-theme', theme)
     </div>
     
   </footer>
-<script src="/application.8e50c08cca24555c1eabb94f7ce5ca8f3aeee9f7ae41ee98e2b79548c30b6ea2.js" integrity="sha256-jlDAjMokVVweq7lPfOXKjzru6feuQe6Y4reVSMMLbqI=" defer></script>
+<script src="/application.f2fbae73cbc3402682df1e13c1c89ef8a98a5ffa2e551c9261768d3b7824cf46.js" integrity="sha256-8vuuc8vDQCaC3x4Twcie&#43;KmKX/ouVRySYXaNO3gkz0Y=" defer></script>
 
    
     
 
-
-<script>
-
-window.ChatbotConfig = {
-    apiUrl: 'http://127.0.0.1:8000',  
-    
-    apiKey: 'xK8TYfRDskX9xmJUuEbHrQbowHy6SOv3eXHivkzvUabK6i1SaFRmJD8AyuWAAKJvocDaOOI7ulqYKIqnExEiMRXJRWB78rM8SV2EUgpWHUdMKNGKo6avD22PrrgqMryF3FepkqNTjsGatwptITAmTpgm4zR6CCbQsgR4mkHXdKtEHDS3RDG7ziKcyBx0rbunFXI9Ce2A9dMhiNNUpGMtabwZSPy7PLfkQUCSU87pKzklR1Qg3vX2DZBHHbg5UGdE'  
-};
-
-
-class BackendChatbot {
-    constructor() {
-        this.isOpen = false;
-        this.messages = [];
-        this.apiUrl = window.ChatbotConfig?.apiUrl || 'https://two00rx-io-chatbot.onrender.com';
-        this.apiKey = window.ChatbotConfig?.apiKey || null;
-        this.init();
-    }
-
-    init() {
-        this.createChatInterface();
-        this.bindEvents();
-    }
-
-    createChatInterface() {
-        
-        const launcher = document.createElement('div');
-        launcher.id = 'chat-launcher';
-        launcher.innerHTML = '💬 Questions about my experience?';
-        launcher.style.cssText = `
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #333;
-            color: #fff;
-            padding: 10px 14px;
-            border-radius: 20px;
-            cursor: pointer;
-            z-index: 1000;
-            font-family: sans-serif;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.3s ease;
-        `;
-
-        launcher.addEventListener('mouseenter', () => {
-            launcher.style.backgroundColor = '#555';
-        });
-        
-        launcher.addEventListener('mouseleave', () => {
-            launcher.style.backgroundColor = '#333';
-        });
-
-        
-        const chatBox = document.createElement('div');
-        chatBox.id = 'chat-box';
-        chatBox.style.cssText = `
-            position: fixed;
-            bottom: 70px;
-            right: 20px;
-            width: 320px;
-            max-height: 400px;
-            background: #fff;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-family: sans-serif;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            z-index: 999;
-            display: none;
-        `;
-
-        chatBox.innerHTML = `
-            <div style="background: #333; color: white; padding: 12px; border-radius: 8px 8px 0 0; font-weight: bold; display: flex; justify-content: space-between; align-items: center;">
-                <span>Chat with Corey</span>
-                <span id="chat-close" style="cursor: pointer; font-size: 20px; line-height: 1;">&times;</span>
-            </div>
-            <div id="chat-messages" style="height: 250px; overflow-y: auto; padding: 10px; background: #f9f9f9;"></div>
-            <div style="padding: 10px; border-top: 1px solid #eee; background: white;">
-                <input id="chat-input" type="text" placeholder="Ask me something..." 
-                       style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; outline: none; font-size: 14px;">
-                <div id="connection-status" style="font-size: 11px; color: #666; margin-top: 4px;"></div>
-            </div>
-        `;
-
-        document.body.appendChild(launcher);
-        document.body.appendChild(chatBox);
-    }
-
-    bindEvents() {
-        const launcher = document.getElementById('chat-launcher');
-        const chatBox = document.getElementById('chat-box');
-        const closeBtn = document.getElementById('chat-close');
-        const input = document.getElementById('chat-input');
-
-        launcher.addEventListener('click', () => this.toggleChat());
-        closeBtn.addEventListener('click', () => this.toggleChat());
-        
-        input.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                this.sendMessage(e.target.value);
-                e.target.value = '';
-            }
-        });
-    }
-
-    async toggleChat() {
-        const chatBox = document.getElementById('chat-box');
-        this.isOpen = !this.isOpen;
-        chatBox.style.display = this.isOpen ? 'block' : 'none';
-        
-        if (this.isOpen && this.messages.length === 0) {
-            
-            await this.testConnection();
-            if (this.apiKey && this.apiKey !== 'YOUR_API_KEY_HERE') {
-                this.addMessage('bot', "Hello! I'm Corey's AI assistant powered by OpenAI. I can help answer questions about his experience, skills, and background. What would you like to know?");
-            } else {
-                this.addMessage('bot', "Hello! I'm Corey's assistant. I'm currently in demo mode with limited responses. For full AI capabilities, the API key needs to be configured. What would you like to know about Corey?");
-            }
-        }
-        
-        
-        if (this.isOpen) {
-            setTimeout(() => {
-                document.getElementById('chat-input').focus();
-            }, 100);
-        }
-    }
-
-    async testConnection() {
-        const statusEl = document.getElementById('connection-status');
-        try {
-            const response = await fetch(`${this.apiUrl}/`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-            
-            if (response.ok) {
-                const data = await response.json();
-                console.log('Backend response:', data); 
-                
-                
-                if (data.status && (data.status.includes('Backend is running') || data.status.includes('running'))) {
-                    if (this.apiKey && this.apiKey !== 'YOUR_API_KEY_HERE') {
-                        statusEl.textContent = '🟢 Connected to AI assistant';
-                        statusEl.style.color = '#28a745';
-                    } else {
-                        statusEl.textContent = '🟡 Connected (demo mode)';
-                        statusEl.style.color = '#ffc107';
-                    }
-                } else {
-                    throw new Error(`Unexpected status: ${data.status}`);
-                }
-            } else {
-                throw new Error(`HTTP ${response.status}`);
-            }
-        } catch (error) {
-            console.warn('Backend connection test failed:', error);
-            statusEl.textContent = '🔴 Using offline mode';
-            statusEl.style.color = '#dc3545';
-        }
-    }
-
-    addMessage(sender, text) {
-        const messagesContainer = document.getElementById('chat-messages');
-        const messageDiv = document.createElement('div');
-        messageDiv.style.cssText = `
-            margin-bottom: 10px;
-            text-align: ${sender === 'user' ? 'right' : 'left'};
-        `;
-        
-        const messageBubble = document.createElement('div');
-        messageBubble.style.cssText = `
-            display: inline-block;
-            max-width: 80%;
-            padding: 8px 12px;
-            border-radius: 12px;
-            background: ${sender === 'user' ? '#007bff' : '#f8f9fa'};
-            color: ${sender === 'user' ? 'white' : '#212529'};
-            border: ${sender === 'user' ? 'none' : '1px solid #dee2e6'};
-            font-size: 14px;
-            line-height: 1.4;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-            white-space: pre-wrap;
-        `;
-        messageBubble.textContent = text;
-        
-        messageDiv.appendChild(messageBubble);
-        messagesContainer.appendChild(messageDiv);
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        
-        this.messages.push({ sender, text });
-    }
-
-    async sendMessage(text) {
-        if (!text.trim()) return;
-        
-        this.addMessage('user', text);
-        this.showTyping();
-        
-        
-        if (this.apiKey && this.apiKey !== 'YOUR_API_KEY_HERE') {
-            try {
-                const response = await this.queryBackend(text);
-                this.hideTyping();
-                this.addMessage('bot', response);
-                return;
-            } catch (error) {
-                console.warn('Backend request failed:', error);
-                
-            }
-        }
-        
-        
-        this.hideTyping();
-        const fallbackResponse = this.generateFallbackResponse(text);
-        this.addMessage('bot', fallbackResponse);
-        
-        
-        const statusEl = document.getElementById('connection-status');
-        if (!this.apiKey || this.apiKey === 'YOUR_API_KEY_HERE') {
-            statusEl.textContent = '🟡 Demo mode - limited responses';
-            statusEl.style.color = '#ffc107';
-        } else {
-            statusEl.textContent = '🔴 Backend unavailable';
-            statusEl.style.color = '#dc3545';
-        }
-    }
-    
-    async queryBackend(question) {
-        const response = await fetch(`${this.apiUrl}/ask`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'X-API-Key': this.apiKey
-            },
-            body: JSON.stringify({ 
-                question: question
-            })
-        });
-        
-        if (!response.ok) {
-            if (response.status === 403) {
-                throw new Error('Authentication failed - API key invalid');
-            } else if (response.status === 429) {
-                throw new Error('Rate limit exceeded - too many requests');
-            } else if (response.status === 422) {
-                throw new Error('Invalid question format');
-            } else {
-                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-            }
-        }
-        
-        const data = await response.json();
-        return data.answer || 'I received your question but got an unexpected response format.';
-    }
-    
-    showTyping() {
-        const messagesContainer = document.getElementById('chat-messages');
-        const typingDiv = document.createElement('div');
-        typingDiv.id = 'typing-indicator';
-        typingDiv.style.cssText = `
-            margin-bottom: 10px;
-            text-align: left;
-        `;
-        
-        typingDiv.innerHTML = `
-            <div style="display: inline-block; padding: 8px 12px; border-radius: 12px; background: #f8f9fa; color: #6c757d; border: 1px solid #dee2e6; font-size: 14px; font-style: italic;">
-                <span class="typing-dots">Thinking</span><span class="dots">...</span>
-            </div>
-        `;
-        
-        messagesContainer.appendChild(typingDiv);
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        
-        
-        let dotCount = 0;
-        this.typingInterval = setInterval(() => {
-            const dotsEl = typingDiv.querySelector('.dots');
-            if (dotsEl) {
-                dotCount = (dotCount + 1) % 4;
-                dotsEl.textContent = '.'.repeat(dotCount);
-            }
-        }, 500);
-    }
-    
-    hideTyping() {
-        const typing = document.getElementById('typing-indicator');
-        if (typing) {
-            typing.remove();
-        }
-        if (this.typingInterval) {
-            clearInterval(this.typingInterval);
-            this.typingInterval = null;
-        }
-    }
-
-    generateFallbackResponse(question) {
-        const q = question.toLowerCase();
-        
-        
-        if (q.includes('hello') || q.includes('hi') || q.includes('hey')) {
-            return "Hello! Great to meet you. I can help answer questions about Corey's professional background and experience. What would you like to know?";
-        } else if (q.includes('experience') || q.includes('work') || q.includes('job') || q.includes('career')) {
-            return "Corey has extensive experience as a System Administrator with expertise in cloud administration, PowerShell, Python, and DevOps practices. He has worked in both government and private sector environments, bringing strong technical leadership and automation skills to every role.";
-        } else if (q.includes('skill') || q.includes('technology') || q.includes('tech') || q.includes('technical')) {
-            return "Corey's key technical skills include:\n\n• Windows Server Administration\n• Cloud Architecture (AWS/Azure)\n• PowerShell scripting and automation\n• Python development\n• Network Administration\n• DevOps practices and CI/CD\n• Infrastructure management\n• Security best practices";
-        } else if (q.includes('contact') || q.includes('reach') || q.includes('email') || q.includes('hire')) {
-            return "You can reach Corey at:\n📧 vinnym@200rx.com\n💼 LinkedIn: https://www.linkedin.com/in/coreyvmiller/\n\nFeel free to reach out for opportunities, technical discussions, or collaboration!";
-        } else if (q.includes('cloud') || q.includes('aws') || q.includes('azure')) {
-            return "Corey has extensive cloud experience with both AWS and Azure platforms. He's worked on cloud migrations, infrastructure automation, and implementing best practices for cloud security and cost optimization.";
-        } else if (q.includes('python') || q.includes('powershell') || q.includes('script') || q.includes('automation')) {
-            return "Corey is proficient in both PowerShell and Python scripting. He uses these tools for automation, system administration tasks, data processing, and building efficient workflows that save time and reduce manual errors.";
-        } else if (q.includes('military') || q.includes('veteran') || q.includes('government') || q.includes('security')) {
-            return "Corey brings valuable experience from government and military environments, where he developed strong discipline, attention to detail, and the ability to work effectively under pressure while maintaining high security standards.";
-        } else if (q.includes('education') || q.includes('learn') || q.includes('study') || q.includes('certifi')) {
-            return "Corey is continuously learning and staying current with technology trends. His background includes both formal education and extensive hands-on experience in IT systems and administration. He's always exploring new technologies and methodologies.";
-        } else if (q.includes('project') || q.includes('portfolio') || q.includes('recent work')) {
-            return "Corey has worked on various projects involving system automation, cloud migrations, and infrastructure optimization. Check out the Projects section above for more details about his recent work and technical achievements.";
-        } else if (q.includes('devops') || q.includes('ci/cd') || q.includes('deployment')) {
-            return "Corey has strong DevOps experience including CI/CD pipeline implementation, infrastructure as code, automated testing, and deployment strategies. He focuses on creating efficient, reliable workflows that improve development velocity.";
-        } else if (q.includes('network') || q.includes('infrastructure') || q.includes('server')) {
-            return "Corey has deep expertise in network administration and infrastructure management. He's worked with Windows Server environments, network configuration, security implementations, and large-scale infrastructure projects.";
-        } else {
-            return "That's a great question! While I have information about Corey's technical background, I'd recommend checking out his full profile above or reaching out to him directly at vinnym@200rx.com for more specific details. Is there anything else about his experience or skills I can help with?";
-        }
-    }
-}
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('Initializing backend-integrated chatbot...');
-    new BackendChatbot();
-});
-</script>
 </body>
-
 </html>
-

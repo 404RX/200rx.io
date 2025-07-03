@@ -1,0 +1,63 @@
+<nav class="navbar navbar-expand-xl top-navbar shadow {{ if .IsHome}}transparent-navbar homepage{{end}}" id="top-navbar">
+  <div class="container">
+    {{ if not .IsHome }}
+    <button class="navbar-toggler navbar-light" id="sidebar-toggler" type="button">
+      <i data-feather="sidebar"></i>
+    </button>
+    {{ end }}
+    <a class="navbar-brand" href="{{ site.BaseURL | relLangURL }}">
+      {{- site.Title -}}
+    </a>
+    <button
+      class="navbar-toggler {{if .IsHome}}navbar-dark{{else}}navbar-light{{end}}"
+      id="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#top-nav-items"
+      aria-label="menu"
+    >
+      <i data-feather="menu"></i>
+    </button>
+
+    <div class="collapse navbar-collapse dynamic-navbar" id="top-nav-items">
+      <ul class="nav navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{{ if .IsHome }}#home{{else}}{{ site.BaseURL | relLangURL }}#home{{end}}">{{ i18n "home" }}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ if .IsHome }}#about{{else}}{{ site.BaseURL | relLangURL }}#about{{end}}">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ if .IsHome }}#skills{{else}}{{ site.BaseURL | relLangURL }}#skills{{end}}">Skills</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ if .IsHome }}#experiences{{else}}{{ site.BaseURL | relLangURL }}#experiences{{end}}">Experience</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ if .IsHome }}#education{{else}}{{ site.BaseURL | relLangURL }}#education{{end}}">Education</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ if .IsHome }}#projects{{else}}{{ site.BaseURL | relLangURL }}#projects{{end}}">Projects</a>
+        </li>
+        {{ if site.Params.features.blog.enable }}
+          <li class="nav-item">
+            <a class="nav-link" id="blog-link" href="{{ path.Join (site.BaseURL | relLangURL) "posts" }}">Blog</a>
+          </li>
+        {{ end }}
+        {{ range site.Params.customMenus }}
+            {{ if (not .hideFromNavbar) }}
+              <li class="nav-item">
+                <a class="nav-link" href="{{ .url }}">{{ .name }}</a>
+              </li>
+            {{ end }}
+        {{ end }}
+        {{ if .IsTranslated }}
+          {{ partial "navigators/lang-selector.html" . }}
+        {{ end }}
+        {{ if or site.Params.features.darkMode.enable site.Params.features.theme.enable }}
+          {{ partial "navigators/theme-selector.html" . }}
+        {{ end }}
+      </ul>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Posts - Ray Miller</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .card { transition: transform 0.2s; }
+        .card:hover { transform: translateY(-5px); }
+        .badge { font-size: 0.8em; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Ray Miller</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/">Home</a>
+                <a class="nav-link" href="/#about">About</a>
+                <a class="nav-link" href="/#skills">Skills</a>
+                <a class="nav-link" href="/#experience">Experience</a>
+                <a class="nav-link" href="/#projects">Projects</a>
+                <a class="nav-link active" href="/posts">Blog</a>
+                <a class="nav-link" href="/contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <h1 class="text-center mb-5">Blog Posts</h1>
+        
+        <div class="alert alert-success text-center mb-4">
+            <strong>✅ Posts Page Working!</strong> Your Hugo blog is now displaying correctly.
+        </div>
+
+        <div class="row">
+            <!-- Post 1: Active Directory Cleanup -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="/posts/ad-cleanup-automation/" class="text-decoration-none">Active Directory Cleanup Automation with PowerShell</a>
+                        </h5>
+                        <p class="card-text">Learn how to use PowerShell to automate cleanup of stale user and computer accounts in Active Directory</p>
+                        <p class="text-muted small">📅 March 18, 2024</p>
+                        <div class="mb-2">
+                            <span class="badge bg-secondary me-1">PowerShell</span>
+                            <span class="badge bg-secondary me-1">Active Directory</span>
+                            <span class="badge bg-secondary me-1">Automation</span>
+                        </div>
+                        <a href="/posts/ad-cleanup-automation/" class="btn btn-primary btn-sm">Read More →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Post 2: System Health Checks -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="/posts/remote-system-healthcheckpowershell/" class="text-decoration-none">Remote System Health Checks with PowerShell</a>
+                        </h5>
+                        <p class="card-text">Learn how to automate system diagnostics across remote machines using PowerShell, complete with logging and test strategies</p>
+                        <p class="text-muted small">📅 March 10, 2024</p>
+                        <div class="mb-2">
+                            <span class="badge bg-secondary me-1">PowerShell</span>
+                            <span class="badge bg-secondary me-1">Monitoring</span>
+                            <span class="badge bg-secondary me-1">Infrastructure</span>
+                        </div>
+                        <a href="/posts/remote-system-healthcheckpowershell/" class="btn btn-primary btn-sm">Read More →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Post 3: Web Development Trends -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="/posts/system-health-checks/" class="text-decoration-none">Modern Web Development Trends in 2024</a>
+                        </h5>
+                        <p class="card-text">Explore the latest trends shaping web development in 2024, from AI integration to performance optimization</p>
+                        <p class="text-muted small">📅 February 20, 2024</p>
+                        <div class="mb-2">
+                            <span class="badge bg-secondary me-1">Web Development</span>
+                            <span class="badge bg-secondary me-1">Trends</span>
+                            <span class="badge bg-secondary me-1">JavaScript</span>
+                        </div>
+                        <a href="/posts/system-health-checks/" class="btn btn-primary btn-sm">Read More →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Post 4: Hugo Guide -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="/posts/getting-started-with-hugo/" class="text-decoration-none">Getting Started with Hugo: A Beginner's Guide</a>
+                        </h5>
+                        <p class="card-text">Learn how to build fast, modern websites with Hugo static site generator</p>
+                        <p class="text-muted small">📅 January 15, 2024</p>
+                        <div class="mb-2">
+                            <span class="badge bg-secondary me-1">Hugo</span>
+                            <span class="badge bg-secondary me-1">Static Site</span>
+                            <span class="badge bg-secondary me-1">Tutorial</span>
+                        </div>
+                        <a href="/posts/getting-started-with-hugo/" class="btn btn-primary btn-sm">Read More →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Post 5: Welcome -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="/posts/first-post/" class="text-decoration-none">Welcome</a>
+                        </h5>
+                        <p class="card-text">Welcome to my portfolio website where I share my thoughts, projects, and experiences</p>
+                        <p class="text-muted small">📅 January 1, 2024</p>
+                        <div class="mb-2">
+                            <span class="badge bg-secondary me-1">welcome</span>
+                            <span class="badge bg-secondary me-1">intro</span>
+                        </div>
+                        <a href="/posts/first-post/" class="btn btn-primary btn-sm">Read More →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional info -->
+        <div class="text-center mt-5">
+            <p class="text-muted">This posts page is working as a temporary solution while the Hugo theme templates are being fixed.</p>
+            <p class="text-muted">All individual post pages are still working normally via Hugo.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Navigation</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/#about" class="text-light">About</a></li>
+                        <li><a href="/#skills" class="text-light">Skills</a></li>
+                        <li><a href="/#experience" class="text-light">Experience</a></li>
+                        <li><a href="/#projects" class="text-light">Projects</a></li>
+                        <li><a href="/posts" class="text-light">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h5>Contact me:</h5>
+                    <ul class="list-unstyled">
+                        <li>📧 ray@200rx.com</li>
+                        <li>📍 Location: New York, NY</li>
+                        <li>🌐 Website: https://200rx.com</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-3">
+            <div class="text-center">
+                <p>&copy; 2025 Copyright. Powered by Hugo</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

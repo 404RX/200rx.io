@@ -1,6 +1,0 @@
-{{ with .Site.GetPage "/" }}
-  {{ .Content }}
-  {{ range .Resources.ByType "image" }}
-    <img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" alt="">
-  {{ end }}
-{{ end }}

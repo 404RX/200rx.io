@@ -1,14 +1,16 @@
 ---
 title: "Modern Web Development Trends in 2024"
 date: 2024-02-20T14:30:00Z
+draft: false
 description: "Explore the latest trends shaping web development in 2024, from AI integration to performance optimization"
 menu:
   sidebar:
-    name: Web Development Trends 2024
+    name: "Modern Web Development Trends in 2024"
     identifier: web-trends-2024
     weight: 20
 tags: ["Web Development", "Trends", "JavaScript", "AI", "Performance"]
 categories: ["Technology", "Web Development"]
+hero: "/images/default-hero.jpg"
 ---
 
 ## The Evolution of Web Development

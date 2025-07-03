@@ -18,7 +18,15 @@
   </head>
 <body class="type-{{ .Page.Type }} kind-{{ .Page.Kind }}" data-bs-spy="scroll" data-bs-target="#TableOfContents" data-bs-offset="80">
   <div class="container-fluid bg-secondary wrapper">
-    ...
+    
+    <!-- Navbar -->
+    {{ block "navbar" . }}{{ end }}
+
+    <!-- Content area with proper Toha theme structure -->
+    {{ block "sidebar" . }}{{ end }}
+    {{ block "content" . }}{{ end }}
+    {{ block "toc" . }}{{ end }}
+
   </div>
 
   <!-- ADD FOOTER & SCRIPTS -->
@@ -29,5 +37,4 @@
   {{- partial "misc/support.html" . -}}
 
 </body>
-
 </html>

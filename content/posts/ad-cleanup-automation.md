@@ -1,14 +1,16 @@
 ---
 title: "Active Directory Cleanup Automation with PowerShell"
 date: 2024-03-18T14:00:00Z
+draft: false
 description: "Learn how to use PowerShell to automate cleanup of stale user and computer accounts in Active Directory"
 menu:
   sidebar:
-    name: AD Cleanup Automation
+    name: "Active Directory Cleanup Automation with PowerShell"
     identifier: ad-cleanup
     weight: 31
 tags: ["PowerShell", "Active Directory", "Automation", "Security", "IT Operations"]
 categories: ["Identity Management", "Infrastructure Automation"]
+hero: "/images/default-hero.jpg"
 ---
 
 ## Introduction

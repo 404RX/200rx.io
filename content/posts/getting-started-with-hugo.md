@@ -1,14 +1,20 @@
 ---
 title: "Getting Started with Hugo: A Beginner's Guide"
 date: 2024-01-15T10:00:00Z
+draft: false
+author:
+  name: "Ray Miller"
+  image: "/images/author/avatar.png"
 description: "Learn how to build fast, modern websites with Hugo static site generator"
 menu:
   sidebar:
-    name: Getting Started with Hugo
-    identifier: hugo-guide
-    weight: 10
+    name: "Getting Started with Hugo: A Beginner's Guide"
+    identifier: getting-started-hugo
+    weight: 40
 tags: ["Hugo", "Static Site", "Web Development", "Tutorial"]
 categories: ["Web Development"]
+hero: "/images/default-hero.jpg"
+toc: true
 ---
 
 ## Introduction

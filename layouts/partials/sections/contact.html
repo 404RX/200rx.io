@@ -1,0 +1,102 @@
+{{ $contactData := index .Site.Data .Site.Language.Lang "sections" "contact" }}
+{{ if $contactData.section.enable }}
+
+<section class="container-fluid section-holder d-flex bg-dimmed" id="contact">
+  <div class="container-fluid anchor p-0" id="contact-section">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <h1 class="text-center">{{ $contactData.section.name }}</h1>
+        <div class="row">
+          <div class="col-lg-6">
+            <h3>{{ $contactData.contactForm.title | default "Get In Touch" }}</h3>
+            <p>{{ $contactData.contactForm.subtitle | default "Let's discuss your project" }}</p>
+            
+            <div class="contact-links">
+              {{ range $contactData.socialLinks }}
+              <a href="{{ .url }}" class="contact-link" target="_blank">
+                <i class="{{ .icon }}"></i> {{ .name }}
+              </a>
+              {{ end }}
+            </div>
+            
+            {{ if $contactData.contactPage }}
+            <div class="mt-4">
+              <a href="{{ $contactData.contactPage }}" class="btn btn-primary">
+                📝 Full Contact Form
+              </a>
+            </div>
+            {{ end }}
+          </div>
+          
+          <div class="col-lg-6">
+            <div class="contact-info">
+              <h4>Contact Information</h4>
+              <div class="contact-item">
+                <i class="fas fa-envelope"></i>
+                <span>{{ $contactData.email }}</span>
+              </div>
+              {{ if $contactData.phone }}
+              <div class="contact-item">
+                <i class="fas fa-phone"></i>
+                <span>{{ $contactData.phone }}</span>
+              </div>
+              {{ end }}
+              <div class="contact-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>{{ $contactData.location }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.contact-link:hover {
+  background-color: rgba(0,0,0,0.1);
+  text-decoration: none;
+  color: inherit;
+}
+
+.contact-info {
+  background: rgba(255,255,255,0.1);
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.75rem 0;
+}
+
+@media (max-width: 768px) {
+  .contact-links {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+</style>
+
+{{ end }}

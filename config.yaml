@@ -11,6 +11,7 @@ params:
   assets:
     customSCSS:
       - scss/custom.scss
+      - styles/override.scss
 
 # Module configuration for npm dependencies
 module:
@@ -45,6 +46,11 @@ outputs:
     - HTML
     - RSS
     - JSON
+  page:
+    - HTML
+  section:
+    - HTML
+    - RSS
 
 # Enable global emoji support
 enableEmoji: true
@@ -180,6 +186,12 @@ params:
     disclaimer:
       enable: false
 
+  # Custom menu items for Toha theme
+  customMenus:
+    - name: "Contact"
+      url: "/contact"
+      hideFromNavbar: false
+
 # Menu configuration
 menu:
   main:
@@ -205,7 +217,7 @@ menu:
       url: "/posts"
       weight: 70
     - name: "Contact"
-      url: "/#contact"
+      url: "/contact"
       weight: 80
 
 # Taxonomies

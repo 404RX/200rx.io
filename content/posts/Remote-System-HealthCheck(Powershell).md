@@ -1,14 +1,16 @@
 ---
 title: "Remote System Health Checks with PowerShell"
 date: 2024-03-10T09:15:00Z
+draft: false
 description: "Learn how to automate system diagnostics across remote machines using PowerShell, complete with logging and test strategies"
 menu:
   sidebar:
-    name: System Health Checks
+    name: "Remote System Health Checks with PowerShell"
     identifier: system-health-checks
     weight: 30
 tags: ["PowerShell", "Automation", "Scripting", "Monitoring", "Infrastructure"]
 categories: ["IT Automation", "Infrastructure Management"]
+hero: "/images/default-hero.jpg"
 ---
 
 ## Introduction

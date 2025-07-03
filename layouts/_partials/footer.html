@@ -58,17 +58,24 @@
           <h5>{{ i18n "navigation" }}</h5>
           {{ if $sections }}
           <ul>
-            {{- range sort $sections "section.weight" }}
-              {{ if and (.section.enable) (.section.showOnNavbar)}}
-                {{ $sectionID := replace (lower .section.name) " " "-"  }}
-                {{ if .section.id }}
-                  {{ $sectionID = .section.id }}
-                {{ end }}
-                <li class="nav-item">
-                  <a class="smooth-scroll" href="{{ "" | absLangURL }}#{{ $sectionID }}">{{ .section.name }}</a>
-                </li>
-              {{ end }}
-            {{- end }}
+            <!-- Static navigation for footer -->
+            <li class="nav-item">
+              <a class="smooth-scroll" href="{{ "" | absLangURL }}#about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="smooth-scroll" href="{{ "" | absLangURL }}#skills">Skills</a>
+            </li>
+            <li class="nav-item">
+              <a class="smooth-scroll" href="{{ "" | absLangURL }}#experiences">Experience</a>
+            </li>
+            <li class="nav-item">
+              <a class="smooth-scroll" href="{{ "" | absLangURL }}#projects">Projects</a>
+            </li>
+            {{ if site.Params.features.blog.enable }}
+            <li class="nav-item">
+              <a href="{{ "" | absLangURL }}posts">Blog</a>
+            </li>
+            {{ end }}
             {{ if $customMenusEnabled }}
               {{ range $customMenus }}
                 {{ if .showOnFooter }}

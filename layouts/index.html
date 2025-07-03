@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ .Site.Language.Lang }}">
   <head>
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-
     <title>{{- .Site.Title -}}</title>
     {{ $siteDescription := .Site.Params.description }}
     {{ if (index .Site.Data .Site.Language.Lang).site }}
@@ -59,16 +56,15 @@
     <!--- ADD FOOTER ----------------------->
     {{ $footerTemplate:= site.Params.footer.template | default "footer.html" }}
     {{- partial $footerTemplate . -}}
+    
+    <!--- ADD CHATBOT ----------------------->
     {{ partial "chatbot.html" . }}
-
 
     <!--- ADD COMMON SCRIPTS --------------->
     {{ partial "scripts.html" . }}
 
     <!------ ADD SUPPORT LINKS -------->
     {{- partial "misc/support.html" . -}}
-
-  
 
   </body>
 </html>

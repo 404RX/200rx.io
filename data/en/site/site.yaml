@@ -1,0 +1,14 @@
+# Site specific information
+copyright: © 2025 Corey Miller. All rights reserved.
+
+# Meta tag information
+description: "System Administrator specializing in cloud administration, automation, and DevOps practices. Experienced in Windows, Networking, PowerShell, and federal environments."
+
+# Navigation title
+navBarTitle: "Corey Miller"
+
+# Custom menu items
+customMenus:
+  - name: "Contact"
+    url: "/contact"
+    hideFromNavbar: false

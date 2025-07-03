@@ -1,11 +1,11 @@
-<!-- Professional AI Chatbot with Contact Form Integration -->
+<!-- Professional AI Chatbot with CRM Integration -->
 <script>
 // Professional chatbot configuration
 window.ChatbotConfig = {
-    // Replace with your actual Render backend URL after deployment
     apiUrl: 'https://portfolio-ai-backend-1zyj.onrender.com',
+    crmApiUrl: 'http://localhost:3000',
     retryAttempts: 3,
-    timeout: 10000 // 10 seconds
+    timeout: 10000
 };
 
 class ProfessionalChatbot {
@@ -15,6 +15,7 @@ class ProfessionalChatbot {
         this.messages = [];
         this.sessionId = this.generateSessionId();
         this.apiUrl = window.ChatbotConfig.apiUrl;
+        this.crmApiUrl = window.ChatbotConfig.crmApiUrl;
         this.retryAttempts = window.ChatbotConfig.retryAttempts;
         this.timeout = window.ChatbotConfig.timeout;
         this.isTyping = false;
@@ -28,57 +29,54 @@ class ProfessionalChatbot {
     async init() {
         this.createChatInterface();
         this.bindEvents();
-        
-        // Check backend health on initialization
         await this.checkBackendHealth();
+        await this.checkCrmHealth();
     }
 
     async checkBackendHealth() {
         const statusEl = document.getElementById('connection-status');
-        
         try {
-            // Test the test endpoint first
-            console.log('Testing basic connectivity...');
-            const testResponse = await fetch(`${this.apiUrl}/api/test`, {
+            const response = await fetch(`${this.apiUrl}/api/health`, {
                 method: 'GET',
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json' },
+                signal: AbortSignal.timeout(5000)
             });
             
-            if (testResponse.ok) {
-                console.log('✅ Test endpoint working');
-                
-                // Now test health endpoint
-                const response = await fetch(`${this.apiUrl}/api/health`, {
-                    method: 'GET',
-                    headers: { 'Content-Type': 'application/json' },
-                    signal: AbortSignal.timeout(5000)
-                });
-                
-                if (response.ok) {
-                    const health = await response.json();
-                    if (health.ai_available) {
-                        statusEl.textContent = '🤖 AI Assistant Ready';
-                        statusEl.style.color = '#28a745';
-                    } else {
-                        statusEl.textContent = '🟡 Enhanced Assistant Ready';
-                        statusEl.style.color = '#ffc107';
-                    }
-                    console.log('Backend health:', health);
-                } else {
-                    throw new Error(`Backend unhealthy: ${response.status}`);
-                }
+            if (response.ok) {
+                const health = await response.json();
+                statusEl.textContent = health.ai_available ? '🤖 AI Ready' : '🟡 Enhanced Ready';
+                statusEl.style.color = health.ai_available ? '#28a745' : '#ffc107';
             } else {
-                throw new Error(`Test endpoint failed: ${testResponse.status}`);
+                throw new Error(`Backend unhealthy: ${response.status}`);
             }
         } catch (error) {
-            console.warn('Backend health check failed:', error);
-            statusEl.textContent = '🔴 Offline Mode';
+            statusEl.textContent = '🔴 AI Offline';
             statusEl.style.color = '#dc3545';
         }
     }
 
+    async checkCrmHealth() {
+        const crmStatusEl = document.getElementById('crm-status');
+        try {
+            const response = await fetch(`${this.crmApiUrl}/api/health`, {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+                signal: AbortSignal.timeout(5000)
+            });
+            
+            if (response.ok) {
+                crmStatusEl.textContent = '📊 CRM Active';
+                crmStatusEl.style.color = '#28a745';
+            } else {
+                throw new Error(`CRM unhealthy: ${response.status}`);
+            }
+        } catch (error) {
+            crmStatusEl.textContent = '📧 Email Mode';
+            crmStatusEl.style.color = '#ffc107';
+        }
+    }
+
     createChatInterface() {
-        // Enhanced chat launcher
         const launcher = document.createElement('div');
         launcher.id = 'chat-launcher';
         launcher.innerHTML = `
@@ -88,118 +86,84 @@ class ProfessionalChatbot {
             </div>
         `;
         launcher.style.cssText = `
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
+            position: fixed; bottom: 20px; right: 20px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 12px 16px;
-            border-radius: 25px;
-            cursor: pointer;
-            z-index: 1000;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            font-size: 14px;
-            font-weight: 500;
-            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
-            transition: all 0.3s ease;
-            border: none;
-            min-width: 200px;
-            text-align: center;
+            color: white; padding: 12px 16px; border-radius: 25px; cursor: pointer;
+            z-index: 1000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 14px; font-weight: 500; box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease; border: none; min-width: 200px; text-align: center;
         `;
 
-        launcher.addEventListener('mouseenter', () => {
-            launcher.style.transform = 'translateY(-2px)';
-            launcher.style.boxShadow = '0 6px 25px rgba(102, 126, 234, 0.5)';
-        });
-        
-        launcher.addEventListener('mouseleave', () => {
-            launcher.style.transform = 'translateY(0)';
-            launcher.style.boxShadow = '0 4px 20px rgba(102, 126, 234, 0.4)';
-        });
-
-        // Edge Copilot-style side panel with contact form
         const chatPanel = document.createElement('div');
         chatPanel.id = 'chat-panel';
         chatPanel.style.cssText = `
-            position: fixed;
-            top: 0;
-            right: -400px;
-            width: 400px;
-            height: 100vh;
-            background: #ffffff;
-            border-left: 1px solid #e1e5e9;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
-            z-index: 999999;
-            display: flex;
-            flex-direction: column;
+            position: fixed; top: 0; right: -400px; width: 400px; height: 100vh; background: #ffffff;
+            border-left: 1px solid #e1e5e9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1); z-index: 999999; display: flex; flex-direction: column;
             transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         `;
 
         chatPanel.innerHTML = `
-            <!-- Header -->
             <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; min-height: 60px; box-sizing: border-box;">
                 <div>
                     <div style="font-weight: 600; font-size: 16px; margin-bottom: 4px;">Corey's AI Assistant</div>
                     <div style="font-size: 12px; opacity: 0.9;">Powered by OpenAI</div>
                 </div>
-                <button id="chat-close" style="background: rgba(255,255,255,0.2); border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; transition: background 0.2s;">&times;</button>
+                <button id="chat-close" style="background: rgba(255,255,255,0.2); border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center;">&times;</button>
             </div>
             
-            <!-- Messages Area -->
-            <div id="chat-messages" style="flex: 1; overflow-y: auto; padding: 20px; background: #f8f9fa; scrollbar-width: thin;"></div>
+            <div id="chat-messages" style="flex: 1; overflow-y: auto; padding: 20px; background: #f8f9fa;"></div>
             
-            <!-- Input Area -->
             <div style="padding: 16px 20px; border-top: 1px solid #e1e5e9; background: white;">
                 <div style="display: flex; gap: 8px; align-items: flex-end;">
                     <textarea id="chat-input" placeholder="Ask me about Corey's experience..." 
-                           style="flex: 1; padding: 12px 16px; border: 2px solid #e1e5e9; border-radius: 12px; outline: none; font-size: 14px; transition: border-color 0.2s; resize: none; min-height: 44px; max-height: 120px; font-family: inherit; line-height: 1.4;"
+                           style="flex: 1; padding: 12px 16px; border: 2px solid #e1e5e9; border-radius: 12px; outline: none; font-size: 14px; resize: none; min-height: 44px; max-height: 120px; font-family: inherit;"
                            rows="1" maxlength="1000"></textarea>
-                    <button id="send-button" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; color: white; width: 44px; height: 44px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.2s; flex-shrink: 0;">
+                    <button id="send-button" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; color: white; width: 44px; height: 44px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
                         <span style="font-size: 16px; transform: rotate(-45deg);">➤</span>
                     </button>
                 </div>
-                <div style="display: flex; gap: 8px; margin-top: 8px; align-items: center;">
-                    <div id="connection-status" style="font-size: 11px; color: #6c757d; flex: 1;">Checking connection...</div>
-                    <button id="contact-trigger" style="background: transparent; border: 1px solid #667eea; color: #667eea; padding: 6px 12px; border-radius: 6px; font-size: 11px; cursor: pointer; transition: all 0.2s;">Contact Corey</button>
+                <div style="display: flex; gap: 8px; margin-top: 8px; align-items: center; flex-wrap: wrap;">
+                    <div id="connection-status" style="font-size: 11px; color: #6c757d; flex: 1;">Checking AI...</div>
+                    <div id="crm-status" style="font-size: 11px; color: #6c757d; flex: 1;">Checking CRM...</div>
+                    <button id="contact-trigger" style="background: transparent; border: 1px solid #667eea; color: #667eea; padding: 6px 12px; border-radius: 6px; font-size: 11px; cursor: pointer;">Contact Corey</button>
                 </div>
             </div>
             
-            <!-- Contact Form -->
             <div id="contact-form" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: white; transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 10;">
                 <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; min-height: 60px; box-sizing: border-box;">
                     <div>
-                        <div style="font-weight: 600; font-size: 16px; margin-bottom: 4px;">Contact Corey</div>
-                        <div style="font-size: 12px; opacity: 0.9;">Get in touch directly</div>
+                        <div style="font-weight: 600; font-size: 16px; margin-bottom: 4px;">Professional Contact Form</div>
+                        <div style="font-size: 12px; opacity: 0.9;">Powered by CRM • Instant notifications</div>
                     </div>
-                    <button id="contact-back" style="background: rgba(255,255,255,0.2); border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; transition: background 0.2s;">←</button>
+                    <button id="contact-back" style="background: rgba(255,255,255,0.2); border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 18px;">←</button>
                 </div>
                 
                 <div style="padding: 20px; height: calc(100% - 92px); overflow-y: auto;">
                     <form id="contact-form-data" style="display: flex; flex-direction: column; gap: 16px;">
                         <div>
                             <label style="display: block; margin-bottom: 6px; font-weight: 500; color: #2c3e50;">Your Name *</label>
-                            <input type="text" id="contact-name" required style="width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 14px; outline: none; transition: border-color 0.2s; box-sizing: border-box;" placeholder="John Smith">
+                            <input type="text" id="contact-name" required style="width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 14px; outline: none; box-sizing: border-box;" placeholder="John Smith">
                         </div>
                         
                         <div>
                             <label style="display: block; margin-bottom: 6px; font-weight: 500; color: #2c3e50;">Email Address *</label>
-                            <input type="email" id="contact-email" required style="width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 14px; outline: none; transition: border-color 0.2s; box-sizing: border-box;" placeholder="john@company.com">
+                            <input type="email" id="contact-email" required style="width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 14px; outline: none; box-sizing: border-box;" placeholder="john@company.com">
                         </div>
                         
                         <div>
                             <label style="display: block; margin-bottom: 6px; font-weight: 500; color: #2c3e50;">Company/Organization</label>
-                            <input type="text" id="contact-company" style="width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 14px; outline: none; transition: border-color 0.2s; box-sizing: border-box;" placeholder="Your Company">
+                            <input type="text" id="contact-company" style="width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 14px; outline: none; box-sizing: border-box;" placeholder="Your Company">
                         </div>
                         
                         <div>
                             <label style="display: block; margin-bottom: 6px; font-weight: 500; color: #2c3e50;">Phone Number</label>
-                            <input type="tel" id="contact-phone" style="width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 14px; outline: none; transition: border-color 0.2s; box-sizing: border-box;" placeholder="(555) 123-4567">
+                            <input type="tel" id="contact-phone" style="width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 14px; outline: none; box-sizing: border-box;" placeholder="(555) 123-4567">
                         </div>
                         
                         <div>
                             <label style="display: block; margin-bottom: 6px; font-weight: 500; color: #2c3e50;">Subject *</label>
-                            <select id="contact-subject" required style="width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 14px; outline: none; transition: border-color 0.2s; box-sizing: border-box; background: white;">
+                            <select id="contact-subject" required style="width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 14px; outline: none; box-sizing: border-box; background: white;">
                                 <option value="">Select a topic...</option>
                                 <option value="job-opportunity">Job Opportunity</option>
                                 <option value="consultation">Technical Consultation</option>
@@ -212,11 +176,11 @@ class ProfessionalChatbot {
                         
                         <div>
                             <label style="display: block; margin-bottom: 6px; font-weight: 500; color: #2c3e50;">Message *</label>
-                            <textarea id="contact-message" required rows="4" style="width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 14px; outline: none; transition: border-color 0.2s; resize: vertical; min-height: 100px; font-family: inherit; box-sizing: border-box;" placeholder="Tell Corey about your opportunity, project, or how you'd like to connect..."></textarea>
+                            <textarea id="contact-message" required rows="4" style="width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 14px; outline: none; resize: vertical; min-height: 100px; font-family: inherit; box-sizing: border-box;" placeholder="Tell Corey about your opportunity, project, or how you'd like to connect..."></textarea>
                         </div>
                         
                         <div style="margin-top: 8px;">
-                            <button type="submit" id="contact-submit" style="width: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 14px; border-radius: 8px; font-size: 16px; font-weight: 500; cursor: pointer; transition: transform 0.2s;">Send Message to Corey</button>
+                            <button type="submit" id="contact-submit" style="width: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 14px; border-radius: 8px; font-size: 16px; font-weight: 500; cursor: pointer;">Send Message to Corey</button>
                         </div>
                         
                         <div style="text-align: center; margin-top: 16px; padding-top: 16px; border-top: 1px solid #e1e5e9;">
@@ -231,103 +195,44 @@ class ProfessionalChatbot {
             </div>
         `;
 
-        // Auto-resize textarea
-        setTimeout(() => {
-            const textarea = document.getElementById('chat-input');
-            if (textarea) {
-                textarea.addEventListener('input', function() {
-                    this.style.height = 'auto';
-                    this.style.height = Math.min(this.scrollHeight, 120) + 'px';
-                });
-            }
-        }, 100);
-
-        // Add to page
         document.body.appendChild(chatPanel);
         document.body.appendChild(launcher);
-
-        // Add styles
         this.addStyles();
     }
 
     addStyles() {
         const style = document.createElement('style');
         style.textContent = `
-            #contact-trigger:hover {
-                background: #667eea !important;
-                color: white !important;
-            }
-            #contact-form input:focus,
-            #contact-form select:focus,
-            #contact-form textarea:focus {
-                border-color: #667eea !important;
-            }
-            #contact-submit:hover {
-                transform: translateY(-1px);
-            }
-            @media (max-width: 768px) {
-                #chat-panel {
-                    width: 100vw !important;
-                    right: -100vw !important;
-                }
-                #chat-panel.open {
-                    right: 0 !important;
-                }
-            }
+            @keyframes typing { 0%, 60%, 100% { transform: translateY(0); opacity: 0.4; } 30% { transform: translateY(-10px); opacity: 1; } }
+            @media (max-width: 768px) { #chat-panel { width: 100vw !important; right: -100vw !important; } #chat-panel.open { right: 0 !important; } }
         `;
         document.head.appendChild(style);
     }
 
     bindEvents() {
-        const launcher = document.getElementById('chat-launcher');
-        const chatPanel = document.getElementById('chat-panel');
-        const closeBtn = document.getElementById('chat-close');
-        const input = document.getElementById('chat-input');
-        const sendBtn = document.getElementById('send-button');
-        const contactTrigger = document.getElementById('contact-trigger');
-        const contactBack = document.getElementById('contact-back');
-        const contactForm = document.getElementById('contact-form-data');
-
-        launcher.addEventListener('click', () => this.toggleChat());
-        closeBtn.addEventListener('click', () => this.toggleChat());
-        sendBtn.addEventListener('click', () => this.sendMessage());
-        contactTrigger.addEventListener('click', () => this.showContactForm());
-        contactBack.addEventListener('click', () => this.hideContactForm());
-        contactForm.addEventListener('submit', (e) => this.handleContactSubmit(e));
+        document.getElementById('chat-launcher').addEventListener('click', () => this.toggleChat());
+        document.getElementById('chat-close').addEventListener('click', () => this.toggleChat());
+        document.getElementById('send-button').addEventListener('click', () => this.sendMessage());
+        document.getElementById('contact-trigger').addEventListener('click', () => this.showContactForm());
+        document.getElementById('contact-back').addEventListener('click', () => this.hideContactForm());
+        document.getElementById('contact-form-data').addEventListener('submit', (e) => this.handleContactSubmit(e));
         
-        input.addEventListener('keypress', (e) => {
+        document.getElementById('chat-input').addEventListener('keypress', (e) => {
             if (e.key === 'Enter' && !e.shiftKey && !this.isTyping) {
                 e.preventDefault();
                 this.sendMessage();
             }
         });
-
-        // Handle Escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                if (this.isContactFormOpen) {
-                    this.hideContactForm();
-                } else if (this.isOpen) {
-                    this.toggleChat();
-                }
-            }
-        });
     }
 
-    // Contact form methods
     showContactForm() {
-        const contactFormEl = document.getElementById('contact-form');
-        contactFormEl.style.transform = 'translateX(0)';
+        document.getElementById('contact-form').style.transform = 'translateX(0)';
         this.isContactFormOpen = true;
-        
-        setTimeout(() => {
-            document.getElementById('contact-name').focus();
-        }, 300);
+        setTimeout(() => document.getElementById('contact-name').focus(), 300);
     }
 
     hideContactForm() {
-        const contactFormEl = document.getElementById('contact-form');
-        contactFormEl.style.transform = 'translateX(100%)';
+        document.getElementById('contact-form').style.transform = 'translateX(100%)';
         this.isContactFormOpen = false;
     }
 
@@ -348,35 +253,75 @@ class ProfessionalChatbot {
             return;
         }
         
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(formData.email)) {
+            alert('Please enter a valid email address.');
+            return;
+        }
+        
         const submitBtn = document.getElementById('contact-submit');
         submitBtn.textContent = 'Sending...';
         submitBtn.disabled = true;
         
         try {
-            const emailBody = this.formatEmailBody(formData);
-            const mailtoLink = `mailto:Ray@200rx.com?subject=${encodeURIComponent(`Contact Form: ${formData.subject}`)}&body=${encodeURIComponent(emailBody)}`;
+            const response = await fetch(`${this.crmApiUrl}/api/leads`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
+                signal: AbortSignal.timeout(10000)
+            });
             
+            if (response.ok) {
+                const result = await response.json();
+                this.hideContactForm();
+                this.addMessage('assistant', 
+                    `✅ Thank you ${formData.name}! Your message has been received and assigned reference ID: ${result.data.reference_id}. 
+
+Corey will review your ${this.getSubjectDisplayName(formData.subject)} inquiry and respond within 24 hours.
+
+Priority Level: ${result.data.priority.toUpperCase()}
+Lead Score: ${result.data.lead_score}/100`
+                );
+                
+                document.getElementById('contact-form-data').reset();
+                document.getElementById('crm-status').textContent = '✅ Lead Captured';
+                document.getElementById('crm-status').style.color = '#28a745';
+            } else {
+                throw new Error(`CRM API error: ${response.status}`);
+            }
+        } catch (error) {
+            console.warn('CRM unavailable, using mailto fallback');
+            const emailBody = this.formatEmailBody(formData);
+            const mailtoLink = `mailto:Ray@200rx.com?subject=${encodeURIComponent(`Contact Form: ${this.getSubjectDisplayName(formData.subject)}`)}&body=${encodeURIComponent(emailBody)}`;
             window.location.href = mailtoLink;
             
             this.hideContactForm();
-            this.addMessage('assistant', `Thank you ${formData.name}! Your email client should have opened with a pre-filled message to Corey. If it didn't open automatically, please email Ray@200rx.com directly.`);
-            
+            this.addMessage('assistant', `Thank you ${formData.name}! Your email client should open with a pre-filled message to Corey.`);
             document.getElementById('contact-form-data').reset();
-            
-        } catch (error) {
-            console.error('Contact form error:', error);
-            alert('There was an issue. Please email Ray@200rx.com directly.');
         } finally {
             submitBtn.textContent = 'Send Message to Corey';
             submitBtn.disabled = false;
         }
     }
 
+    getSubjectDisplayName(subject) {
+        const map = {
+            'job-opportunity': 'Job Opportunity',
+            'consultation': 'Technical Consultation',
+            'project-collaboration': 'Project Collaboration',
+            'networking': 'Professional Networking',
+            'speaking': 'Speaking Engagement',
+            'other': 'General Inquiry'
+        };
+        return map[subject] || 'Contact Request';
+    }
+
     formatEmailBody(formData) {
         return `Hi Corey,
 
-I'm reaching out regarding: ${formData.subject}
+I'm reaching out regarding: ${this.getSubjectDisplayName(formData.subject)}
 
+Contact Information:
 Name: ${formData.name}
 Email: ${formData.email}
 ${formData.company ? `Company: ${formData.company}\n` : ''}${formData.phone ? `Phone: ${formData.phone}\n` : ''}
@@ -388,20 +333,8 @@ Best regards,
 ${formData.name}
 
 ---
-Sent via your portfolio contact form`;
-    }
-
-    // Enhanced message detection for contact form triggers
-    detectContactIntent(message) {
-        const contactKeywords = [
-            'contact', 'email', 'reach out', 'get in touch', 'hire', 'job', 
-            'opportunity', 'work together', 'collaborate', 'consultation',
-            'speak with', 'talk to', 'connect with', 'meeting', 'call',
-            'interview', 'position', 'role', 'employment'
-        ];
-        
-        const msg = message.toLowerCase();
-        return contactKeywords.some(keyword => msg.includes(keyword));
+Sent via 200rx.com contact form
+${new Date().toLocaleString()}`;
     }
 
     async toggleChat() {
@@ -412,7 +345,6 @@ Sent via your portfolio contact form`;
         
         if (this.isOpen) {
             chatPanel.style.right = '0';
-            chatPanel.classList.add('open');
             launcher.style.opacity = '0';
             launcher.style.visibility = 'hidden';
             
@@ -420,80 +352,42 @@ Sent via your portfolio contact form`;
                 this.addMessage('assistant', "Hello! I'm Corey's AI assistant. I can provide detailed information about his professional background, technical expertise, and project experience. What would you like to know?");
             }
             
-            setTimeout(() => {
-                document.getElementById('chat-input').focus();
-            }, 300);
+            setTimeout(() => document.getElementById('chat-input').focus(), 300);
         } else {
             chatPanel.style.right = window.innerWidth <= 768 ? '-100vw' : '-400px';
-            chatPanel.classList.remove('open');
             launcher.style.opacity = '1';
             launcher.style.visibility = 'visible';
         }
     }
 
     addMessage(sender, text, typing = false) {
-        const messagesContainer = document.getElementById('chat-messages');
-        const messageDiv = document.createElement('div');
+        const container = document.getElementById('chat-messages');
+        const div = document.createElement('div');
         const isUser = sender === 'user';
         
-        messageDiv.style.cssText = `
-            margin-bottom: 16px;
-            display: flex;
-            ${isUser ? 'justify-content: flex-end' : 'justify-content: flex-start'};
-        `;
+        div.style.cssText = `margin-bottom: 16px; display: flex; ${isUser ? 'justify-content: flex-end' : 'justify-content: flex-start'};`;
         
-        const messageBubble = document.createElement('div');
-        messageBubble.style.cssText = `
-            max-width: 80%;
-            padding: 12px 16px;
+        const bubble = document.createElement('div');
+        bubble.style.cssText = `
+            max-width: 80%; padding: 12px 16px;
             border-radius: ${isUser ? '18px 18px 4px 18px' : '18px 18px 18px 4px'};
             background: ${isUser ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : '#ffffff'};
             color: ${isUser ? 'white' : '#2c3e50'};
             border: ${isUser ? 'none' : '1px solid #e9ecef'};
-            font-size: 14px;
-            line-height: 1.5;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            position: relative;
+            font-size: 14px; line-height: 1.5; white-space: pre-wrap; word-wrap: break-word;
         `;
 
         if (typing) {
-            messageBubble.id = 'typing-indicator';
-            messageBubble.innerHTML = `
-                <div style="display: flex; align-items: center; gap: 8px;">
-                    <div style="display: flex; gap: 4px;">
-                        <div class="typing-dot" style="width: 8px; height: 8px; border-radius: 50%; background: #6c757d; animation: typing 1.4s infinite ease-in-out;"></div>
-                        <div class="typing-dot" style="width: 8px; height: 8px; border-radius: 50%; background: #6c757d; animation: typing 1.4s infinite ease-in-out 0.2s;"></div>
-                        <div class="typing-dot" style="width: 8px; height: 8px; border-radius: 50%; background: #6c757d; animation: typing 1.4s infinite ease-in-out 0.4s;"></div>
-                    </div>
-                    <span style="color: #6c757d; font-style: italic; font-size: 12px;">AI is thinking...</span>
-                </div>
-            `;
+            bubble.id = 'typing-indicator';
+            bubble.innerHTML = '<div style="display: flex; gap: 4px;"><div style="width: 8px; height: 8px; border-radius: 50%; background: #6c757d; animation: typing 1.4s infinite;"></div><div style="width: 8px; height: 8px; border-radius: 50%; background: #6c757d; animation: typing 1.4s infinite 0.2s;"></div><div style="width: 8px; height: 8px; border-radius: 50%; background: #6c757d; animation: typing 1.4s infinite 0.4s;"></div></div>';
         } else {
-            messageBubble.textContent = text;
-        }
-        
-        messageDiv.appendChild(messageBubble);
-        messagesContainer.appendChild(messageDiv);
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        
-        if (!typing) {
+            bubble.textContent = text;
             this.messages.push({ sender, text, timestamp: new Date().toISOString() });
         }
-    }
-
-    showTyping() {
-        this.addMessage('assistant', '', true);
-        this.isTyping = true;
-    }
-    
-    hideTyping() {
-        const typing = document.getElementById('typing-indicator');
-        if (typing) {
-            typing.parentElement.remove();
-        }
-        this.isTyping = false;
+        
+        div.appendChild(bubble);
+        container.appendChild(div);
+        container.scrollTop = container.scrollHeight;
     }
 
     async sendMessage() {
@@ -502,96 +396,40 @@ Sent via your portfolio contact form`;
         
         if (!message || this.isTyping) return;
         
-        // Add user message
         this.addMessage('user', message);
         input.value = '';
-        input.style.height = 'auto';
         
-        // Check if this is a contact-related message
-        if (this.detectContactIntent(message)) {
-            setTimeout(() => {
-                this.addMessage('assistant', `I'd be happy to help you get in touch with Corey! You can either continue our conversation here, or click the "Contact Corey" button below to open a contact form for a direct message. What would you prefer?`);
-            }, 500);
-            return;
-        }
-        
-        // Show typing indicator
-        this.showTyping();
+        this.addMessage('assistant', '', true);
+        this.isTyping = true;
         
         try {
-            const response = await this.queryBackend(message);
-            this.hideTyping();
-            this.addMessage('assistant', response.response);
+            const response = await fetch(`${this.apiUrl}/api/chat`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message, sessionId: this.sessionId }),
+                signal: AbortSignal.timeout(this.timeout)
+            });
             
-            // Update status based on response source
-            const statusEl = document.getElementById('connection-status');
-            if (response.source === 'ai') {
-                statusEl.textContent = '🤖 AI Response';
-                statusEl.style.color = '#28a745';
-            } else if (response.source === 'cache') {
-                statusEl.textContent = '⚡ Cached Response';
-                statusEl.style.color = '#17a2b8';
-            } else {
-                statusEl.textContent = '🔧 Enhanced Response';
-                statusEl.style.color = '#ffc107';
-            }
+            document.getElementById('typing-indicator').parentElement.remove();
+            this.isTyping = false;
             
-        } catch (error) {
-            this.hideTyping();
-            console.error('Chat error:', error);
-            this.addMessage('assistant', "I apologize, but I'm experiencing some technical difficulties. Please feel free to contact Corey directly at Ray@200rx.com for any questions about his background and experience.");
-            
-            const statusEl = document.getElementById('connection-status');
-            statusEl.textContent = '🔴 Connection Error';
-            statusEl.style.color = '#dc3545';
-        }
-    }
-    
-    async queryBackend(message) {
-        for (let attempt = 1; attempt <= this.retryAttempts; attempt++) {
-            try {
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), this.timeout);
-                
-                const response = await fetch(`${this.apiUrl}/api/chat`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        message: message,
-                        sessionId: this.sessionId
-                    }),
-                    signal: controller.signal
-                });
-                
-                clearTimeout(timeoutId);
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
-                
+            if (response.ok) {
                 const data = await response.json();
-                return data;
-                
-            } catch (error) {
-                console.warn(`Attempt ${attempt} failed:`, error.message);
-                
-                if (attempt === this.retryAttempts) {
-                    throw error;
-                }
-                
-                // Wait before retry (exponential backoff)
-                await new Promise(resolve => setTimeout(resolve, Math.pow(2, attempt) * 1000));
+                this.addMessage('assistant', data.response);
+            } else {
+                throw new Error(`HTTP ${response.status}`);
             }
+        } catch (error) {
+            document.getElementById('typing-indicator')?.parentElement?.remove();
+            this.isTyping = false;
+            this.addMessage('assistant', "I'm experiencing technical difficulties. Please contact Corey directly at Ray@200rx.com.");
         }
     }
 }
 
-// Initialize professional chatbot when page loads
+// Initialize chatbot
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('🚀 Initializing Professional AI Chatbot with Contact Form...');
+    console.log('🚀 Initializing Professional AI Chatbot with CRM Integration...');
     new ProfessionalChatbot();
 });
 </script>

@@ -1,0 +1,35 @@
+/* Custom CSS overrides for Toha theme - minimal fixes only */
+
+/* Fix navbar overlap on individual post pages */
+.type-posts.kind-page .wrapper {
+  padding-top: 20px; /* Just a small adjustment for navbar overlap */
+}
+
+/* Ensure proper spacing for post content without breaking layout */
+.type-posts.kind-page .content {
+  margin-top: 10px;
+}
+
+/* Posts list page - expand content when no TOC is present */
+.type-posts.kind-section .wrapper {
+  .content-section {
+    flex: 80% !important;
+    max-width: 80% !important;
+  }
+  
+  .toc-section {
+    display: none; /* Hide empty TOC section on posts list page */
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .type-posts.kind-page .wrapper {
+    padding-top: 15px;
+  }
+  
+  .type-posts.kind-section .wrapper .content-section {
+    flex: 100% !important;
+    max-width: 100% !important;
+  }
+}
