@@ -218,7 +218,7 @@ class ProfessionalChatbot {
             /* Mobile-specific chatbot styles */
             @media (max-width: 768px) { 
                 #chat-launcher {
-                    bottom: 15px !important;
+                    bottom: calc(15px + env(safe-area-inset-bottom)) !important;
                     right: 15px !important;
                     min-width: 180px !important;
                     padding: 10px 14px !important;
@@ -229,7 +229,10 @@ class ProfessionalChatbot {
                     width: 100vw !important; 
                     right: -100vw !important;
                     height: 100vh !important;
+                    height: 100dvh !important; /* Dynamic viewport height for mobile */
                     top: 0 !important;
+                    padding-bottom: env(safe-area-inset-bottom) !important;
+                    box-sizing: border-box !important;
                 } 
                 
                 #chat-panel.open { 
@@ -238,10 +241,41 @@ class ProfessionalChatbot {
                 
                 #chat-messages {
                     padding: 15px !important;
+                    padding-bottom: calc(15px + env(safe-area-inset-bottom)) !important;
                 }
                 
                 #chat-input {
                     font-size: 16px !important; /* Prevents zoom on iOS */
+                }
+                
+                /* Specific input area positioning for iOS */
+                #chat-panel > div:last-child {
+                    padding-bottom: calc(16px + env(safe-area-inset-bottom)) !important;
+                    margin-bottom: env(safe-area-inset-bottom) !important;
+                }
+            }
+            
+            /* iOS Safari specific fixes */
+            @supports (-webkit-touch-callout: none) {
+                @media (max-width: 768px) {
+                    #chat-panel {
+                        height: calc(100vh - env(safe-area-inset-bottom)) !important;
+                        height: calc(100dvh - env(safe-area-inset-bottom)) !important;
+                    }
+                    
+                    #chat-launcher {
+                        bottom: calc(25px + env(safe-area-inset-bottom)) !important;
+                    }
+                    
+                    /* Ensure input area is above iOS URL bar */
+                    #chat-panel > div:last-child {
+                        position: relative !important;
+                        bottom: env(safe-area-inset-bottom) !important;
+                        padding-bottom: calc(20px + env(safe-area-inset-bottom)) !important;
+                        background: white !important;
+                        border-top: 1px solid #e1e5e9 !important;
+                        margin-bottom: 0 !important;
+                    }
                 }
             }
             
@@ -540,6 +574,53 @@ ${new Date().toLocaleString()}`;
 // Initialize chatbot
 document.addEventListener('DOMContentLoaded', () => {
     console.log('🚀 Initializing Professional AI Chatbot with CRM Integration...');
-    new ProfessionalChatbot();
+    const chatbot = new ProfessionalChatbot();
+    
+    // Handle iOS viewport changes (URL bar, keyboard)
+    let initialViewportHeight = window.innerHeight;
+    
+    window.addEventListener('resize', () => {
+        if (window.innerWidth <= 768) {
+            const chatPanel = document.getElementById('chat-panel');
+            const currentHeight = window.innerHeight;
+            
+            // If height changed significantly (keyboard or URL bar)
+            if (Math.abs(currentHeight - initialViewportHeight) > 150) {
+                if (chatPanel && chatbot.isOpen) {
+                    // Adjust chat panel height dynamically
+                    chatPanel.style.height = `${currentHeight}px`;
+                    
+                    // Ensure input stays visible
+                    const inputArea = chatPanel.querySelector('div:last-child');
+                    if (inputArea) {
+                        inputArea.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                    }
+                }
+            }
+        }
+    });
+    
+    // Handle focus events on chat input for better iOS keyboard handling
+    window.addEventListener('load', () => {
+        const chatInput = document.getElementById('chat-input');
+        if (chatInput) {
+            chatInput.addEventListener('focus', () => {
+                if (window.innerWidth <= 768) {
+                    setTimeout(() => {
+                        // Scroll the input into view above the iOS URL bar
+                        const viewportHeight = window.innerHeight;
+                        const inputRect = chatInput.getBoundingClientRect();
+                        const urlBarHeight = 44; // Approximate iOS URL bar height
+                        
+                        if (inputRect.bottom > (viewportHeight - urlBarHeight)) {
+                            window.scrollBy(0, inputRect.bottom - (viewportHeight - urlBarHeight - 20));
+                        }
+                        
+                        chatInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 300);
+                }
+            });
+        }
+    });
 });
 </script>
