@@ -3,7 +3,8 @@
 // Professional chatbot configuration
 window.ChatbotConfig = {
     apiUrl: 'https://portfolio-ai-backend-1zyj.onrender.com',
-    crmApiUrl: 'http://localhost:3000',
+    crmApiUrl: 'https://200rxio-crm-production.up.railway.app',
+    crmApiUrlFallback: 'http://localhost:3000', // Local fallback for development
     retryAttempts: 3,
     timeout: 10000
 };
@@ -62,28 +63,41 @@ class ProfessionalChatbot {
 
     async checkCrmHealth() {
         const crmStatusEl = document.getElementById('crm-status');
-        try {
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 5000);
-            
-            const response = await fetch(`${this.crmApiUrl}/api/health`, {
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' },
-                signal: controller.signal
-            });
-            
-            clearTimeout(timeoutId);
-            
-            if (response.ok) {
-                crmStatusEl.textContent = '📊 CRM Active';
-                crmStatusEl.style.color = '#28a745';
-            } else {
-                throw new Error(`CRM unhealthy: ${response.status}`);
+        
+        // Try production URL first, then fallback
+        const urlsToTry = [
+            this.crmApiUrl,
+            window.ChatbotConfig.crmApiUrlFallback
+        ];
+        
+        for (const url of urlsToTry) {
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000);
+                
+                const response = await fetch(`${url}/api/health`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' },
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeoutId);
+                
+                if (response.ok) {
+                    // Update to working URL
+                    this.crmApiUrl = url;
+                    crmStatusEl.textContent = url.includes('localhost') ? '🏠 CRM Local' : '📊 CRM Active';
+                    crmStatusEl.style.color = '#28a745';
+                    return;
+                }
+            } catch (error) {
+                console.warn(`CRM health check failed for ${url}:`, error.message);
             }
-        } catch (error) {
-            crmStatusEl.textContent = '📧 Email Mode';
-            crmStatusEl.style.color = '#ffc107';
         }
+        
+        // All URLs failed
+        crmStatusEl.textContent = '📧 Email Mode';
+        crmStatusEl.style.color = '#ffc107';
     }
 
     createChatInterface() {
