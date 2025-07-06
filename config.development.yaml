@@ -1,0 +1,48 @@
+baseURL: "https://dev--200rx.netlify.app"
+languageCode: "en-us"
+title: "Ray Miller - IT Infrastructure Specialist [DEV]"
+theme: "toha"
+
+# Development-specific parameters
+params:
+  # Development environment indicators
+  environment: "development"
+  showEnvironmentBadge: true
+  
+  # Development API endpoints
+  crmApiUrl: "https://200rxio-crm-development.up.railway.app"
+  aiApiUrl: "https://portfolio-ai-development.up.railway.app"
+  
+  # Development analytics (disable or use test IDs)
+  analytics:
+    google:
+      id: "" # Disable in dev or use GA4-DEV-ID
+    
+  # Development contact form
+  contact:
+    testMode: true
+    
+# Development build settings
+build:
+  writeStats: true
+  
+# Development markup settings  
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+  highlight:
+    style: github
+    noClasses: false
+    
+# Enable development features
+enableRobotsTXT: false # Disable robots.txt in dev
+enableGitInfo: true
+enableEmoji: true
+
+# Development menu structure
+menu:
+  main:
+    - name: "🚧 DEV ENVIRONMENT"
+      url: "#"
+      weight: 1
