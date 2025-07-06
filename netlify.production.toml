@@ -1,0 +1,38 @@
+# Netlify Production Environment Configuration
+
+[build]
+  command = "cd themes/toha && npm install && cd ../.. && npm install && cd src && rm -rf node_modules package-lock.json && npm install && npm run build && cd .. && hugo --config config.yaml --gc --minify"
+  publish = "public"
+
+[build.environment]
+  NODE_VERSION = "18"
+  NPM_FLAGS = "--legacy-peer-deps"
+  SECRETS_SCAN_ENABLED = "false"
+  HUGO_VERSION = "0.146.0"
+  HUGO_EXTENDED = "true"
+  HUGO_ENV = "production"
+
+# Production redirects
+[[redirects]]
+  from = "/api/crm/*"
+  to = "https://200rxio-crm-production.up.railway.app/api/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/ai/*"
+  to = "https://portfolio-ai-backend-1zyj.onrender.com/api/:splat"
+  status = 200
+  force = true
+
+# Production headers with strict CSP
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+    Content-Security-Policy = "default-src 'self' https: 'unsafe-inline' 'unsafe-eval'; img-src 'self' https: data:; connect-src 'self' https://200rx.com https://200rxio-crm-production.up.railway.app https://portfolio-ai-backend-1zyj.onrender.com; frame-ancestors 'none';"
+    X-Environment = "production"

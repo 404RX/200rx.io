@@ -36,4 +36,4 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
-    Content-Security-Policy = "default-src 'self' https: 'unsafe-inline' 'unsafe-eval'; img-src 'self' https: data:; connect-src 'self' https://api.200rx.com https://*.netlify.app; frame-ancestors 'none';"
+    Content-Security-Policy = "default-src 'self' https: 'unsafe-inline' 'unsafe-eval'; img-src 'self' https: data:; connect-src 'self' https://api.200rx.com https://*.netlify.app https://dev-200rx.netlify.app https://200rxio-crm-development.up.railway.app https://200rxio-crm-production.up.railway.app https://portfolio-ai-development.up.railway.app https://portfolio-ai-backend-1zyj.onrender.com http://localhost:3000 http://localhost:3001; frame-ancestors 'none';"
