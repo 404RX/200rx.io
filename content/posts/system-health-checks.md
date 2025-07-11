@@ -42,7 +42,7 @@ export default async function handler(request) {
     timestamp: new Date().toISOString()
   }), {
     headers: { 'content-type': 'application/json' }
-  });
+  });1
 }
 ```
 

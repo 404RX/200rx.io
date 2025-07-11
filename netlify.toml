@@ -1,33 +1,31 @@
-# Netlify Configuration
-# This file configures how Netlify builds and deploys your site
+# Netlify Development Environment Configuration
 
 [build]
-  # Build command for the React application
-  command = "cd themes/toha && npm install && cd ../.. && npm install && cd src && rm -rf node_modules package-lock.json && npm install && npm run build && cd .. && hugo --gc --minify"
-  # Directory containing the built files
+  command = "cd themes/toha && npm install && cd ../.. && npm install && cd src && rm -rf node_modules package-lock.json && npm install && npm run build && cd .. && hugo --config config.development.yaml --gc --minify"
   publish = "public"
 
-# Environment variables documentation
-# These variables must be set in Netlify's dashboard:
-# Site settings > Build & deploy > Environment
 [build.environment]
-  # Node version for the build
   NODE_VERSION = "18"
-  # Ensure clean installs
   NPM_FLAGS = "--legacy-peer-deps"
-  # Disable secrets scanning for build output
   SECRETS_SCAN_ENABLED = "false"
   HUGO_VERSION = "0.146.0"
   HUGO_EXTENDED = "true"
+  HUGO_ENV = "development"
 
-# Redirects for SPA
+# Development-specific redirects
 [[redirects]]
-  from = "/api/*"
-  to = "https://api.200rx.com/:splat"
+  from = "/api/crm/*"
+  to = "https://200rxio-crm-development.up.railway.app/api/:splat"
   status = 200
   force = true
 
-# Headers for security
+[[redirects]]
+  from = "/api/ai/*"
+  to = "https://dev-200rx.netlify.app/:splat"
+  status = 200
+  force = true
+
+# Development headers with permissive CSP
 [[headers]]
   for = "/*"
   [headers.values]
@@ -36,4 +34,11 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
-    Content-Security-Policy = "default-src 'self' https: 'unsafe-inline' 'unsafe-eval'; img-src 'self' https: data:; connect-src 'self' https://api.200rx.com https://*.netlify.app https://dev-200rx.netlify.app https://200rxio-crm-development.up.railway.app https://200rxio-crm-production.up.railway.app https://portfolio-ai-development.up.railway.app https://portfolio-ai-backend-1zyj.onrender.com http://localhost:3000 http://localhost:3001; frame-ancestors 'none';"
+    Content-Security-Policy = "default-src 'self' https: 'unsafe-inline' 'unsafe-eval'; img-src 'self' https: data:; connect-src 'self' https://dev-200rx.netlify.app/ https://*.netlify.app https://200rxio-crm-development.up.railway.app https://portfolio-ai-development.up.railway.app http://localhost:3000 http://localhost:3001; frame-ancestors 'none';"
+    X-Environment = "development"
+
+# Development environment badge
+[[headers]]
+  for = "/"
+  [headers.values]
+    X-Dev-Environment = "This is a development environment"

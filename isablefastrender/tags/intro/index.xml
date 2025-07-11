@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Intro on Ray Miller - IT Infrastructure Specialist [DEV]</title>
+    <link>http://localhost:1313/tags/intro/</link>
+    <description>Recent content in Intro on Ray Miller - IT Infrastructure Specialist [DEV]</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 01 Jan 2024 10:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/intro/index.xml" rel="self" type="application/rss+xml" /><item>
+      <title>Welcome</title>
+      <link>http://localhost:1313/posts/first-post/</link>
+      <pubDate>Mon, 01 Jan 2024 10:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/first-post/</guid>
+      <description>&lt;h1 id=&#34;welcome-to-my-portfolio&#34;&gt;Welcome to My Portfolio&lt;/h1&gt;
+&lt;p&gt;This is my personal website where I share my thoughts, projects, and experiences.&lt;/p&gt;
+&lt;h2 id=&#34;recent-posts&#34;&gt;Recent Posts&lt;/h2&gt;
+&lt;p&gt;Check out my latest blog posts below, or use the menu to navigate through different sections of the site.&lt;/p&gt;</description>
+    </item>
+    
+    
+  </channel>
+</rss>

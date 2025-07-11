@@ -1,0 +1,55 @@
+{{ define "header" }}
+    <link rel="stylesheet" href="/css/global-layout-fix.css">
+{{ end }}
+
+{{ define "navbar" }}
+    {{ partial "navigators/navbar.html" . }}
+{{ end }}
+
+{{ define "sidebar" }}
+  <section class="sidebar-section" id="sidebar-section">
+    <div class="sidebar-holder">
+      <div class="sidebar" id="sidebar">
+        <form class="mx-auto" method="get" action="{{ "search" | relLangURL }}">
+          <input type="text" name="keyword" value="" placeholder="{{ i18n "search" }}" data-search="" id="search-box" />
+        </form>
+        <div class="sidebar-tree">
+          <ul class="tree" id="tree">
+            <li id="list-heading">
+              <a href="/services" data-filter="all">Services</a>
+              <ul class="subtree active">
+                <!-- Only show services pages, not blog posts -->
+                {{ range where .Site.RegularPages "Section" "services" }}
+                  {{ if not (eq .RelPermalink "/services/") }}
+                    <li><a class="list-link" href="{{ .RelPermalink }}" title="{{ .Title }}">{{ .Title }}</a></li>
+                  {{ end }}
+                {{ end }}
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+{{ end }}
+
+{{ define "content" }}
+<section class="content-section" id="content-section">
+  <div class="content container-fluid" id="content">
+    <div class="container-fluid post-card-holder" id="post-card-holder">
+      <!-- Show only services pages, not all posts -->
+      {{ $services := where .Site.RegularPages "Section" "services" }}
+      {{ $numShow := 12 }}
+      {{ $paginator := .Paginate $services $numShow }}
+      {{ range $paginator.Pages }}
+        {{ if not (eq .RelPermalink "/services/") }}
+          {{ partial "cards/post.html" . }}
+        {{ end }}
+      {{ end }}
+    </div>
+    <div class="paginator">
+      {{ partial "pagination.html" . }}
+    </div>
+  </div>
+</section>
+{{ end }}

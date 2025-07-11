@@ -21,7 +21,7 @@
 
 [[redirects]]
   from = "/api/ai/*"
-  to = "https://portfolio-ai-development.up.railway.app/api/:splat"
+  to = "https://dev-200rx.netlify.app/:splat"
   status = 200
   force = true
 
@@ -34,7 +34,7 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
-    Content-Security-Policy = "default-src 'self' https: 'unsafe-inline' 'unsafe-eval'; img-src 'self' https: data:; connect-src 'self' https://dev-200rx.netlify.app https://*.netlify.app https://200rxio-crm-development.up.railway.app https://portfolio-ai-development.up.railway.app http://localhost:3000 http://localhost:3001; frame-ancestors 'none';"
+    Content-Security-Policy = "default-src 'self' https: 'unsafe-inline' 'unsafe-eval'; img-src 'self' https: data:; connect-src 'self' https://dev-200rx.netlify.app/ https://*.netlify.app https://200rxio-crm-development.up.railway.app https://portfolio-ai-development.up.railway.app http://localhost:3000 http://localhost:3001; frame-ancestors 'none';"
     X-Environment = "development"
 
 # Development environment badge

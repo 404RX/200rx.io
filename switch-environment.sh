@@ -13,7 +13,7 @@ switch_to_dev() {
     
     echo "✅ Switched to Development environment"
     echo "📍 Configuration:"
-    echo "   - Base URL: https://dev-200rx.netlify.app"
+    echo "   - Base URL: https://dev-200rx.netlify.app/"
     echo "   - CRM API: https://200rxio-crm-development.up.railway.app"
     echo "   - AI API: https://portfolio-ai-development.up.railway.app"
     echo "   - CSP: Permissive for development testing"

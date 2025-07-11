@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-<link rel="stylesheet" href="/application.c6d771b4b54ea22d5b498c4b5aa63973ae39189231b4a54f661260b04b7b46b1.css" integrity="sha256-xtdxtLVOoi1bSYxLWqY5c645GJIxtKVPZhJgsEt7RrE=" />
+<link rel="stylesheet" href="/application.b5a2039216085b4da29787c4b1287f07c35f4e7c233e4262b80f1c312614f847.css" integrity="sha256-taIDkhYIW02il4fEsSh/B8NfTnwjPkJiuA8cMSYU&#43;Ec=" />
 
 
 
@@ -21,7 +21,7 @@
 
 
 
-<meta property="og:title" content="Ray - Systems Administrator"/>
+<meta property="og:title" content="Ray Miller - IT Infrastructure Specialist [DEV]"/>
 <meta property="og:type" content="website"/>
 <meta property="og:description" content=""/>
 <meta property="og:image" content="/images/author/self.png">
@@ -30,9 +30,8 @@
     
 <meta name="description" content="Learn how to use PowerShell to automate cleanup of stale user and computer accounts in Active Directory" />
 
+<link rel="stylesheet" href="/css/global-layout-fix.css">
 
-
-    
 
     
 
@@ -66,7 +65,7 @@ document.documentElement.setAttribute('data-theme', theme)
       <i data-feather="sidebar"></i>
     </button>
     
-    <a class="navbar-brand" href="/">Ray - Systems Administrator</a>
+    <a class="navbar-brand" href="/">Ray Miller - IT Infrastructure Specialist [DEV]</a>
     <button
       class="navbar-toggler navbar-light"
       id="navbar-toggler"
@@ -103,6 +102,12 @@ document.documentElement.setAttribute('data-theme', theme)
             <a class="nav-link" id="blog-link" href="/posts">Blog</a>
           </li>
         
+        
+            
+              <li class="nav-item">
+                <a class="nav-link" href="/services">Services</a>
+              </li>
+            
         
             
               <li class="nav-item">
@@ -171,15 +176,6 @@ document.documentElement.setAttribute('data-theme', theme)
   
   
     
-    <li><a class=" list-link" href="/posts/about-fixed/" title="About">About</a></li>
-  
-
-  
-  
-  
-  
-  
-    
     <li><a class=" list-link" href="/posts/system-health-checks/" title="Modern Web Development Trends in 2024">Modern Web Development Trends in 2024</a></li>
   
 
@@ -234,7 +230,7 @@ document.documentElement.setAttribute('data-theme', theme)
     
 <section class="content-section" id="content-section">
   <div class="content">
-    <div class="container p-0 read-area">
+    <div class="container-fluid p-0 read-area">
       
       <div class="hero-area col-sm-12" id="hero-area" style='background-image: url(/images/default-hero.jpg);'>
       </div>
@@ -245,7 +241,7 @@ document.documentElement.setAttribute('data-theme', theme)
         <div class="author-profile ms-auto align-self-lg-center">
           <img class="rounded-circle" src='%0a%0a%20%20%0a%0a%0a%0a%0a%0a%20%20%0a%0a%0a%0a%0a%0a%0a%0a%20%0a%20%0a%20%20%0a%0a%0a%0a%20%20%0a%20%20%0a%20%20%0a%0a' alt="Author Image">
           <h5 class="author-name">Corey Miller</h5>
-          <p class="text-muted">Monday, March 18, 2024 | 2 minutes</p>
+          <p class="text-muted">Monday, March 18, 2024</p>
         </div>
         
 
@@ -256,55 +252,33 @@ document.documentElement.setAttribute('data-theme', theme)
         
 
         
-          <div class="tags">
-  <ul style="padding-left: 0;">
-    
-    
-    <li class="rounded"><a href="/tags/powershell/" class="btn btn-sm btn-info">PowerShell</a></li>
-    
-    
-    <li class="rounded"><a href="/tags/active-directory/" class="btn btn-sm btn-info">Active Directory</a></li>
-    
-    
-    <li class="rounded"><a href="/tags/automation/" class="btn btn-sm btn-info">Automation</a></li>
-    
-    
-    <li class="rounded"><a href="/tags/security/" class="btn btn-sm btn-info">Security</a></li>
-    
-    
-    <li class="rounded"><a href="/tags/it-operations/" class="btn btn-sm btn-info">IT Operations</a></li>
-    
-  </ul>
-</div>
-
-        
         <div class="post-content" id="post-content">
           <h2 id="introduction">Introduction</h2>
 <p>Stale and unused objects in Active Directory not only clutter your environment but can also create security risks and provisioning errors. Automating cleanup ensures better hygiene and consistent identity lifecycle management. This guide walks through how to use PowerShell to audit and optionally remove inactive AD users and computers.</p>
 <hr>
 <h2 id="core-principles">Core Principles</h2>
 <h3 id="1-identify-inactive-users-and-computers">1. Identify Inactive Users and Computers</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#75715e"># Users inactive for 90+ days</span>
-</span></span><span style="display:flex;"><span>$inactiveUsers = Get-ADUser -Filter * -Properties LastLogonDate |
-</span></span><span style="display:flex;"><span>    Where-Object { $_.Enabled <span style="color:#f92672">-eq</span> $true <span style="color:#f92672">-and</span> $_.LastLogonDate <span style="color:#f92672">-lt</span> (Get-Date).AddDays(<span style="color:#ae81ff">-90</span>) }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Computers inactive for 90+ days</span>
-</span></span><span style="display:flex;"><span>$inactiveComputers = Get-ADComputer -Filter * -Properties LastLogonDate |
-</span></span><span style="display:flex;"><span>    Where-Object { $_.Enabled <span style="color:#f92672">-eq</span> $true <span style="color:#f92672">-and</span> $_.LastLogonDate <span style="color:#f92672">-lt</span> (Get-Date).AddDays(<span style="color:#ae81ff">-90</span>) }
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="c"># Users inactive for 90+ days</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$inactiveUsers</span> <span class="p">=</span> <span class="nb">Get-ADUser</span> <span class="n">-Filter</span> <span class="p">*</span> <span class="n">-Properties</span> <span class="n">LastLogonDate</span> <span class="p">|</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">Where-Object</span> <span class="p">{</span> <span class="nv">$_</span><span class="p">.</span><span class="py">Enabled</span> <span class="o">-eq</span> <span class="vm">$true</span> <span class="o">-and</span> <span class="nv">$_</span><span class="p">.</span><span class="py">LastLogonDate</span> <span class="o">-lt</span> <span class="p">(</span><span class="nb">Get-Date</span><span class="p">).</span><span class="py">AddDays</span><span class="p">(</span><span class="mf">-90</span><span class="p">)</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c"># Computers inactive for 90+ days</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$inactiveComputers</span> <span class="p">=</span> <span class="nb">Get-ADComputer</span> <span class="n">-Filter</span> <span class="p">*</span> <span class="n">-Properties</span> <span class="n">LastLogonDate</span> <span class="p">|</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">Where-Object</span> <span class="p">{</span> <span class="nv">$_</span><span class="p">.</span><span class="py">Enabled</span> <span class="o">-eq</span> <span class="vm">$true</span> <span class="o">-and</span> <span class="nv">$_</span><span class="p">.</span><span class="py">LastLogonDate</span> <span class="o">-lt</span> <span class="p">(</span><span class="nb">Get-Date</span><span class="p">).</span><span class="py">AddDays</span><span class="p">(</span><span class="mf">-90</span><span class="p">)</span> <span class="p">}</span>
 </span></span></code></pre></div><blockquote>
 <p>🔍 Use <code>-SearchBase</code> to narrow to a specific OU<br>
 Example: <code>-SearchBase &quot;OU=Workstations,DC=corp,DC=domain,DC=com&quot;</code></p></blockquote>
 <hr>
 <h3 id="2-export-for-review-before-deletion">2. Export for Review Before Deletion</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span>$inactiveUsers | Select-Object Name, SamAccountName, LastLogonDate | Export-Csv <span style="color:#e6db74">&#34;.\InactiveUsers.csv&#34;</span> -NoTypeInformation
-</span></span><span style="display:flex;"><span>$inactiveComputers | Select-Object Name, LastLogonDate | Export-Csv <span style="color:#e6db74">&#34;.\InactiveComputers.csv&#34;</span> -NoTypeInformation
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nv">$inactiveUsers</span> <span class="p">|</span> <span class="nb">Select-Object</span> <span class="n">Name</span><span class="p">,</span> <span class="n">SamAccountName</span><span class="p">,</span> <span class="n">LastLogonDate</span> <span class="p">|</span> <span class="nb">Export-Csv</span> <span class="s2">&#34;.\InactiveUsers.csv&#34;</span> <span class="n">-NoTypeInformation</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$inactiveComputers</span> <span class="p">|</span> <span class="nb">Select-Object</span> <span class="n">Name</span><span class="p">,</span> <span class="n">LastLogonDate</span> <span class="p">|</span> <span class="nb">Export-Csv</span> <span class="s2">&#34;.\InactiveComputers.csv&#34;</span> <span class="n">-NoTypeInformation</span>
 </span></span></code></pre></div><hr>
 <h3 id="3-optional-remove-accounts-after-review">3. (Optional) Remove Accounts After Review</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-powershell" data-lang="powershell"><span style="display:flex;"><span><span style="color:#75715e"># Remove users (example - use caution)</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#$inactiveUsers | ForEach-Object { Remove-ADUser -Identity $_ -Confirm:$false }</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Disable computers instead of deleting immediately</span>
-</span></span><span style="display:flex;"><span>$inactiveComputers | ForEach-Object { Disable-ADAccount -Identity $_ }
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="c"># Remove users (example - use caution)</span>
+</span></span><span class="line"><span class="cl"><span class="c">#$inactiveUsers | ForEach-Object { Remove-ADUser -Identity $_ -Confirm:$false }</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c"># Disable computers instead of deleting immediately</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$inactiveComputers</span> <span class="p">|</span> <span class="nb">ForEach-Object</span> <span class="p">{</span> <span class="nb">Disable-ADAccount</span> <span class="n">-Identity</span> <span class="nv">$_</span> <span class="p">}</span>
 </span></span></code></pre></div><blockquote>
 <p>🛡️ Always disable first, delete only after organizational approval or quarantine window.</p></blockquote>
 <hr>
@@ -329,45 +303,9 @@ Example: <code>-SearchBase &quot;OU=Workstations,DC=corp,DC=domain,DC=com&quot;<
         
           <div class="col-md-6 share-buttons">
           
-            <strong>Share on:</strong>
-            
-            <a class="btn icon-button bg-facebook" href="https://www.facebook.com/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2fposts%2fad-cleanup-automation%2f" target="_blank">
-              <i class="fab fa-facebook"></i>
-            </a>
-            
-            
-            
-            
-            
-            
-                <a class="btn icon-button bg-linkedin" href="https://www.linkedin.com/shareArticle?url=http%3a%2f%2flocalhost%3a1313%2fposts%2fad-cleanup-automation%2f&title=Active%20Directory%20Cleanup%20Automation%20with%20PowerShell" target="_blank">
-                  <i class="fab fa-linkedin"></i>
-                </a>
-            
-            
-             
-            
-            
-                <a class="btn icon-button" href="mailto:?subject=Active%20Directory%20Cleanup%20Automation%20with%20PowerShell&body=http%3a%2f%2flocalhost%3a1313%2fposts%2fad-cleanup-automation%2f" target="_blank">
-                  <i class="fas fa-envelope-open-text"></i>
-                </a>
-            
-          
           </div>
 
         
-        
-          
-            
-          
-          <div class="col-md-6 btn-improve-page">
-             
-               <a href="https://github.com/404RX/200rx.io/edit/main/content/posts%5cad-cleanup-automation.md" title="Improve this page" target="_blank" rel="noopener">
-            
-                <i class="fas fa-code-branch"></i>
-                Improve this page
-              </a>
-          </div>
         
         </div>
 
@@ -388,9 +326,6 @@ Example: <code>-SearchBase &quot;OU=Workstations,DC=corp,DC=domain,DC=com&quot;<
 
 
 
-
-  
-  
 
   
   
@@ -453,28 +388,6 @@ Example: <code>-SearchBase &quot;OU=Workstations,DC=corp,DC=domain,DC=com&quot;<
 
     
   <section class="toc-section" id="toc-section">
-    
-    <div class="toc-holder">
-      <h5 class="text-center ps-3">Table of Contents</h5>
-      <hr>
-      <div class="toc">
-        <nav id="TableOfContents">
-  <ul>
-    <li><a href="#introduction">Introduction</a></li>
-    <li><a href="#core-principles">Core Principles</a>
-      <ul>
-        <li><a href="#1-identify-inactive-users-and-computers">1. Identify Inactive Users and Computers</a></li>
-        <li><a href="#2-export-for-review-before-deletion">2. Export for Review Before Deletion</a></li>
-        <li><a href="#3-optional-remove-accounts-after-review">3. (Optional) Remove Accounts After Review</a></li>
-        <li><a href="#4-automate-via-scheduled-task">4. Automate via Scheduled Task</a></li>
-      </ul>
-    </li>
-    <li><a href="#summary">Summary</a></li>
-    <li><a href="#optional-enhancements">Optional Enhancements</a></li>
-  </ul>
-</nav>
-      </div>
-    </div>
     
   </section>
 
@@ -552,6 +465,8 @@ Example: <code>-SearchBase &quot;OU=Workstations,DC=corp,DC=domain,DC=com&quot;<
               
                 
               
+                
+              
             
           </ul>
           
@@ -569,7 +484,7 @@ Example: <code>-SearchBase &quot;OU=Workstations,DC=corp,DC=domain,DC=com&quot;<
               
             
               
-                <li><span>Location: </span> <span>New York, Ny</span></li>
+                <li><span>Location: </span> <span>New York, NY</span></li>
               
             
               
@@ -580,6 +495,22 @@ Example: <code>-SearchBase &quot;OU=Workstations,DC=corp,DC=domain,DC=com&quot;<
         </div>
         
         
+        
+          
+          <div class="col-md-4 col-sm-12">
+            <p>Stay up to date with email notification</p>
+            
+              <form method='post' action='https://blogtrottr.com'>
+              <div class="form-group">
+              <input type='email' class="form-control" name='btr_email' placeholder="Enter email"/><br />
+              <input type='hidden' name='btr_url' value='http://localhost:1313//index.xml' />
+              <input type='hidden' name='schedule_type' value='1' />
+              <small id="emailHelp" class="form-text text-muted">By entering your email address, you agree to receive the newsletter of this website.</small>
+              <button type="submit" class="btn btn-info"> Submit </button>
+              </div>
+              </form>
+            
+          </div>
         
       </div>
     </div>
@@ -607,10 +538,8 @@ Example: <code>-SearchBase &quot;OU=Workstations,DC=corp,DC=domain,DC=com&quot;<
     </div>
     
   </footer>
-<script src="/application.f2fbae73cbc3402682df1e13c1c89ef8a98a5ffa2e551c9261768d3b7824cf46.js" integrity="sha256-8vuuc8vDQCaC3x4Twcie&#43;KmKX/ouVRySYXaNO3gkz0Y=" defer></script>
+<script src="/application.1074c36fa5a00b173c7607ec6258a6e8bdac1f63ca345c30e3c415da3680a0a5.js" integrity="sha256-EHTDb6WgCxc8dgfsYlim6L2sH2PKNFww48QV2jaAoKU=" defer></script>
 
    
-    
-
 </body>
 </html>
