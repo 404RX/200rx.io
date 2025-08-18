@@ -32,6 +32,10 @@
   <!-- ADD FOOTER & SCRIPTS -->
   {{ $footerTemplate:= site.Params.footer.template | default "footer.html" }}
   {{- partial $footerTemplate . -}}
+  
+  <!-- ADD CHATBOT for pages using base template -->
+  {{ partial "chatbot.html" . }}
+  
   {{ partial "scripts.html" . }}
   {{ block "scripts" . }} {{ end }}
   {{- partial "misc/support.html" . -}}

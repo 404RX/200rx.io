@@ -15,7 +15,7 @@
   {{ $sections = (index site.Data site.Language.Lang).sections }}
 {{ end }}
 
-{{ $backgroundImage:= "/images/default-background.jpg" }}
+{{ $backgroundImage:= "/static/css/homepage-background-fix.css" }}
 {{ if site.Params.background }}
   {{ $backgroundImage = site.Params.background }}
 {{ end }}
@@ -35,145 +35,18 @@
 {{ if and $authorImage (and (ne $authorImage.MediaType.SubType "svg") ( ne $authorImage.MediaType.SubType "gif")) }}
   {{ $authorImage = $authorImage.Fit "148x148" }}
 {{ end }}
-{{/* get file that matches the filename as specified as src="" in shortcode */}}
-{{ $src := resources.Get $backgroundImage }}
-
-{{/* set image sizes, these are hardcoded for now, x dictates that images are resized to this width */}}
-
-{{ $tinyw := default "500x" }}
-{{ $smallw := default "800x" }}
-{{ $mediumw := default "1200x" }}
-{{ $largew := default "1500x" }}
-
-{{/* resize the src image to the given sizes - only if src exists */}}
-{{ $tiny := "" }}
-{{ $small := "" }}
-{{ $medium := "" }}
-{{ $large := "" }}
-
-{{ if $src }}
-  {{ $tiny = $src.Resize $tinyw }}
-  {{ $small = $src.Resize $smallw }}
-  {{ $medium = $src.Resize $mediumw }}
-  {{ $large = $src.Resize $largew }}
-
-  {{/* only use images smaller than or equal to the src (original) image size, as Hugo will upscale small images */}}
-  {{ if lt $src.Width "500" }}
-    {{ $tiny = $src}}
-    {{ $small = $src}}
-    {{ $medium = $src}}
-    {{ $large = $src}}
-  {{ end }}
-
-  {{ if lt $src.Width "800" }}
-    {{ $small = $src}}
-    {{ $medium = $src}}
-    {{ $large = $src}}
-  {{ end }}
-
-  {{ if lt $src.Width "1200" }}
-    {{ $medium = $src}}
-    {{ $large = $src}}
-  {{ end }}
-
-  {{ if lt $src.Width "1500" }}
-    {{ $large = $src}}
-  {{ end }}
-{{ end }}
-
-{{/* get file that matches the filename as specified as src="" in shortcode */}}
-{{ $darkSrc := resources.Get $darkBackgroundImage }}
-
-{{/* resize the dark src image to the given sizes - only if darkSrc exists */}}
-{{ $darkTiny := "" }}
-{{ $darkSmall := "" }}
-{{ $darkMedium := "" }}
-{{ $darkLarge := "" }}
-
-{{ if $darkSrc }}
-  {{ $darkTiny = $darkSrc.Resize $tinyw }}
-  {{ $darkSmall = $darkSrc.Resize $smallw }}
-  {{ $darkMedium = $darkSrc.Resize $mediumw }}
-  {{ $darkLarge = $darkSrc.Resize $largew }}
-
-  {{/* only use images smaller than or equal to the src (original) image size, as Hugo will upscale small images */}}
-  {{ if lt $darkSrc.Width "500" }}
-    {{ $darkTiny = $darkSrc}}
-    {{ $darkSmall = $darkSrc}}
-    {{ $darkMedium = $darkSrc}}
-    {{ $darkLarge = $darkSrc}}
-  {{ end }}
-
-  {{ if lt $darkSrc.Width "800" }}
-    {{ $darkSmall = $darkSrc}}
-    {{ $darkMedium = $darkSrc}}
-    {{ $darkLarge = $darkSrc}}
-  {{ end }}
-
-  {{ if lt $darkSrc.Width "1200" }}
-    {{ $darkMedium = $darkSrc}}
-    {{ $darkLarge = $darkSrc}}
-  {{ end }}
-
-  {{ if lt $darkSrc.Width "1500" }}
-    {{ $darkLarge = $darkSrc}}
-  {{ end }}
-{{ end }}
+{{/* Using static background image - no processing needed */}}
 
 <div class="container-fluid home" id="home">
   <style>
-    /* 0 to 299 */
+    /* Use single background image for all screen sizes */
     #homePageBackgroundImageDivStyled {
-      {{ if $tiny }}background-image: url('{{ $tiny.RelPermalink }}');{{ end }}
+      background-image: url('/static/css/homepage-background-fix.css');
     }
-    /* 300 to X */
-    @media (min-width: 500px) and (max-width: 800px) { /* or 301 if you want really the same as previously.  */
-      #homePageBackgroundImageDivStyled {
-          {{ if $small }}background-image: url('{{ $small.RelPermalink }}');{{ end }}
-        }
-    }
-    @media (min-width: 801px) and (max-width: 1200px) { /* or 301 if you want really the same as previously.  */
-      #homePageBackgroundImageDivStyled {
-          {{ if $medium }}background-image: url('{{ $medium.RelPermalink }}');{{ end }}
-        }
-    }
-    @media (min-width: 1201px) and (max-width: 1500px) { /* or 301 if you want really the same as previously.  */
-      #homePageBackgroundImageDivStyled {
-          {{ if $large }}background-image: url('{{ $large.RelPermalink }}');{{ end }}
-        }
-    }
-    @media (min-width: 1501px) { /* or 301 if you want really the same as previously.  */
-      #homePageBackgroundImageDivStyled {
-          {{ if $src }}background-image: url('{{ $src.RelPermalink }}');{{ end }}
-        }
-    }
-
-    html[data-theme='dark'] {
-      /* 0 to 299 */
-      #homePageBackgroundImageDivStyled {
-        {{ if $darkTiny }}background-image: url('{{ $darkTiny.RelPermalink }}');{{ end }}
-      }
-      /* 300 to X */
-      @media (min-width: 500px) and (max-width: 800px) { /* or 301 if you want really the same as previously.  */
-        #homePageBackgroundImageDivStyled {
-          {{ if $darkSmall }}background-image: url('{{ $darkSmall.RelPermalink }}');{{ end }}
-        }
-      }
-      @media (min-width: 801px) and (max-width: 1200px) { /* or 301 if you want really the same as previously.  */
-        #homePageBackgroundImageDivStyled {
-          {{ if $darkMedium }}background-image: url('{{ $darkMedium.RelPermalink }}');{{ end }}
-        }
-      }
-      @media (min-width: 1201px) and (max-width: 1500px) { /* or 301 if you want really the same as previously.  */
-        #homePageBackgroundImageDivStyled {
-          {{ if $darkLarge }}background-image: url('{{ $darkLarge.RelPermalink }}');{{ end }}
-        }
-      }
-      @media (min-width: 1501px) { /* or 301 if you want really the same as previously.  */
-        #homePageBackgroundImageDivStyled {
-          {{ if $darkSrc }}background-image: url('{{ $darkSrc.RelPermalink }}');{{ end }}
-        }
-      }
+    
+    /* Dark theme also uses the same background image */
+    html[data-theme='dark'] #homePageBackgroundImageDivStyled {
+      background-image: url('/static/css/homepage-background-fix.css');
     }
     </style>
     <span class="on-the-fly-behavior"></span>

@@ -10,7 +10,7 @@ menu:
     weight: 30
 tags: ["PowerShell", "Automation", "Scripting", "Monitoring", "Infrastructure"]
 categories: ["IT Automation", "Infrastructure Management"]
-hero: "/images/default-hero.jpg"
+hero: "/images/hero/system-monitoring.jpg"
 ---
 
 ## Introduction

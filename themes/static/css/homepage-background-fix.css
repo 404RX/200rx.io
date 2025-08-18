@@ -1,0 +1,66 @@
+/* Override body background for homepage - Default and Light theme */
+body.kind-home,
+html[data-theme='light'] body.kind-home,
+body {
+    background-color: #1a365d !important; /* Navy blue for professional look */
+}
+
+/* Force override of any inline styles */
+body[style] {
+    background-color: #1a365d !important;
+}
+
+/* Default and Light theme - Professional navy background */
+#homePageBackgroundImageDivStyled,
+html[data-theme='light'] #homePageBackgroundImageDivStyled {
+    background-image: none !important;
+    background-color: #1a365d !important; /* Navy blue for professional look */
+}
+
+/* Dark theme body background for homepage */
+html[data-theme='dark'] body.kind-home {
+    background-color: #0f172a !important; /* Darker navy for dark mode */
+}
+
+/* Dark theme - Darker background for better dark mode experience */
+html[data-theme='dark'] #homePageBackgroundImageDivStyled {
+    background-image: none !important;
+    background-color: #0f172a !important; /* Darker navy for dark mode */
+}
+
+/* Ensure homepage content has proper background for default and light theme */
+.container-fluid.home,
+html[data-theme='light'] .container-fluid.home {
+    background-color: #1a365d !important;
+}
+
+/* Dark theme homepage background */
+html[data-theme='dark'] .container-fluid.home {
+    background-color: #0f172a !important;
+}
+
+/* Fix text colors for better readability on navy background - Default and Light theme */
+.container-fluid.home .content,
+html[data-theme='light'] .container-fluid.home .content {
+    color: #ffffff !important;
+}
+
+.container-fluid.home .greeting,
+html[data-theme='light'] .container-fluid.home .greeting {
+    color: #ffffff !important;
+}
+
+.container-fluid.home .greeting-subtitle,
+html[data-theme='light'] .container-fluid.home .greeting-subtitle {
+    color: #a0aec0 !important; /* Cool gray for secondary text */
+}
+
+.container-fluid.home .typing-carousel,
+html[data-theme='light'] .container-fluid.home .typing-carousel {
+    color: #ffffff !important;
+}
+
+.container-fluid.home .ityped,
+html[data-theme='light'] .container-fluid.home .ityped {
+    color: #ffffff !important;
+}

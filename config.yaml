@@ -13,10 +13,6 @@ params:
   crmApiUrl: "https://200rxio-crm-development.up.railway.app"
   aiApiUrl: "https://portfolio-ai-development.up.railway.app"
   
-  # Override background images to use solid color like production
-  background: ""  # Disable background image for light mode
-  darkBackground: ""  # Disable background image for dark mode
-    
   # Theme color scheme
   theme:
     backgroundColor: "#06386e"
