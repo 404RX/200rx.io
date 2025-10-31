@@ -1,0 +1,11 @@
+{
+  "title": "Example AI-Generated Blog Post",
+  "content": "# Introduction\n\nThis is an example of an AI-generated blog post created through our automated pipeline.\n\n## Features\n\nOur blog post generation system includes:\n\n- **Automatic Front-Matter**: Properly formatted YAML front-matter for Hugo\n- **Tag Support**: Organize posts with relevant tags\n- **Category Organization**: Group related content together\n- **Draft Mode**: Create posts without publishing immediately\n- **Author Attribution**: Include author information and images\n\n## How It Works\n\n1. Create a JSON file with your post data\n2. Place it in the `scripts/post_data/` directory\n3. Commit and push to trigger the GitHub Action\n4. The workflow automatically generates the Markdown file\n5. Posts are created in `content/blog/auto/`\n\n## Code Example\n\nHere's a simple Python example:\n\n```python\ndef hello_world():\n    print(\"Hello from auto-generated blog!\")\n```\n\n## Conclusion\n\nThis automation pipeline makes it easy to generate consistent, well-formatted blog posts for your Hugo site.\n\nHappy blogging! 🎉",
+  "description": "An example blog post demonstrating the automated blog generation pipeline",
+  "tags": ["Automation", "Hugo", "Python", "DevOps"],
+  "categories": ["Web Development"],
+  "author_name": "Ray Miller",
+  "author_image": "/images/author/avatar.png",
+  "draft": true,
+  "hero_image": ""
+}
