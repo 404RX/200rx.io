@@ -1,6 +1,6 @@
 ---
 title: "Example AI-Generated Blog Post"
-date: 2025-10-31T19:10:00Z
+date: 2025-10-31T22:55:00Z
 draft: true
 author:
   name: "Ray Miller"
