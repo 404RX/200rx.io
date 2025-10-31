@@ -1,0 +1,120 @@
+name: Generate Blog Posts
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'scripts/generate_posts.py'
+      - 'scripts/post_data/**'
+      - '.github/workflows/generate-posts.yml'
+  workflow_dispatch:
+    inputs:
+      post_title:
+        description: 'Blog post title'
+        required: false
+        type: string
+      post_content:
+        description: 'Blog post content (Markdown)'
+        required: false
+        type: string
+      post_tags:
+        description: 'Tags (comma-separated)'
+        required: false
+        type: string
+      draft:
+        description: 'Create as draft'
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          
+      - name: Install Python dependencies
+        run: |
+          if [ -f scripts/requirements.txt ]; then
+            pip install -r scripts/requirements.txt
+          fi
+          
+      - name: Generate post from workflow dispatch
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.post_title != ''
+        run: |
+          DRAFT_FLAG=""
+          if [ "${{ github.event.inputs.draft }}" = "true" ]; then
+            DRAFT_FLAG="--draft"
+          fi
+          
+          TAGS_ARRAY=""
+          if [ -n "${{ github.event.inputs.post_tags }}" ]; then
+            # Convert comma-separated tags to space-separated
+            TAGS=$(echo "${{ github.event.inputs.post_tags }}" | tr ',' ' ')
+            TAGS_ARRAY="--tags $TAGS"
+          fi
+          
+          python3 scripts/generate_posts.py \
+            --title "${{ github.event.inputs.post_title }}" \
+            --content "${{ github.event.inputs.post_content }}" \
+            $TAGS_ARRAY \
+            $DRAFT_FLAG
+            
+      - name: Process JSON post data files
+        if: github.event_name == 'push'
+        run: |
+          # Check if post_data directory exists and has JSON files
+          if [ -d "scripts/post_data" ] && [ -n "$(find scripts/post_data -name '*.json' 2>/dev/null)" ]; then
+            echo "Processing JSON files in scripts/post_data/"
+            python3 scripts/generate_posts.py --batch scripts/post_data/*.json
+          else
+            echo "No JSON files found in scripts/post_data/"
+          fi
+          
+      - name: Check for changes
+        id: check_changes
+        run: |
+          git diff --quiet content/blog/auto/ || echo "has_changes=true" >> $GITHUB_OUTPUT
+          
+      - name: Commit and push generated posts
+        if: steps.check_changes.outputs.has_changes == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add content/blog/auto/
+          git commit -m "chore: auto-generate blog posts [skip ci]"
+          git push
+          
+      - name: Summary
+        if: always()
+        run: |
+          echo "## Blog Post Generation Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ -d "content/blog/auto" ]; then
+            POST_COUNT=$(find content/blog/auto -name "*.md" -type f | wc -l)
+            echo "📝 Total posts in auto directory: **$POST_COUNT**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            
+            if [ -n "$(git diff HEAD^ HEAD --name-only content/blog/auto/ 2>/dev/null)" ]; then
+              echo "### New/Updated Posts" >> $GITHUB_STEP_SUMMARY
+              git diff HEAD^ HEAD --name-only content/blog/auto/ | sed 's/^/- /' >> $GITHUB_STEP_SUMMARY
+            else
+              echo "No changes to blog posts" >> $GITHUB_STEP_SUMMARY
+            fi
+          else
+            echo "⚠️ Auto blog directory not found" >> $GITHUB_STEP_SUMMARY
+          fi
