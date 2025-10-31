@@ -99,6 +99,12 @@ resources/
 hugo_stats.json
 hugo_extended*.tar.gz
 
+# Python cache and bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
 # Temporary folders
 tmp/
 temp/
