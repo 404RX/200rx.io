@@ -36,16 +36,42 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18'
+          cache: 'npm'
 
-      - name: Install dependencies
-        run: npm install
+      - name: Cache Hugo resources
+        uses: actions/cache@v4
+        with:
+          path: resources
+          key: ${{ runner.os }}-hugo-resources-${{ hashFiles('config.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-hugo-resources-
+
+      - name: Install theme dependencies
+        working-directory: themes/toha
+        run: npm ci --legacy-peer-deps
+
+      - name: Install root dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Build React components
+        working-directory: src
+        run: |
+          npm ci --legacy-peer-deps
+          npm run build
 
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
 
       - name: Build
-        run: hugo --minify --baseURL "${{ steps.pages.outputs.base_url }}/"
+        env:
+          HUGO_ENVIRONMENT: production
+        run: |
+          if [ "${{ github.ref }}" = "refs/heads/main" ]; then
+            hugo --minify --gc --baseURL "${{ steps.pages.outputs.base_url }}/"
+          else
+            hugo --gc --baseURL "${{ steps.pages.outputs.base_url }}/"
+          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

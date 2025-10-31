@@ -1,7 +1,7 @@
 # Netlify Development Environment Configuration
 
 [build]
-  command = "cd themes/toha && npm install && cd ../.. && npm install && cd src && rm -rf node_modules package-lock.json && npm install && npm run build && cd .. && hugo --config config.development.yaml --gc --minify"
+  command = "cd themes/toha && npm ci --legacy-peer-deps && cd ../.. && npm ci --legacy-peer-deps && cd src && npm ci --legacy-peer-deps && npm run build && cd .. && hugo --config config.development.yaml --gc --minify"
   publish = "public"
 
 [build.environment]
