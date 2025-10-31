@@ -1,0 +1,9 @@
+# Python dependencies for AI blog post generation
+# This script uses only Python standard library modules
+# No external dependencies required for basic functionality
+
+# Future enhancements could include:
+# openai>=1.0.0  # For AI content generation
+# anthropic>=0.3.0  # For Claude API integration
+# requests>=2.31.0  # For API calls
+# pyyaml>=6.0  # For YAML processing (if needed)
