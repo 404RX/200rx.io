@@ -1,0 +1,21 @@
+# section information
+section:
+  name: Recent Posts
+  id: recent-posts
+  enable: true
+  weight: 5
+  showOnNavbar: true
+  template: sections/recent-posts.html
+
+# your recent posts
+recentPosts:
+  enable: true
+  showReadMore: true
+  showPages: 3
+  showTags: true
+  showDate: true
+  showAuthor: false
+  showSummary: true
+  showExcerpt: true
+  # RSS feed URL
+  rssUrl: "/posts/index.xml"

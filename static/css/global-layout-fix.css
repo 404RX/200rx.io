@@ -1,0 +1,202 @@
+/* Global Layout Fixes for All Pages */
+
+/* Fix the main wrapper layout that affects all section pages */
+body.kind-section .wrapper,
+body.kind-page .wrapper {
+    max-width: 100vw !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: hidden !important;
+}
+
+/* Fix horizontal scrollbar issues in navbar and main content */
+html, body {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+}
+
+/* Prevent any element from causing horizontal overflow */
+* {
+    box-sizing: border-box !important;
+}
+
+/* Fix sidebar and content section ratios for better space utilization */
+.sidebar-section {
+    flex: 18% !important;
+    max-width: 18% !important;
+    min-width: 280px;
+}
+
+.content-section {
+    flex: 82% !important;
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+    max-width: 82% !important;
+}
+
+/* Fix sidebar overflow issues */
+.sidebar-holder {
+    height: calc(100vh - 120px) !important;
+    overflow: hidden !important;
+}
+
+.sidebar {
+    height: 100% !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    scrollbar-width: thin !important;
+}
+
+/* Fix sidebar link text overflow */
+.sidebar .list-link {
+    display: block !important;
+    width: 100% !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 250px !important;
+    line-height: 1.4 !important;
+    padding: 4px 8px !important;
+    text-decoration: none !important;
+    border-radius: 4px !important;
+    transition: background-color 0.2s ease !important;
+}
+
+.sidebar .list-link:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    text-decoration: none !important;
+}
+
+/* Ensure sidebar tree structure doesn't overflow */
+.sidebar-tree,
+.sidebar-tree ul,
+.sidebar-tree li {
+    max-width: 100% !important;
+    overflow: hidden !important;
+}
+
+/* Hide scrollbar for webkit browsers but keep functionality */
+.sidebar::-webkit-scrollbar {
+    width: 6px !important;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2) !important;
+    border-radius: 3px !important;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* Fix post card layout in listing pages */
+.post-card-holder {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+    justify-content: flex-start !important;
+    gap: 1.5rem !important;
+}
+
+.post-card {
+    flex: 1 1 calc(50% - 0.75rem) !important;
+    min-width: 300px !important;
+    max-width: calc(50% - 0.75rem) !important;
+}
+
+/* Fix content containers to use full available width */
+.content {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+/* Fix read-area container for single pages (blog posts, service pages) */
+.read-area {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+}
+
+/* Ensure page content doesn't overflow */
+.page-content {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+}
+
+/* Fix container-fluid padding issues */
+.container-fluid {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    max-width: 100% !important;
+}
+
+/* Fix top navbar container to use full width */
+.top-navbar .container {
+    max-width: 100% !important;
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+}
+
+/* Fix TOC section taking up space when empty */
+.toc-section {
+    display: none !important;
+}
+
+/* Alternative: if TOC is needed, constrain its width */
+.toc-section:not(:empty) {
+    display: block !important;
+    max-width: 250px !important;
+    flex-shrink: 0 !important;
+}
+
+/* Ensure content section uses full available width when TOC is hidden */
+.content-section {
+    flex: 1 !important;
+    max-width: 100% !important;
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+}
+
+/* Responsive design adjustments */
+@media (max-width: 992px) {
+    .post-card {
+        flex: 1 1 100% !important;
+        max-width: 100% !important;
+    }
+    
+    .sidebar-section {
+        flex: 25% !important;
+        max-width: 25% !important;
+    }
+    
+    .content-section {
+        flex: 75% !important;
+        max-width: 75% !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar-section {
+        flex: 0% !important;
+        max-width: 0% !important;
+    }
+    
+    .sidebar-section.expanded {
+        flex: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    .content-section {
+        flex: 100% !important;
+        max-width: 100% !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+}

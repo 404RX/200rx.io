@@ -1,0 +1,128 @@
+{{ $sectionID := replace (lower .section.name) " " "-"  }}
+{{ if .section.id }}
+  {{ $sectionID = .section.id }}
+{{ end }}
+
+<div class="container-fluid anchor pb-5 services-section" id="{{ $sectionID }}">
+  {{ if not (.section.hideTitle) }}
+    <h1 class="text-center">
+        <span id="{{ $sectionID }}"></span>{{ .section.name }}</h1>
+  {{ else }}
+    <h1 class="text-center" style="display: none">
+        <span id="{{ $sectionID }}"></span>{{ .section.name }}</h1>
+  {{ end }}
+  
+  <div class="container d-flex-block">
+    <div class="row" id="services-grid">
+      {{ range .services }}
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card h-100 service-card">
+          {{ if .logo }}
+          <div class="card-img-top text-center pt-3">
+            <img src="{{ .logo }}" alt="{{ .name }}" class="service-logo" style="width: 60px; height: 60px; object-fit: contain;">
+          </div>
+          {{ end }}
+          <div class="card-body">
+            <h5 class="card-title">{{ .name }}</h5>
+            <p class="card-text">{{ .summary }}</p>
+            {{ if .description }}
+            <div class="service-description">
+              {{ .description | markdownify }}
+            </div>
+            {{ end }}
+            {{ if .technologies }}
+            <div class="service-technologies mt-3">
+              <small class="text-muted">
+                <strong>Technologies:</strong> {{ delimit .technologies ", " }}
+              </small>
+            </div>
+            {{ end }}
+            {{ if .deliverables }}
+            <div class="service-deliverables mt-2">
+              <small class="text-muted">
+                <strong>Deliverables:</strong>
+                <ul class="small">
+                  {{ range .deliverables }}
+                  <li>{{ . }}</li>
+                  {{ end }}
+                </ul>
+              </small>
+            </div>
+            {{ end }}
+          </div>
+        </div>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+  
+  {{ if .servicePackages }}
+  <div class="container mt-5">
+    <h3 class="text-center mb-4">Service Packages</h3>
+    <div class="row">
+      {{ range .servicePackages }}
+      <div class="col-md-4 mb-3">
+        <div class="card package-card">
+          <div class="card-body text-center">
+            <h5 class="card-title">{{ .name }}</h5>
+            <p class="card-text"><strong>Duration:</strong> {{ .duration }}</p>
+            <p class="card-text">{{ .description }}</p>
+            <small class="text-muted">{{ .ideal_for }}</small>
+          </div>
+        </div>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+  {{ end }}
+</div>
+
+<style>
+.service-card {
+  transition: transform 0.2s ease-in-out;
+  border: 1px solid #dee2e6;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.service-logo {
+  filter: grayscale(0);
+  transition: filter 0.3s ease;
+}
+
+.service-description ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.service-description ul li::before {
+  content: "• ";
+  color: #007bff;
+  font-weight: bold;
+}
+
+.package-card {
+  border-left: 4px solid #007bff;
+  transition: border-color 0.3s ease;
+}
+
+.package-card:hover {
+  border-left-color: #0056b3;
+}
+
+.service-technologies {
+  font-size: 0.9em;
+}
+
+.service-deliverables ul {
+  margin-bottom: 0;
+  padding-left: 1rem;
+}
+
+.service-deliverables li {
+  margin-bottom: 0.2rem;
+}
+</style>

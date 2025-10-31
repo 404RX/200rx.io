@@ -1,0 +1,130 @@
+# Professional Services Offered
+# For both full-time opportunities and consulting engagements
+
+section:
+  name: Services
+  id: services
+  enable: false
+  weight: 4
+  showOnNavbar: false
+  template: sections/services.html
+
+services:
+  - name: "Automation as a Service"
+    logo: "/images/sections/services/automation.png"
+    summary: "Custom scripting solutions that eliminate manual processes"
+    description: |
+      Transform your repetitive IT tasks into automated workflows:
+      • PowerShell/Python script development
+      • System monitoring and alerting
+      • Compliance automation (STIG, CIS)
+      • Deployment and configuration management
+      • ROI: Typically save 20-40 hours/week per implementation
+    technologies: ["PowerShell", "Python", "Bash", "REST APIs"]
+    deliverables:
+      - "Custom automation scripts"
+      - "Documentation and training"
+      - "Monitoring dashboards"
+      - "Maintenance procedures"
+    
+  - name: "IT Infrastructure Consulting"
+    logo: "/images/sections/services/infrastructure.png"
+    summary: "Enterprise-grade system optimization and troubleshooting"
+    description: |
+      Optimize your IT infrastructure for peak performance:
+      • System architecture review and recommendations
+      • Performance bottleneck identification
+      • Security posture assessment
+      • Disaster recovery planning
+      • ROI: Average 30% improvement in system efficiency
+    technologies: ["Windows Server", "Active Directory", "Azure", "VMware"]
+    deliverables:
+      - "Infrastructure assessment report"
+      - "Optimization roadmap"
+      - "Implementation support"
+      - "Performance benchmarks"
+    
+  - name: "Compliance & Security"
+    logo: "/images/sections/services/security.png"
+    summary: "STIG/CIS compliance and security standardization"
+    description: |
+      Achieve and maintain security compliance standards:
+      • STIG implementation and validation
+      • CIS Controls assessment
+      • Vulnerability remediation
+      • Audit preparation and support
+      • ROI: 85% reduction in audit preparation time
+    technologies: ["STIG Viewer", "SCAP", "Nessus", "Group Policy"]
+    deliverables:
+      - "Compliance gap analysis"
+      - "Remediation scripts"
+      - "Policy templates"
+      - "Ongoing monitoring tools"
+    
+  - name: "Emergency IT Support"
+    logo: "/images/sections/services/support.png"
+    summary: "Critical issue resolution and crisis management"
+    description: |
+      Rapid response for business-critical IT emergencies:
+      • 24/7 emergency support availability
+      • Root cause analysis and resolution
+      • System recovery and restoration
+      • Post-incident documentation
+      • ROI: Minimize business disruption and downtime costs
+    technologies: ["Remote Tools", "Diagnostic Scripts", "Recovery Tools"]
+    deliverables:
+      - "Immediate issue resolution"
+      - "Root cause analysis report"
+      - "Prevention recommendations"
+      - "Documentation updates"
+    
+  - name: "Team Training & Mentorship"
+    logo: "/images/sections/services/training.png"
+    summary: "Knowledge transfer and skill development programs"
+    description: |
+      Elevate your team's technical capabilities:
+      • Custom training program development
+      • Hands-on workshops and labs
+      • Mentorship and career guidance
+      • Best practices documentation
+      • ROI: 50% improvement in team productivity
+    technologies: ["Virtual Labs", "Documentation Tools", "Training Platforms"]
+    deliverables:
+      - "Custom training materials"
+      - "Hands-on lab exercises"
+      - "Skills assessment framework"
+      - "Career development plans"
+    
+  - name: "System Integration"
+    logo: "/images/sections/services/integration.png"
+    summary: "Seamless technology stack integration and optimization"
+    description: |
+      Connect and optimize your technology ecosystem:
+      • API development and integration
+      • Data synchronization solutions
+      • Legacy system modernization
+      • Cloud migration planning
+      • ROI: 60% improvement in workflow efficiency
+    technologies: ["REST APIs", "PowerShell", "Azure", "SQL"]
+    deliverables:
+      - "Integration architecture"
+      - "Custom connectors/scripts"
+      - "Migration roadmap"
+      - "Testing and validation"
+
+# Service packages for different client needs
+servicePackages:
+  - name: "Quick Win Package"
+    duration: "1-2 weeks"
+    description: "Immediate automation of 1-3 critical processes"
+    ideal_for: "Small businesses, immediate ROI needed"
+    
+  - name: "Transformation Package"
+    duration: "1-3 months"
+    description: "Comprehensive infrastructure optimization"
+    ideal_for: "Medium enterprises, major efficiency gains"
+    
+  - name: "Enterprise Package"
+    duration: "3-6 months"
+    description: "Full-scale automation and compliance program"
+    ideal_for: "Large organizations, enterprise-wide improvements"

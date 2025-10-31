@@ -1,5 +1,135 @@
 /* Custom CSS overrides for Toha theme - minimal fixes only */
 
+/* Homepage Background Fix - Professional Navy Theme */
+/* Override body background for homepage - Default and Light theme */
+body.kind-home,
+html[data-theme='light'] body.kind-home,
+body {
+    background-color: #1a365d !important; /* Navy blue for professional look */
+}
+
+/* Force override of any inline styles */
+body[style] {
+    background-color: #1a365d !important;
+}
+
+/* Dark theme body background for homepage */
+html[data-theme='dark'] body.kind-home {
+    background-color: #0f172a !important; /* Darker navy for dark mode */
+}
+
+/* Default and Light theme - Professional navy background */
+#homePageBackgroundImageDivStyled,
+html[data-theme='light'] #homePageBackgroundImageDivStyled {
+    background-image: none !important;
+    background-color: #1a365d !important; /* Navy blue for professional look */
+}
+
+/* Dark theme - Darker background for better dark mode experience */
+html[data-theme='dark'] #homePageBackgroundImageDivStyled {
+    background-image: none !important;
+    background-color: #0f172a !important; /* Darker navy for dark mode */
+}
+
+/* Ensure homepage content has proper background for default and light theme */
+.container-fluid.home,
+html[data-theme='light'] .container-fluid.home {
+    background-color: #1a365d !important;
+}
+
+/* Dark theme homepage background */
+html[data-theme='dark'] .container-fluid.home {
+    background-color: #0f172a !important;
+}
+
+/* Fix text colors for better readability on navy background - Default and Light theme */
+.container-fluid.home .content,
+html[data-theme='light'] .container-fluid.home .content {
+    color: #ffffff !important;
+}
+
+.container-fluid.home .greeting,
+html[data-theme='light'] .container-fluid.home .greeting {
+    color: #ffffff !important;
+}
+
+.container-fluid.home .greeting-subtitle,
+html[data-theme='light'] .container-fluid.home .greeting-subtitle {
+    color: #a0aec0 !important; /* Cool gray for secondary text */
+}
+
+.container-fluid.home .typing-carousel,
+html[data-theme='light'] .container-fluid.home .typing-carousel {
+    color: #ffffff !important;
+}
+
+.container-fluid.home .ityped,
+html[data-theme='light'] .container-fluid.home .ityped {
+    color: #ffffff !important;
+}
+
+/* Contact Form Contrast Fixes */
+.section-holder.bg-dimmed {
+    /* Ensure proper background for contact section */
+    background-color: #1a365d !important;
+    
+    /* Fix header text contrast */
+    .text-muted {
+        color: #ffffff !important; /* White text instead of muted gray */
+    }
+    
+    .lead {
+        color: #a0aec0 !important; /* Light gray for better hierarchy */
+    }
+    
+    .form-label {
+        color: #ffffff !important;
+        background-color: rgba(26, 54, 93, 0.8) !important;
+        padding: 8px 12px !important;
+        border-radius: 4px !important;
+        margin-bottom: 8px !important;
+    }
+    
+    .form-control, .form-select {
+        background-color: #ffffff !important;
+        border: 2px solid #a0aec0 !important;
+        color: #2d3748 !important;
+        
+        &:focus {
+            border-color: #64ffda !important;
+            box-shadow: 0 0 0 0.25rem rgba(100, 255, 218, 0.25) !important;
+        }
+        
+        &::placeholder {
+            color: #718096 !important;
+        }
+    }
+    
+    #contact-status {
+        background-color: rgba(26, 54, 93, 0.8) !important;
+        border-radius: 4px !important;
+        padding: 8px 12px !important;
+        color: #ffffff !important;
+    }
+}
+
+/* Projects Section Filter Buttons - Ensure proper contrast */
+.projects-section .btn-group .btn {
+    margin: 2px !important;
+    
+    &.btn-dark {
+        background-color: #2d3748 !important;
+        border-color: #4a5568 !important;
+        color: #ffffff !important;
+        
+        &:hover, &:focus, &.active {
+            background-color: #64ffda !important;
+            border-color: #64ffda !important;
+            color: #0a192f !important;
+        }
+    }
+}
+
 /* Fix navbar overlap on individual post pages */
 .type-posts.kind-page .wrapper {
   padding-top: 20px; /* Just a small adjustment for navbar overlap */

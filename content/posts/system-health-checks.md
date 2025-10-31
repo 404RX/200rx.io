@@ -10,7 +10,7 @@ menu:
     weight: 20
 tags: ["Web Development", "Trends", "JavaScript", "AI", "Performance"]
 categories: ["Technology", "Web Development"]
-hero: "/images/default-hero.jpg"
+hero: "/images/hero/web-development-trends.jpg"
 ---
 
 ## The Evolution of Web Development
@@ -42,7 +42,7 @@ export default async function handler(request) {
     timestamp: new Date().toISOString()
   }), {
     headers: { 'content-type': 'application/json' }
-  });
+  });1
 }
 ```
 

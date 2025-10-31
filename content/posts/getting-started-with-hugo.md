@@ -13,7 +13,7 @@ menu:
     weight: 40
 tags: ["Hugo", "Static Site", "Web Development", "Tutorial"]
 categories: ["Web Development"]
-hero: "/images/default-hero.jpg"
+hero: "/images/hero/hugo-static-site.jpg"
 toc: true
 ---
 

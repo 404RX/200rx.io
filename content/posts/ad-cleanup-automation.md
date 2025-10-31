@@ -10,7 +10,7 @@ menu:
     weight: 31
 tags: ["PowerShell", "Active Directory", "Automation", "Security", "IT Operations"]
 categories: ["Identity Management", "Infrastructure Automation"]
-hero: "/images/default-hero.jpg"
+hero: "/images/hero/active-directory-automation.jpg"
 ---
 
 ## Introduction

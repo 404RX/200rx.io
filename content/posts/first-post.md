@@ -10,7 +10,7 @@ menu:
     weight: 50
 tags: ["welcome", "intro"]
 categories: ["General"]
-hero: "/images/default-hero.jpg"
+hero: "/images/hero/portfolio-welcome.jpg"
 ---
 
 # Welcome to My Portfolio

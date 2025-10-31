@@ -3,7 +3,6 @@
   "baseUrl": ".",
   "paths": {
    "*": [
-    "..\\node_modules\\*",
     "..\\themes\\toha\\assets\\*"
    ]
   }
