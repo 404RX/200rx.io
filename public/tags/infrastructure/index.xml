@@ -1,154 +1,126 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Infrastructure on Ray Miller - IT Infrastructure Specialist [DEV]</title>
-    <link>http://localhost:1313/tags/infrastructure/</link>
-    <description>Recent content in Infrastructure on Ray Miller - IT Infrastructure Specialist [DEV]</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Sun, 10 Mar 2024 09:15:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/infrastructure/index.xml" rel="self" type="application/rss+xml" /><item>
-      <title>Remote System Health Checks with PowerShell</title>
-      <link>http://localhost:1313/posts/remote-system-healthcheckpowershell/</link>
-      <pubDate>Sun, 10 Mar 2024 09:15:00 +0000</pubDate>
-      
-      <guid>http://localhost:1313/posts/remote-system-healthcheckpowershell/</guid>
-      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
-&lt;p&gt;Ensuring system uptime and catching performance issues early is vital in any infrastructure. With PowerShell, you can automate system health checks across your environment, collect metrics, and act on anomalies before they impact operations.&lt;/p&gt;
-&lt;p&gt;This guide walks through a practical PowerShell script for remote system health monitoring, complete with optional test coverage using Pester.&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id=&#34;core-principles&#34;&gt;Core Principles&lt;/h2&gt;
-&lt;h3 id=&#34;1-test-system-health-remotely-with-wmi&#34;&gt;1. Test System Health Remotely with WMI&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kd&#34;&gt;function&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;Test-SystemHealth&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;param&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;string&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$ComputerName&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nv&#34;&gt;$result&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;vm&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;ComputerName&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$ComputerName&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;Ping&lt;/span&gt;         &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;vm&#34;&gt;$false&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;CPU&lt;/span&gt;          &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;vm&#34;&gt;$null&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;Memory&lt;/span&gt;       &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;vm&#34;&gt;$null&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;DiskSpace&lt;/span&gt;    &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;vm&#34;&gt;$null&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;Test-Connection&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ComputerName&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$ComputerName&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Count&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;2&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Quiet&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nv&#34;&gt;$result&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;Ping&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;vm&#34;&gt;$true&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;try&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;nv&#34;&gt;$sys&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;Get-WmiObject&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Class&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Win32_OperatingSystem&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ComputerName&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$ComputerName&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;nv&#34;&gt;$cpu&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;Get-WmiObject&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Class&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Win32_Processor&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ComputerName&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$ComputerName&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;nv&#34;&gt;$disk&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;Get-WmiObject&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Class&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Win32_LogicalDisk&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ComputerName&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$ComputerName&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Filter&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;DriveType=3&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;nv&#34;&gt;$result&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;CPU&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;math&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Round&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$cpu&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;LoadPercentage&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;nv&#34;&gt;$result&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;Memory&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;math&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Round&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(((&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$sys&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;TotalVisibleMemorySize&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$sys&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;FreePhysicalMemory&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$sys&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;TotalVisibleMemorySize&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;100&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;nv&#34;&gt;$result&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;DiskSpace&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;vm&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;k&#34;&gt;foreach&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$d&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$disk&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                &lt;span class=&#34;nv&#34;&gt;$usedPercent&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;math&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Round&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(((&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$d&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;Size&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$d&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;FreeSpace&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$d&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Size&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;100&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                &lt;span class=&#34;nv&#34;&gt;$result&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;DiskSpace&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;vm&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Drive&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$d&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DeviceID&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;UsedPercent&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$usedPercent&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;catch&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;nb&#34;&gt;Write-Warning&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Unable to gather metrics from &lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$ComputerName&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$result&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;# Example usage&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$computers&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;Get-Content&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Path&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;.\computers.txt&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$healthReport&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$computers&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;ForEach-Object&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;Test-SystemHealth&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ComputerName&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$_&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$healthReport&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;ConvertTo-Json&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;Out-File&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;.\HealthReport.json&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;### 2. Testing Strategy with Pester&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;```&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;powershell&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;Describe&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;Test-SystemHealth&amp;#39;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;It&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;Should return a result object with expected keys&amp;#39;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nv&#34;&gt;$mockResult&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;Test-SystemHealth&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ComputerName&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;localhost&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nv&#34;&gt;$mockResult&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Should&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-Not&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-BeNullOrEmpty&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nv&#34;&gt;$mockResult&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Should&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-HaveProperty&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;ComputerName&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nv&#34;&gt;$mockResult&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Should&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-HaveProperty&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;Ping&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nv&#34;&gt;$mockResult&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Should&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-HaveProperty&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;CPU&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nv&#34;&gt;$mockResult&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Should&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-HaveProperty&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;Memory&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nv&#34;&gt;$mockResult&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Should&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-HaveProperty&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;DiskSpace&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;It&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;Should show Ping as true for localhost&amp;#39;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nv&#34;&gt;$mockResult&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;Test-SystemHealth&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ComputerName&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;localhost&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nv&#34;&gt;$mockResult&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;Ping&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Should&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-BeTrue&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-    </item>
-    
-    <item>
-      <title>IT Infrastructure Consulting</title>
-      <link>http://localhost:1313/services/infrastructure-consulting/</link>
-      <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>
-      
-      <guid>http://localhost:1313/services/infrastructure-consulting/</guid>
-      <description>&lt;h1 id=&#34;it-infrastructure-consulting&#34;&gt;IT Infrastructure Consulting&lt;/h1&gt;
-&lt;p&gt;Optimize your IT infrastructure for peak performance, reliability, and scalability with expert analysis and strategic recommendations.&lt;/p&gt;
-&lt;h2 id=&#34;core-services&#34;&gt;Core Services&lt;/h2&gt;
-&lt;h3 id=&#34;infrastructure-assessment&#34;&gt;Infrastructure Assessment&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Complete system architecture&lt;/strong&gt; review&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Performance bottleneck&lt;/strong&gt; identification&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Security posture&lt;/strong&gt; evaluation&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Capacity planning&lt;/strong&gt; and growth projections&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;system-optimization&#34;&gt;System Optimization&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Performance tuning&lt;/strong&gt; for maximum efficiency&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Resource allocation&lt;/strong&gt; optimization&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Network configuration&lt;/strong&gt; improvements&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Storage and backup&lt;/strong&gt; strategy enhancement&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;troubleshooting--resolution&#34;&gt;Troubleshooting &amp;amp; Resolution&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Root cause analysis&lt;/strong&gt; of complex issues&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Emergency response&lt;/strong&gt; for critical problems&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Preventive maintenance&lt;/strong&gt; planning&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Documentation&lt;/strong&gt; and knowledge transfer&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;specialized-expertise&#34;&gt;Specialized Expertise&lt;/h2&gt;
-&lt;h3 id=&#34;windows-server--active-directory&#34;&gt;Windows Server &amp;amp; Active Directory&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Enterprise AD management&lt;/strong&gt; (600+ systems experience)&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Group Policy optimization&lt;/strong&gt; and troubleshooting&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;DNS/DHCP configuration&lt;/strong&gt; and performance&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Server consolidation&lt;/strong&gt; and modernization&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;virtualization-vmware-vsphere&#34;&gt;Virtualization (VMware vSphere)&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;ESXi cluster&lt;/strong&gt; optimization&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;VM lifecycle management&lt;/strong&gt; automation&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Resource pooling&lt;/strong&gt; and allocation&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;High availability&lt;/strong&gt; configuration&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;cloud-integration-microsoft-azure&#34;&gt;Cloud Integration (Microsoft Azure)&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Hybrid identity&lt;/strong&gt; setup and optimization&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Cloud migration&lt;/strong&gt; planning and execution&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Cost optimization&lt;/strong&gt; strategies&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Security configuration&lt;/strong&gt; best practices&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;typical-outcomes&#34;&gt;Typical Outcomes&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;30% improvement&lt;/strong&gt; in system efficiency&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;50% reduction&lt;/strong&gt; in downtime incidents&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;40% faster&lt;/strong&gt; problem resolution&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;25% cost savings&lt;/strong&gt; through optimization&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;engagement-process&#34;&gt;Engagement Process&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;Discovery Phase&lt;/strong&gt; (1-2 weeks)&lt;/p&gt;</description>
-    </item>
-    
-    
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Infrastructure on Ray Miller - IT Infrastructure Specialist [DEV]</title><link>https://dev--200rx.netlify.app/tags/infrastructure/</link><description>Recent content in Infrastructure on Ray Miller - IT Infrastructure Specialist [DEV]</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 10 Mar 2024 09:15:00 +0000</lastBuildDate><atom:link href="https://dev--200rx.netlify.app/tags/infrastructure/index.xml" rel="self" type="application/rss+xml"/><item><title>Remote System Health Checks with PowerShell</title><link>https://dev--200rx.netlify.app/posts/remote-system-healthcheckpowershell/</link><pubDate>Sun, 10 Mar 2024 09:15:00 +0000</pubDate><guid>https://dev--200rx.netlify.app/posts/remote-system-healthcheckpowershell/</guid><description>&lt;h2 id="introduction">Introduction&lt;/h2>
+&lt;p>Ensuring system uptime and catching performance issues early is vital in any infrastructure. With PowerShell, you can automate system health checks across your environment, collect metrics, and act on anomalies before they impact operations.&lt;/p>
+&lt;p>This guide walks through a practical PowerShell script for remote system health monitoring, complete with optional test coverage using Pester.&lt;/p>
+&lt;hr>
+&lt;h2 id="core-principles">Core Principles&lt;/h2>
+&lt;h3 id="1-test-system-health-remotely-with-wmi">1. Test System Health Remotely with WMI&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-powershell" data-lang="powershell">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">function&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nb">Test-SystemHealth&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">param&lt;/span> &lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">[&lt;/span>&lt;span class="no">string&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="nv">$ComputerName&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$result&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="vm">@&lt;/span>&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ComputerName&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nv">$ComputerName&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Ping&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="vm">$false&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">CPU&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="vm">$null&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Memory&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="vm">$null&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">DiskSpace&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="vm">$null&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nb">Test-Connection&lt;/span> &lt;span class="n">-ComputerName&lt;/span> &lt;span class="nv">$ComputerName&lt;/span> &lt;span class="n">-Count&lt;/span> &lt;span class="mf">2&lt;/span> &lt;span class="n">-Quiet&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$result&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="py">Ping&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="vm">$true&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">try&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$sys&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nb">Get-WmiObject&lt;/span> &lt;span class="n">-Class&lt;/span> &lt;span class="n">Win32_OperatingSystem&lt;/span> &lt;span class="n">-ComputerName&lt;/span> &lt;span class="nv">$ComputerName&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$cpu&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nb">Get-WmiObject&lt;/span> &lt;span class="n">-Class&lt;/span> &lt;span class="n">Win32_Processor&lt;/span> &lt;span class="n">-ComputerName&lt;/span> &lt;span class="nv">$ComputerName&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$disk&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nb">Get-WmiObject&lt;/span> &lt;span class="n">-Class&lt;/span> &lt;span class="n">Win32_LogicalDisk&lt;/span> &lt;span class="n">-ComputerName&lt;/span> &lt;span class="nv">$ComputerName&lt;/span> &lt;span class="n">-Filter&lt;/span> &lt;span class="s2">&amp;#34;DriveType=3&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$result&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="py">CPU&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="no">math&lt;/span>&lt;span class="p">]::&lt;/span>&lt;span class="n">Round&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$cpu&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">LoadPercentage&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mf">2&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$result&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="py">Memory&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="no">math&lt;/span>&lt;span class="p">]::&lt;/span>&lt;span class="n">Round&lt;/span>&lt;span class="p">(((&lt;/span>&lt;span class="nv">$sys&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="py">TotalVisibleMemorySize&lt;/span> &lt;span class="p">-&lt;/span> &lt;span class="nv">$sys&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">FreePhysicalMemory&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">/&lt;/span> &lt;span class="nv">$sys&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">TotalVisibleMemorySize&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">*&lt;/span> &lt;span class="mf">100&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mf">2&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$result&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="py">DiskSpace&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="vm">@&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">foreach&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">$d&lt;/span> &lt;span class="k">in&lt;/span> &lt;span class="nv">$disk&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$usedPercent&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="no">math&lt;/span>&lt;span class="p">]::&lt;/span>&lt;span class="n">Round&lt;/span>&lt;span class="p">(((&lt;/span>&lt;span class="nv">$d&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="py">Size&lt;/span> &lt;span class="p">-&lt;/span> &lt;span class="nv">$d&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">FreeSpace&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">/&lt;/span> &lt;span class="nv">$d&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Size&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">*&lt;/span> &lt;span class="mf">100&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mf">2&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$result&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="py">DiskSpace&lt;/span> &lt;span class="p">+=&lt;/span> &lt;span class="vm">@&lt;/span>&lt;span class="p">{&lt;/span> &lt;span class="n">Drive&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nv">$d&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">DeviceID&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">UsedPercent&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nv">$usedPercent&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span> &lt;span class="k">catch&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">Write-Warning&lt;/span> &lt;span class="s2">&amp;#34;Unable to gather metrics from &lt;/span>&lt;span class="nv">$ComputerName&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nv">$result&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c"># Example usage&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$computers&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nb">Get-Content&lt;/span> &lt;span class="n">-Path&lt;/span> &lt;span class="s2">&amp;#34;.\computers.txt&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$healthReport&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nv">$computers&lt;/span> &lt;span class="p">|&lt;/span> &lt;span class="nb">ForEach-Object&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nb">Test-SystemHealth&lt;/span> &lt;span class="n">-ComputerName&lt;/span> &lt;span class="nv">$_&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$healthReport&lt;/span> &lt;span class="p">|&lt;/span> &lt;span class="nb">ConvertTo-Json&lt;/span> &lt;span class="p">|&lt;/span> &lt;span class="nb">Out-File&lt;/span> &lt;span class="s2">&amp;#34;.\HealthReport.json&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c">### 2. Testing Strategy with Pester&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">```&lt;/span>&lt;span class="n">powershell&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Describe&lt;/span> &lt;span class="s1">&amp;#39;Test-SystemHealth&amp;#39;&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">It&lt;/span> &lt;span class="s1">&amp;#39;Should return a result object with expected keys&amp;#39;&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$mockResult&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nb">Test-SystemHealth&lt;/span> &lt;span class="n">-ComputerName&lt;/span> &lt;span class="s2">&amp;#34;localhost&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$mockResult&lt;/span> &lt;span class="p">|&lt;/span> &lt;span class="n">Should&lt;/span> &lt;span class="o">-Not&lt;/span> &lt;span class="n">-BeNullOrEmpty&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$mockResult&lt;/span> &lt;span class="p">|&lt;/span> &lt;span class="n">Should&lt;/span> &lt;span class="n">-HaveProperty&lt;/span> &lt;span class="s1">&amp;#39;ComputerName&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$mockResult&lt;/span> &lt;span class="p">|&lt;/span> &lt;span class="n">Should&lt;/span> &lt;span class="n">-HaveProperty&lt;/span> &lt;span class="s1">&amp;#39;Ping&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$mockResult&lt;/span> &lt;span class="p">|&lt;/span> &lt;span class="n">Should&lt;/span> &lt;span class="n">-HaveProperty&lt;/span> &lt;span class="s1">&amp;#39;CPU&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$mockResult&lt;/span> &lt;span class="p">|&lt;/span> &lt;span class="n">Should&lt;/span> &lt;span class="n">-HaveProperty&lt;/span> &lt;span class="s1">&amp;#39;Memory&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$mockResult&lt;/span> &lt;span class="p">|&lt;/span> &lt;span class="n">Should&lt;/span> &lt;span class="n">-HaveProperty&lt;/span> &lt;span class="s1">&amp;#39;DiskSpace&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">It&lt;/span> &lt;span class="s1">&amp;#39;Should show Ping as true for localhost&amp;#39;&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$mockResult&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nb">Test-SystemHealth&lt;/span> &lt;span class="n">-ComputerName&lt;/span> &lt;span class="s2">&amp;#34;localhost&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$mockResult&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="py">Ping&lt;/span> &lt;span class="p">|&lt;/span> &lt;span class="n">Should&lt;/span> &lt;span class="n">-BeTrue&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>IT Infrastructure Consulting</title><link>https://dev--200rx.netlify.app/services/infrastructure-consulting/</link><pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate><guid>https://dev--200rx.netlify.app/services/infrastructure-consulting/</guid><description>&lt;h1 id="it-infrastructure-consulting">IT Infrastructure Consulting&lt;/h1>
+&lt;p>Optimize your IT infrastructure for peak performance, reliability, and scalability with expert analysis and strategic recommendations.&lt;/p>
+&lt;h2 id="core-services">Core Services&lt;/h2>
+&lt;h3 id="infrastructure-assessment">Infrastructure Assessment&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>Complete system architecture&lt;/strong> review&lt;/li>
+&lt;li>&lt;strong>Performance bottleneck&lt;/strong> identification&lt;/li>
+&lt;li>&lt;strong>Security posture&lt;/strong> evaluation&lt;/li>
+&lt;li>&lt;strong>Capacity planning&lt;/strong> and growth projections&lt;/li>
+&lt;/ul>
+&lt;h3 id="system-optimization">System Optimization&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>Performance tuning&lt;/strong> for maximum efficiency&lt;/li>
+&lt;li>&lt;strong>Resource allocation&lt;/strong> optimization&lt;/li>
+&lt;li>&lt;strong>Network configuration&lt;/strong> improvements&lt;/li>
+&lt;li>&lt;strong>Storage and backup&lt;/strong> strategy enhancement&lt;/li>
+&lt;/ul>
+&lt;h3 id="troubleshooting--resolution">Troubleshooting &amp;amp; Resolution&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>Root cause analysis&lt;/strong> of complex issues&lt;/li>
+&lt;li>&lt;strong>Emergency response&lt;/strong> for critical problems&lt;/li>
+&lt;li>&lt;strong>Preventive maintenance&lt;/strong> planning&lt;/li>
+&lt;li>&lt;strong>Documentation&lt;/strong> and knowledge transfer&lt;/li>
+&lt;/ul>
+&lt;h2 id="specialized-expertise">Specialized Expertise&lt;/h2>
+&lt;h3 id="windows-server--active-directory">Windows Server &amp;amp; Active Directory&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>Enterprise AD management&lt;/strong> (600+ systems experience)&lt;/li>
+&lt;li>&lt;strong>Group Policy optimization&lt;/strong> and troubleshooting&lt;/li>
+&lt;li>&lt;strong>DNS/DHCP configuration&lt;/strong> and performance&lt;/li>
+&lt;li>&lt;strong>Server consolidation&lt;/strong> and modernization&lt;/li>
+&lt;/ul>
+&lt;h3 id="virtualization-vmware-vsphere">Virtualization (VMware vSphere)&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>ESXi cluster&lt;/strong> optimization&lt;/li>
+&lt;li>&lt;strong>VM lifecycle management&lt;/strong> automation&lt;/li>
+&lt;li>&lt;strong>Resource pooling&lt;/strong> and allocation&lt;/li>
+&lt;li>&lt;strong>High availability&lt;/strong> configuration&lt;/li>
+&lt;/ul>
+&lt;h3 id="cloud-integration-microsoft-azure">Cloud Integration (Microsoft Azure)&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>Hybrid identity&lt;/strong> setup and optimization&lt;/li>
+&lt;li>&lt;strong>Cloud migration&lt;/strong> planning and execution&lt;/li>
+&lt;li>&lt;strong>Cost optimization&lt;/strong> strategies&lt;/li>
+&lt;li>&lt;strong>Security configuration&lt;/strong> best practices&lt;/li>
+&lt;/ul>
+&lt;h2 id="typical-outcomes">Typical Outcomes&lt;/h2>
+&lt;ul>
+&lt;li>&lt;strong>30% improvement&lt;/strong> in system efficiency&lt;/li>
+&lt;li>&lt;strong>50% reduction&lt;/strong> in downtime incidents&lt;/li>
+&lt;li>&lt;strong>40% faster&lt;/strong> problem resolution&lt;/li>
+&lt;li>&lt;strong>25% cost savings&lt;/strong> through optimization&lt;/li>
+&lt;/ul>
+&lt;h2 id="engagement-process">Engagement Process&lt;/h2>
+&lt;ol>
+&lt;li>
+&lt;p>&lt;strong>Discovery Phase&lt;/strong> (1-2 weeks)&lt;/p></description></item></channel></rss>

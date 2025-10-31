@@ -1,4 +1,0 @@
-{{/* Guard (or wrap) the fingerprint call so that it only runs if the asset (or resource) is not nil. */}}
-{{ if ( .Site.Params.SomeAsset ) }}
-{{ fingerprint ( .Site.Params.SomeAsset ) }}
-{{ end }} 

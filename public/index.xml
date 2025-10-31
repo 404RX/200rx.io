@@ -1,458 +1,342 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Corey Miller - System Administrator on Ray Miller - IT Infrastructure Specialist [DEV]</title>
-    <link>http://localhost:1313/</link>
-    <description>Recent content in Corey Miller - System Administrator on Ray Miller - IT Infrastructure Specialist [DEV]</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" /><item>
-      <title>Active Directory Cleanup Automation with PowerShell</title>
-      <link>http://localhost:1313/posts/ad-cleanup-automation/</link>
-      <pubDate>Mon, 18 Mar 2024 14:00:00 +0000</pubDate>
-      
-      <guid>http://localhost:1313/posts/ad-cleanup-automation/</guid>
-      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
-&lt;p&gt;Stale and unused objects in Active Directory not only clutter your environment but can also create security risks and provisioning errors. Automating cleanup ensures better hygiene and consistent identity lifecycle management. This guide walks through how to use PowerShell to audit and optionally remove inactive AD users and computers.&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id=&#34;core-principles&#34;&gt;Core Principles&lt;/h2&gt;
-&lt;h3 id=&#34;1-identify-inactive-users-and-computers&#34;&gt;1. Identify Inactive Users and Computers&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;# Users inactive for 90+ days&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$inactiveUsers&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;Get-ADUser&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Filter&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Properties&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;LastLogonDate&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;Where-Object&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;Enabled&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-eq&lt;/span&gt; &lt;span class=&#34;vm&#34;&gt;$true&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-and&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;LastLogonDate&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-lt&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;Get-Date&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;).&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;AddDays&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mf&#34;&gt;-90&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;# Computers inactive for 90+ days&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$inactiveComputers&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;Get-ADComputer&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Filter&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Properties&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;LastLogonDate&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;Where-Object&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;Enabled&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-eq&lt;/span&gt; &lt;span class=&#34;vm&#34;&gt;$true&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-and&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$_&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;LastLogonDate&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-lt&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;Get-Date&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;).&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;AddDays&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mf&#34;&gt;-90&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
-&lt;p&gt;🔍 Use &lt;code&gt;-SearchBase&lt;/code&gt; to narrow to a specific OU&lt;br&gt;
-Example: &lt;code&gt;-SearchBase &amp;quot;OU=Workstations,DC=corp,DC=domain,DC=com&amp;quot;&lt;/code&gt;&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Remote System Health Checks with PowerShell</title>
-      <link>http://localhost:1313/posts/remote-system-healthcheckpowershell/</link>
-      <pubDate>Sun, 10 Mar 2024 09:15:00 +0000</pubDate>
-      
-      <guid>http://localhost:1313/posts/remote-system-healthcheckpowershell/</guid>
-      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
-&lt;p&gt;Ensuring system uptime and catching performance issues early is vital in any infrastructure. With PowerShell, you can automate system health checks across your environment, collect metrics, and act on anomalies before they impact operations.&lt;/p&gt;
-&lt;p&gt;This guide walks through a practical PowerShell script for remote system health monitoring, complete with optional test coverage using Pester.&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id=&#34;core-principles&#34;&gt;Core Principles&lt;/h2&gt;
-&lt;h3 id=&#34;1-test-system-health-remotely-with-wmi&#34;&gt;1. Test System Health Remotely with WMI&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kd&#34;&gt;function&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;Test-SystemHealth&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;param&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;string&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$ComputerName&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nv&#34;&gt;$result&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;vm&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;ComputerName&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$ComputerName&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;Ping&lt;/span&gt;         &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;vm&#34;&gt;$false&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;CPU&lt;/span&gt;          &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;vm&#34;&gt;$null&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;Memory&lt;/span&gt;       &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;vm&#34;&gt;$null&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;DiskSpace&lt;/span&gt;    &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;vm&#34;&gt;$null&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;Test-Connection&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ComputerName&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$ComputerName&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Count&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;2&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Quiet&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nv&#34;&gt;$result&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;Ping&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;vm&#34;&gt;$true&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;try&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;nv&#34;&gt;$sys&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;Get-WmiObject&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Class&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Win32_OperatingSystem&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ComputerName&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$ComputerName&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;nv&#34;&gt;$cpu&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;Get-WmiObject&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Class&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Win32_Processor&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ComputerName&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$ComputerName&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;nv&#34;&gt;$disk&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;Get-WmiObject&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Class&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Win32_LogicalDisk&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ComputerName&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$ComputerName&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Filter&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;DriveType=3&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;nv&#34;&gt;$result&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;CPU&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;math&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Round&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$cpu&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;LoadPercentage&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;nv&#34;&gt;$result&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;Memory&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;math&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Round&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(((&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$sys&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;TotalVisibleMemorySize&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$sys&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;FreePhysicalMemory&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$sys&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;TotalVisibleMemorySize&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;100&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;nv&#34;&gt;$result&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;DiskSpace&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;vm&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;k&#34;&gt;foreach&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$d&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$disk&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                &lt;span class=&#34;nv&#34;&gt;$usedPercent&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;math&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]::&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Round&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(((&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$d&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;Size&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$d&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;FreeSpace&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$d&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Size&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;100&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                &lt;span class=&#34;nv&#34;&gt;$result&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;DiskSpace&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;vm&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Drive&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$d&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DeviceID&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;UsedPercent&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$usedPercent&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;catch&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;nb&#34;&gt;Write-Warning&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Unable to gather metrics from &lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$ComputerName&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$result&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;# Example usage&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$computers&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;Get-Content&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-Path&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;.\computers.txt&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$healthReport&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$computers&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;ForEach-Object&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;Test-SystemHealth&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ComputerName&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$_&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$healthReport&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;ConvertTo-Json&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;Out-File&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;.\HealthReport.json&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;### 2. Testing Strategy with Pester&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;```&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;powershell&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;Describe&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;Test-SystemHealth&amp;#39;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;It&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;Should return a result object with expected keys&amp;#39;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nv&#34;&gt;$mockResult&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;Test-SystemHealth&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ComputerName&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;localhost&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nv&#34;&gt;$mockResult&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Should&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-Not&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-BeNullOrEmpty&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nv&#34;&gt;$mockResult&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Should&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-HaveProperty&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;ComputerName&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nv&#34;&gt;$mockResult&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Should&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-HaveProperty&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;Ping&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nv&#34;&gt;$mockResult&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Should&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-HaveProperty&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;CPU&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nv&#34;&gt;$mockResult&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Should&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-HaveProperty&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;Memory&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nv&#34;&gt;$mockResult&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Should&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-HaveProperty&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;DiskSpace&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;It&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;Should show Ping as true for localhost&amp;#39;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nv&#34;&gt;$mockResult&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;Test-SystemHealth&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-ComputerName&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;localhost&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nv&#34;&gt;$mockResult&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;py&#34;&gt;Ping&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Should&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;-BeTrue&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-    </item>
-    
-    <item>
-      <title>Modern Web Development Trends in 2024</title>
-      <link>http://localhost:1313/posts/system-health-checks/</link>
-      <pubDate>Tue, 20 Feb 2024 14:30:00 +0000</pubDate>
-      
-      <guid>http://localhost:1313/posts/system-health-checks/</guid>
-      <description>&lt;h2 id=&#34;the-evolution-of-web-development&#34;&gt;The Evolution of Web Development&lt;/h2&gt;
-&lt;p&gt;Web development continues to evolve at a rapid pace. As we progress through 2024, several key trends are shaping how we build and deploy web applications.&lt;/p&gt;
-&lt;h2 id=&#34;key-trends-for-2024&#34;&gt;Key Trends for 2024&lt;/h2&gt;
-&lt;h3 id=&#34;1-ai-powered-development-tools&#34;&gt;1. AI-Powered Development Tools&lt;/h3&gt;
-&lt;p&gt;Artificial Intelligence is revolutionizing how developers write code:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Code completion&lt;/strong&gt;: Tools like GitHub Copilot and Tabnine&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Automated testing&lt;/strong&gt;: AI-generated test cases&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Bug detection&lt;/strong&gt;: Intelligent code analysis&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Documentation&lt;/strong&gt;: Auto-generated API docs&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;2-edge-computing-and-cdns&#34;&gt;2. Edge Computing and CDNs&lt;/h3&gt;
-&lt;p&gt;Moving computation closer to users:&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Getting Started with Hugo: A Beginner&#39;s Guide</title>
-      <link>http://localhost:1313/posts/getting-started-with-hugo/</link>
-      <pubDate>Mon, 15 Jan 2024 10:00:00 +0000</pubDate>
-      
-      <guid>http://localhost:1313/posts/getting-started-with-hugo/</guid>
-      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
-&lt;p&gt;Hugo is one of the fastest static site generators available today. Built with Go, it can generate thousands of pages in seconds, making it perfect for blogs, documentation sites, and portfolios.&lt;/p&gt;
-&lt;h2 id=&#34;why-choose-hugo&#34;&gt;Why Choose Hugo?&lt;/h2&gt;
-&lt;h3 id=&#34;speed&#34;&gt;Speed&lt;/h3&gt;
-&lt;p&gt;Hugo is incredibly fast. It can build most websites in under a second, which means you can see your changes almost instantly during development.&lt;/p&gt;
-&lt;h3 id=&#34;flexibility&#34;&gt;Flexibility&lt;/h3&gt;
-&lt;p&gt;With its powerful templating system and extensive theme ecosystem, Hugo can be adapted to almost any type of website.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Welcome</title>
-      <link>http://localhost:1313/posts/first-post/</link>
-      <pubDate>Mon, 01 Jan 2024 10:00:00 +0000</pubDate>
-      
-      <guid>http://localhost:1313/posts/first-post/</guid>
-      <description>&lt;h1 id=&#34;welcome-to-my-portfolio&#34;&gt;Welcome to My Portfolio&lt;/h1&gt;
-&lt;p&gt;This is my personal website where I share my thoughts, projects, and experiences.&lt;/p&gt;
-&lt;h2 id=&#34;recent-posts&#34;&gt;Recent Posts&lt;/h2&gt;
-&lt;p&gt;Check out my latest blog posts below, or use the menu to navigate through different sections of the site.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Automation as a Service</title>
-      <link>http://localhost:1313/services/automation-as-a-service/</link>
-      <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>
-      
-      <guid>http://localhost:1313/services/automation-as-a-service/</guid>
-      <description>&lt;h1 id=&#34;automation-as-a-service&#34;&gt;Automation as a Service&lt;/h1&gt;
-&lt;p&gt;Transform your repetitive IT tasks into automated workflows that save time, reduce errors, and free your team for strategic work.&lt;/p&gt;
-&lt;h2 id=&#34;what-you-get&#34;&gt;What You Get&lt;/h2&gt;
-&lt;h3 id=&#34;custom-script-development&#34;&gt;Custom Script Development&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;PowerShell/Python scripts&lt;/strong&gt; tailored to your environment&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;API integrations&lt;/strong&gt; connecting your systems&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Scheduled automation&lt;/strong&gt; for routine tasks&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Error handling&lt;/strong&gt; and logging for reliability&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;system-monitoring--alerting&#34;&gt;System Monitoring &amp;amp; Alerting&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Proactive monitoring&lt;/strong&gt; of critical systems&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Custom dashboards&lt;/strong&gt; with real-time metrics&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Intelligent alerting&lt;/strong&gt; to prevent issues&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Performance trend analysis&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;compliance-automation&#34;&gt;Compliance Automation&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;STIG/CIS standard&lt;/strong&gt; implementation&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Automated remediation&lt;/strong&gt; scripts&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Compliance reporting&lt;/strong&gt; and documentation&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Audit preparation&lt;/strong&gt; support&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;typical-roi&#34;&gt;Typical ROI&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;20-40 hours saved&lt;/strong&gt; per week per implementation&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;50% reduction&lt;/strong&gt; in manual errors&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;30% faster&lt;/strong&gt; incident response&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;85% less time&lt;/strong&gt; spent on audit preparation&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;technologies-used&#34;&gt;Technologies Used&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;PowerShell&lt;/strong&gt; (5.1/7.x)&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Python&lt;/strong&gt; (3.x with libraries)&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;REST APIs&lt;/strong&gt; and web services&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Task schedulers&lt;/strong&gt; and automation platforms&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Monitoring tools&lt;/strong&gt; (PRTG, Nagios, custom)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;deliverables&#34;&gt;Deliverables&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;Custom automation scripts&lt;/strong&gt; with full documentation&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Installation and configuration&lt;/strong&gt; guides&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Monitoring dashboards&lt;/strong&gt; and alerting setup&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Training materials&lt;/strong&gt; for your team&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Maintenance procedures&lt;/strong&gt; and support documentation&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&#34;engagement-options&#34;&gt;Engagement Options&lt;/h2&gt;
-&lt;h3 id=&#34;quick-win-package-1-2-weeks&#34;&gt;Quick Win Package (1-2 weeks)&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Automate 1-3 critical processes&lt;/li&gt;
-&lt;li&gt;Immediate ROI demonstration&lt;/li&gt;
-&lt;li&gt;Perfect for proof of concept&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;transformation-package-1-3-months&#34;&gt;Transformation Package (1-3 months)&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Comprehensive process automation&lt;/li&gt;
-&lt;li&gt;Multiple system integration&lt;/li&gt;
-&lt;li&gt;Significant efficiency gains&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;enterprise-package-3-6-months&#34;&gt;Enterprise Package (3-6 months)&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Full-scale automation program&lt;/li&gt;
-&lt;li&gt;Organization-wide improvements&lt;/li&gt;
-&lt;li&gt;Complete process transformation&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;p&gt;&lt;strong&gt;Ready to eliminate manual processes?&lt;/strong&gt; &lt;a href=&#34;http://localhost:1313/contact&#34;&gt;Contact me&lt;/a&gt; to discuss your automation needs and get a custom proposal.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Emergency IT Support</title>
-      <link>http://localhost:1313/services/emergency-support/</link>
-      <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>
-      
-      <guid>http://localhost:1313/services/emergency-support/</guid>
-      <description>&lt;h1 id=&#34;emergency-it-support&#34;&gt;Emergency IT Support&lt;/h1&gt;
-&lt;p&gt;When critical systems fail, rapid response is essential. Get expert help to minimize downtime and restore operations quickly.&lt;/p&gt;
-&lt;h2 id=&#34;emergency-response-services&#34;&gt;Emergency Response Services&lt;/h2&gt;
-&lt;h3 id=&#34;247-critical-support&#34;&gt;24/7 Critical Support&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Immediate response&lt;/strong&gt; to system failures&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Remote troubleshooting&lt;/strong&gt; capabilities&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Escalation management&lt;/strong&gt; for complex issues&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Real-time communication&lt;/strong&gt; during incidents&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;crisis-management&#34;&gt;Crisis Management&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Incident command&lt;/strong&gt; structure and coordination&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Stakeholder communication&lt;/strong&gt; and updates&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Priority-based triage&lt;/strong&gt; for multiple issues&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Business impact assessment&lt;/strong&gt; and mitigation&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;system-recovery&#34;&gt;System Recovery&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Data recovery&lt;/strong&gt; and restoration&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Service restoration&lt;/strong&gt; procedures&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Backup validation&lt;/strong&gt; and testing&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Failover activation&lt;/strong&gt; when needed&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;rapid-response-capabilities&#34;&gt;Rapid Response Capabilities&lt;/h2&gt;
-&lt;h3 id=&#34;remote-access-tools&#34;&gt;Remote Access Tools&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Secure remote connection&lt;/strong&gt; to your systems&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Administrative access&lt;/strong&gt; for critical repairs&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Screen sharing&lt;/strong&gt; for collaborative troubleshooting&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;File transfer&lt;/strong&gt; for emergency patches&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;diagnostic-expertise&#34;&gt;Diagnostic Expertise&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;System log analysis&lt;/strong&gt; and interpretation&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Performance monitoring&lt;/strong&gt; and analysis&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Network troubleshooting&lt;/strong&gt; and optimization&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Security incident&lt;/strong&gt; response&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;recovery-tools&#34;&gt;Recovery Tools&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Custom recovery scripts&lt;/strong&gt; for common issues&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Automated diagnostics&lt;/strong&gt; for faster resolution&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;System restore&lt;/strong&gt; and rollback procedures&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Emergency patches&lt;/strong&gt; and hotfixes&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;service-levels&#34;&gt;Service Levels&lt;/h2&gt;
-&lt;h3 id=&#34;standard-emergency-support&#34;&gt;Standard Emergency Support&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;4-hour response&lt;/strong&gt; time guarantee&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Business hours&lt;/strong&gt; primary coverage&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Remote resolution&lt;/strong&gt; preferred method&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Follow-up documentation&lt;/strong&gt; included&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;premium-emergency-support&#34;&gt;Premium Emergency Support&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;1-hour response&lt;/strong&gt; time guarantee&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;24/7 availability&lt;/strong&gt; including holidays&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;On-site support&lt;/strong&gt; when required&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Dedicated hotline&lt;/strong&gt; for critical issues&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;enterprise-emergency-support&#34;&gt;Enterprise Emergency Support&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;30-minute response&lt;/strong&gt; time guarantee&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Dedicated support engineer&lt;/strong&gt; assignment&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Priority escalation&lt;/strong&gt; to vendor support&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Post-incident review&lt;/strong&gt; and improvement&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;common-emergency-scenarios&#34;&gt;Common Emergency Scenarios&lt;/h2&gt;
-&lt;h3 id=&#34;server-failures&#34;&gt;Server Failures&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Hardware diagnostics&lt;/strong&gt; and replacement coordination&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Service restoration&lt;/strong&gt; on alternate systems&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Data recovery&lt;/strong&gt; from failed storage&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Application troubleshooting&lt;/strong&gt; and repair&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;network-outages&#34;&gt;Network Outages&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Connectivity diagnosis&lt;/strong&gt; and restoration&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Routing and switching&lt;/strong&gt; issue resolution&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;DNS/DHCP service&lt;/strong&gt; recovery&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Internet connectivity&lt;/strong&gt; troubleshooting&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;security-incidents&#34;&gt;Security Incidents&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Malware removal&lt;/strong&gt; and system cleaning&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Intrusion response&lt;/strong&gt; and containment&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Account compromise&lt;/strong&gt; remediation&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Security baseline&lt;/strong&gt; restoration&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;performance-crises&#34;&gt;Performance Crises&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Resource exhaustion&lt;/strong&gt; diagnosis and relief&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Performance bottleneck&lt;/strong&gt; identification&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Capacity planning&lt;/strong&gt; for immediate needs&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Load balancing&lt;/strong&gt; and optimization&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;value-proposition&#34;&gt;Value Proposition&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Minimize business disruption&lt;/strong&gt; with rapid response&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Leverage 10+ years&lt;/strong&gt; of crisis management experience&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Access to specialized tools&lt;/strong&gt; and diagnostic capabilities&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Federal and enterprise&lt;/strong&gt; experience with critical systems&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Clear communication&lt;/strong&gt; throughout the incident&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;engagement-model&#34;&gt;Engagement Model&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;Initial Contact&lt;/strong&gt; - Immediate response and triage&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Assessment&lt;/strong&gt; - Rapid diagnosis and impact analysis&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Response&lt;/strong&gt; - Coordinated resolution efforts&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Recovery&lt;/strong&gt; - System restoration and validation&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Follow-up&lt;/strong&gt; - Post-incident review and recommendations&lt;/li&gt;
-&lt;/ol&gt;
-&lt;hr&gt;
-&lt;p&gt;&lt;strong&gt;Facing a critical IT emergency?&lt;/strong&gt; &lt;a href=&#34;http://localhost:1313/contact&#34;&gt;Contact me immediately&lt;/a&gt; - Response within 1 hour guaranteed.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>IT Infrastructure Consulting</title>
-      <link>http://localhost:1313/services/infrastructure-consulting/</link>
-      <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>
-      
-      <guid>http://localhost:1313/services/infrastructure-consulting/</guid>
-      <description>&lt;h1 id=&#34;it-infrastructure-consulting&#34;&gt;IT Infrastructure Consulting&lt;/h1&gt;
-&lt;p&gt;Optimize your IT infrastructure for peak performance, reliability, and scalability with expert analysis and strategic recommendations.&lt;/p&gt;
-&lt;h2 id=&#34;core-services&#34;&gt;Core Services&lt;/h2&gt;
-&lt;h3 id=&#34;infrastructure-assessment&#34;&gt;Infrastructure Assessment&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Complete system architecture&lt;/strong&gt; review&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Performance bottleneck&lt;/strong&gt; identification&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Security posture&lt;/strong&gt; evaluation&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Capacity planning&lt;/strong&gt; and growth projections&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;system-optimization&#34;&gt;System Optimization&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Performance tuning&lt;/strong&gt; for maximum efficiency&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Resource allocation&lt;/strong&gt; optimization&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Network configuration&lt;/strong&gt; improvements&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Storage and backup&lt;/strong&gt; strategy enhancement&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;troubleshooting--resolution&#34;&gt;Troubleshooting &amp;amp; Resolution&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Root cause analysis&lt;/strong&gt; of complex issues&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Emergency response&lt;/strong&gt; for critical problems&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Preventive maintenance&lt;/strong&gt; planning&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Documentation&lt;/strong&gt; and knowledge transfer&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;specialized-expertise&#34;&gt;Specialized Expertise&lt;/h2&gt;
-&lt;h3 id=&#34;windows-server--active-directory&#34;&gt;Windows Server &amp;amp; Active Directory&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Enterprise AD management&lt;/strong&gt; (600+ systems experience)&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Group Policy optimization&lt;/strong&gt; and troubleshooting&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;DNS/DHCP configuration&lt;/strong&gt; and performance&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Server consolidation&lt;/strong&gt; and modernization&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;virtualization-vmware-vsphere&#34;&gt;Virtualization (VMware vSphere)&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;ESXi cluster&lt;/strong&gt; optimization&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;VM lifecycle management&lt;/strong&gt; automation&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Resource pooling&lt;/strong&gt; and allocation&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;High availability&lt;/strong&gt; configuration&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;cloud-integration-microsoft-azure&#34;&gt;Cloud Integration (Microsoft Azure)&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Hybrid identity&lt;/strong&gt; setup and optimization&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Cloud migration&lt;/strong&gt; planning and execution&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Cost optimization&lt;/strong&gt; strategies&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Security configuration&lt;/strong&gt; best practices&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;typical-outcomes&#34;&gt;Typical Outcomes&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;30% improvement&lt;/strong&gt; in system efficiency&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;50% reduction&lt;/strong&gt; in downtime incidents&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;40% faster&lt;/strong&gt; problem resolution&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;25% cost savings&lt;/strong&gt; through optimization&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;engagement-process&#34;&gt;Engagement Process&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;Discovery Phase&lt;/strong&gt; (1-2 weeks)&lt;/p&gt;</description>
-    </item>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <item>
-      <title>Contact Me                                        </title>
-      <link>http://localhost:1313/contact/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://localhost:1313/contact/</guid>
-      <description>&lt;p&gt;Ready to work together? Let&amp;rsquo;s discuss your project and how I can help with your system administration, cloud infrastructure, or automation needs.&lt;/p&gt;</description>
-    </item>
-    
-    
-    
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Corey Miller - System Administrator on Ray Miller - IT Infrastructure Specialist [DEV]</title><link>https://dev--200rx.netlify.app/</link><description>Recent content in Corey Miller - System Administrator on Ray Miller - IT Infrastructure Specialist [DEV]</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://dev--200rx.netlify.app/index.xml" rel="self" type="application/rss+xml"/><item><title>Active Directory Cleanup Automation with PowerShell</title><link>https://dev--200rx.netlify.app/posts/ad-cleanup-automation/</link><pubDate>Mon, 18 Mar 2024 14:00:00 +0000</pubDate><guid>https://dev--200rx.netlify.app/posts/ad-cleanup-automation/</guid><description>&lt;h2 id="introduction">Introduction&lt;/h2>
+&lt;p>Stale and unused objects in Active Directory not only clutter your environment but can also create security risks and provisioning errors. Automating cleanup ensures better hygiene and consistent identity lifecycle management. This guide walks through how to use PowerShell to audit and optionally remove inactive AD users and computers.&lt;/p>
+&lt;hr>
+&lt;h2 id="core-principles">Core Principles&lt;/h2>
+&lt;h3 id="1-identify-inactive-users-and-computers">1. Identify Inactive Users and Computers&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-powershell" data-lang="powershell">&lt;span class="line">&lt;span class="cl">&lt;span class="c"># Users inactive for 90+ days&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$inactiveUsers&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nb">Get-ADUser&lt;/span> &lt;span class="n">-Filter&lt;/span> &lt;span class="p">*&lt;/span> &lt;span class="n">-Properties&lt;/span> &lt;span class="n">LastLogonDate&lt;/span> &lt;span class="p">|&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">Where-Object&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nv">$_&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="py">Enabled&lt;/span> &lt;span class="o">-eq&lt;/span> &lt;span class="vm">$true&lt;/span> &lt;span class="o">-and&lt;/span> &lt;span class="nv">$_&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="py">LastLogonDate&lt;/span> &lt;span class="o">-lt&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nb">Get-Date&lt;/span>&lt;span class="p">).&lt;/span>&lt;span class="py">AddDays&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mf">-90&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c"># Computers inactive for 90+ days&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$inactiveComputers&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nb">Get-ADComputer&lt;/span> &lt;span class="n">-Filter&lt;/span> &lt;span class="p">*&lt;/span> &lt;span class="n">-Properties&lt;/span> &lt;span class="n">LastLogonDate&lt;/span> &lt;span class="p">|&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">Where-Object&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nv">$_&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="py">Enabled&lt;/span> &lt;span class="o">-eq&lt;/span> &lt;span class="vm">$true&lt;/span> &lt;span class="o">-and&lt;/span> &lt;span class="nv">$_&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="py">LastLogonDate&lt;/span> &lt;span class="o">-lt&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nb">Get-Date&lt;/span>&lt;span class="p">).&lt;/span>&lt;span class="py">AddDays&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mf">-90&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
+&lt;p>🔍 Use &lt;code>-SearchBase&lt;/code> to narrow to a specific OU&lt;br>
+Example: &lt;code>-SearchBase &amp;quot;OU=Workstations,DC=corp,DC=domain,DC=com&amp;quot;&lt;/code>&lt;/p></description></item><item><title>Remote System Health Checks with PowerShell</title><link>https://dev--200rx.netlify.app/posts/remote-system-healthcheckpowershell/</link><pubDate>Sun, 10 Mar 2024 09:15:00 +0000</pubDate><guid>https://dev--200rx.netlify.app/posts/remote-system-healthcheckpowershell/</guid><description>&lt;h2 id="introduction">Introduction&lt;/h2>
+&lt;p>Ensuring system uptime and catching performance issues early is vital in any infrastructure. With PowerShell, you can automate system health checks across your environment, collect metrics, and act on anomalies before they impact operations.&lt;/p>
+&lt;p>This guide walks through a practical PowerShell script for remote system health monitoring, complete with optional test coverage using Pester.&lt;/p>
+&lt;hr>
+&lt;h2 id="core-principles">Core Principles&lt;/h2>
+&lt;h3 id="1-test-system-health-remotely-with-wmi">1. Test System Health Remotely with WMI&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-powershell" data-lang="powershell">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">function&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nb">Test-SystemHealth&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">param&lt;/span> &lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">[&lt;/span>&lt;span class="no">string&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="nv">$ComputerName&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$result&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="vm">@&lt;/span>&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ComputerName&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nv">$ComputerName&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Ping&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="vm">$false&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">CPU&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="vm">$null&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Memory&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="vm">$null&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">DiskSpace&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="vm">$null&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nb">Test-Connection&lt;/span> &lt;span class="n">-ComputerName&lt;/span> &lt;span class="nv">$ComputerName&lt;/span> &lt;span class="n">-Count&lt;/span> &lt;span class="mf">2&lt;/span> &lt;span class="n">-Quiet&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$result&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="py">Ping&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="vm">$true&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">try&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$sys&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nb">Get-WmiObject&lt;/span> &lt;span class="n">-Class&lt;/span> &lt;span class="n">Win32_OperatingSystem&lt;/span> &lt;span class="n">-ComputerName&lt;/span> &lt;span class="nv">$ComputerName&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$cpu&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nb">Get-WmiObject&lt;/span> &lt;span class="n">-Class&lt;/span> &lt;span class="n">Win32_Processor&lt;/span> &lt;span class="n">-ComputerName&lt;/span> &lt;span class="nv">$ComputerName&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$disk&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nb">Get-WmiObject&lt;/span> &lt;span class="n">-Class&lt;/span> &lt;span class="n">Win32_LogicalDisk&lt;/span> &lt;span class="n">-ComputerName&lt;/span> &lt;span class="nv">$ComputerName&lt;/span> &lt;span class="n">-Filter&lt;/span> &lt;span class="s2">&amp;#34;DriveType=3&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$result&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="py">CPU&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="no">math&lt;/span>&lt;span class="p">]::&lt;/span>&lt;span class="n">Round&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nv">$cpu&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">LoadPercentage&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mf">2&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$result&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="py">Memory&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="no">math&lt;/span>&lt;span class="p">]::&lt;/span>&lt;span class="n">Round&lt;/span>&lt;span class="p">(((&lt;/span>&lt;span class="nv">$sys&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="py">TotalVisibleMemorySize&lt;/span> &lt;span class="p">-&lt;/span> &lt;span class="nv">$sys&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">FreePhysicalMemory&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">/&lt;/span> &lt;span class="nv">$sys&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">TotalVisibleMemorySize&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">*&lt;/span> &lt;span class="mf">100&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mf">2&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$result&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="py">DiskSpace&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="vm">@&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">foreach&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nv">$d&lt;/span> &lt;span class="k">in&lt;/span> &lt;span class="nv">$disk&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$usedPercent&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="no">math&lt;/span>&lt;span class="p">]::&lt;/span>&lt;span class="n">Round&lt;/span>&lt;span class="p">(((&lt;/span>&lt;span class="nv">$d&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="py">Size&lt;/span> &lt;span class="p">-&lt;/span> &lt;span class="nv">$d&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">FreeSpace&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">/&lt;/span> &lt;span class="nv">$d&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">Size&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">*&lt;/span> &lt;span class="mf">100&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mf">2&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$result&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="py">DiskSpace&lt;/span> &lt;span class="p">+=&lt;/span> &lt;span class="vm">@&lt;/span>&lt;span class="p">{&lt;/span> &lt;span class="n">Drive&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nv">$d&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">DeviceID&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">UsedPercent&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nv">$usedPercent&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span> &lt;span class="k">catch&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">Write-Warning&lt;/span> &lt;span class="s2">&amp;#34;Unable to gather metrics from &lt;/span>&lt;span class="nv">$ComputerName&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nv">$result&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c"># Example usage&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$computers&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nb">Get-Content&lt;/span> &lt;span class="n">-Path&lt;/span> &lt;span class="s2">&amp;#34;.\computers.txt&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$healthReport&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nv">$computers&lt;/span> &lt;span class="p">|&lt;/span> &lt;span class="nb">ForEach-Object&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nb">Test-SystemHealth&lt;/span> &lt;span class="n">-ComputerName&lt;/span> &lt;span class="nv">$_&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">$healthReport&lt;/span> &lt;span class="p">|&lt;/span> &lt;span class="nb">ConvertTo-Json&lt;/span> &lt;span class="p">|&lt;/span> &lt;span class="nb">Out-File&lt;/span> &lt;span class="s2">&amp;#34;.\HealthReport.json&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c">### 2. Testing Strategy with Pester&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">```&lt;/span>&lt;span class="n">powershell&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">Describe&lt;/span> &lt;span class="s1">&amp;#39;Test-SystemHealth&amp;#39;&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">It&lt;/span> &lt;span class="s1">&amp;#39;Should return a result object with expected keys&amp;#39;&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$mockResult&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nb">Test-SystemHealth&lt;/span> &lt;span class="n">-ComputerName&lt;/span> &lt;span class="s2">&amp;#34;localhost&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$mockResult&lt;/span> &lt;span class="p">|&lt;/span> &lt;span class="n">Should&lt;/span> &lt;span class="o">-Not&lt;/span> &lt;span class="n">-BeNullOrEmpty&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$mockResult&lt;/span> &lt;span class="p">|&lt;/span> &lt;span class="n">Should&lt;/span> &lt;span class="n">-HaveProperty&lt;/span> &lt;span class="s1">&amp;#39;ComputerName&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$mockResult&lt;/span> &lt;span class="p">|&lt;/span> &lt;span class="n">Should&lt;/span> &lt;span class="n">-HaveProperty&lt;/span> &lt;span class="s1">&amp;#39;Ping&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$mockResult&lt;/span> &lt;span class="p">|&lt;/span> &lt;span class="n">Should&lt;/span> &lt;span class="n">-HaveProperty&lt;/span> &lt;span class="s1">&amp;#39;CPU&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$mockResult&lt;/span> &lt;span class="p">|&lt;/span> &lt;span class="n">Should&lt;/span> &lt;span class="n">-HaveProperty&lt;/span> &lt;span class="s1">&amp;#39;Memory&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$mockResult&lt;/span> &lt;span class="p">|&lt;/span> &lt;span class="n">Should&lt;/span> &lt;span class="n">-HaveProperty&lt;/span> &lt;span class="s1">&amp;#39;DiskSpace&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">It&lt;/span> &lt;span class="s1">&amp;#39;Should show Ping as true for localhost&amp;#39;&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$mockResult&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nb">Test-SystemHealth&lt;/span> &lt;span class="n">-ComputerName&lt;/span> &lt;span class="s2">&amp;#34;localhost&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">$mockResult&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="py">Ping&lt;/span> &lt;span class="p">|&lt;/span> &lt;span class="n">Should&lt;/span> &lt;span class="n">-BeTrue&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Modern Web Development Trends in 2024</title><link>https://dev--200rx.netlify.app/posts/system-health-checks/</link><pubDate>Tue, 20 Feb 2024 14:30:00 +0000</pubDate><guid>https://dev--200rx.netlify.app/posts/system-health-checks/</guid><description>&lt;h2 id="the-evolution-of-web-development">The Evolution of Web Development&lt;/h2>
+&lt;p>Web development continues to evolve at a rapid pace. As we progress through 2024, several key trends are shaping how we build and deploy web applications.&lt;/p>
+&lt;h2 id="key-trends-for-2024">Key Trends for 2024&lt;/h2>
+&lt;h3 id="1-ai-powered-development-tools">1. AI-Powered Development Tools&lt;/h3>
+&lt;p>Artificial Intelligence is revolutionizing how developers write code:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Code completion&lt;/strong>: Tools like GitHub Copilot and Tabnine&lt;/li>
+&lt;li>&lt;strong>Automated testing&lt;/strong>: AI-generated test cases&lt;/li>
+&lt;li>&lt;strong>Bug detection&lt;/strong>: Intelligent code analysis&lt;/li>
+&lt;li>&lt;strong>Documentation&lt;/strong>: Auto-generated API docs&lt;/li>
+&lt;/ul>
+&lt;h3 id="2-edge-computing-and-cdns">2. Edge Computing and CDNs&lt;/h3>
+&lt;p>Moving computation closer to users:&lt;/p></description></item><item><title>Getting Started with Hugo: A Beginner's Guide</title><link>https://dev--200rx.netlify.app/posts/getting-started-with-hugo/</link><pubDate>Mon, 15 Jan 2024 10:00:00 +0000</pubDate><guid>https://dev--200rx.netlify.app/posts/getting-started-with-hugo/</guid><description>&lt;h2 id="introduction">Introduction&lt;/h2>
+&lt;p>Hugo is one of the fastest static site generators available today. Built with Go, it can generate thousands of pages in seconds, making it perfect for blogs, documentation sites, and portfolios.&lt;/p>
+&lt;h2 id="why-choose-hugo">Why Choose Hugo?&lt;/h2>
+&lt;h3 id="speed">Speed&lt;/h3>
+&lt;p>Hugo is incredibly fast. It can build most websites in under a second, which means you can see your changes almost instantly during development.&lt;/p>
+&lt;h3 id="flexibility">Flexibility&lt;/h3>
+&lt;p>With its powerful templating system and extensive theme ecosystem, Hugo can be adapted to almost any type of website.&lt;/p></description></item><item><title>Welcome</title><link>https://dev--200rx.netlify.app/posts/first-post/</link><pubDate>Mon, 01 Jan 2024 10:00:00 +0000</pubDate><guid>https://dev--200rx.netlify.app/posts/first-post/</guid><description>&lt;h1 id="welcome-to-my-portfolio">Welcome to My Portfolio&lt;/h1>
+&lt;p>This is my personal website where I share my thoughts, projects, and experiences.&lt;/p>
+&lt;h2 id="recent-posts">Recent Posts&lt;/h2>
+&lt;p>Check out my latest blog posts below, or use the menu to navigate through different sections of the site.&lt;/p></description></item><item><title>Automation as a Service</title><link>https://dev--200rx.netlify.app/services/automation-as-a-service/</link><pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate><guid>https://dev--200rx.netlify.app/services/automation-as-a-service/</guid><description>&lt;h1 id="automation-as-a-service">Automation as a Service&lt;/h1>
+&lt;p>Transform your repetitive IT tasks into automated workflows that save time, reduce errors, and free your team for strategic work.&lt;/p>
+&lt;h2 id="what-you-get">What You Get&lt;/h2>
+&lt;h3 id="custom-script-development">Custom Script Development&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>PowerShell/Python scripts&lt;/strong> tailored to your environment&lt;/li>
+&lt;li>&lt;strong>API integrations&lt;/strong> connecting your systems&lt;/li>
+&lt;li>&lt;strong>Scheduled automation&lt;/strong> for routine tasks&lt;/li>
+&lt;li>&lt;strong>Error handling&lt;/strong> and logging for reliability&lt;/li>
+&lt;/ul>
+&lt;h3 id="system-monitoring--alerting">System Monitoring &amp;amp; Alerting&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>Proactive monitoring&lt;/strong> of critical systems&lt;/li>
+&lt;li>&lt;strong>Custom dashboards&lt;/strong> with real-time metrics&lt;/li>
+&lt;li>&lt;strong>Intelligent alerting&lt;/strong> to prevent issues&lt;/li>
+&lt;li>&lt;strong>Performance trend analysis&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;h3 id="compliance-automation">Compliance Automation&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>STIG/CIS standard&lt;/strong> implementation&lt;/li>
+&lt;li>&lt;strong>Automated remediation&lt;/strong> scripts&lt;/li>
+&lt;li>&lt;strong>Compliance reporting&lt;/strong> and documentation&lt;/li>
+&lt;li>&lt;strong>Audit preparation&lt;/strong> support&lt;/li>
+&lt;/ul>
+&lt;h2 id="typical-roi">Typical ROI&lt;/h2>
+&lt;ul>
+&lt;li>&lt;strong>20-40 hours saved&lt;/strong> per week per implementation&lt;/li>
+&lt;li>&lt;strong>50% reduction&lt;/strong> in manual errors&lt;/li>
+&lt;li>&lt;strong>30% faster&lt;/strong> incident response&lt;/li>
+&lt;li>&lt;strong>85% less time&lt;/strong> spent on audit preparation&lt;/li>
+&lt;/ul>
+&lt;h2 id="technologies-used">Technologies Used&lt;/h2>
+&lt;ul>
+&lt;li>&lt;strong>PowerShell&lt;/strong> (5.1/7.x)&lt;/li>
+&lt;li>&lt;strong>Python&lt;/strong> (3.x with libraries)&lt;/li>
+&lt;li>&lt;strong>REST APIs&lt;/strong> and web services&lt;/li>
+&lt;li>&lt;strong>Task schedulers&lt;/strong> and automation platforms&lt;/li>
+&lt;li>&lt;strong>Monitoring tools&lt;/strong> (PRTG, Nagios, custom)&lt;/li>
+&lt;/ul>
+&lt;h2 id="deliverables">Deliverables&lt;/h2>
+&lt;ol>
+&lt;li>&lt;strong>Custom automation scripts&lt;/strong> with full documentation&lt;/li>
+&lt;li>&lt;strong>Installation and configuration&lt;/strong> guides&lt;/li>
+&lt;li>&lt;strong>Monitoring dashboards&lt;/strong> and alerting setup&lt;/li>
+&lt;li>&lt;strong>Training materials&lt;/strong> for your team&lt;/li>
+&lt;li>&lt;strong>Maintenance procedures&lt;/strong> and support documentation&lt;/li>
+&lt;/ol>
+&lt;h2 id="engagement-options">Engagement Options&lt;/h2>
+&lt;h3 id="quick-win-package-1-2-weeks">Quick Win Package (1-2 weeks)&lt;/h3>
+&lt;ul>
+&lt;li>Automate 1-3 critical processes&lt;/li>
+&lt;li>Immediate ROI demonstration&lt;/li>
+&lt;li>Perfect for proof of concept&lt;/li>
+&lt;/ul>
+&lt;h3 id="transformation-package-1-3-months">Transformation Package (1-3 months)&lt;/h3>
+&lt;ul>
+&lt;li>Comprehensive process automation&lt;/li>
+&lt;li>Multiple system integration&lt;/li>
+&lt;li>Significant efficiency gains&lt;/li>
+&lt;/ul>
+&lt;h3 id="enterprise-package-3-6-months">Enterprise Package (3-6 months)&lt;/h3>
+&lt;ul>
+&lt;li>Full-scale automation program&lt;/li>
+&lt;li>Organization-wide improvements&lt;/li>
+&lt;li>Complete process transformation&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;p>&lt;strong>Ready to eliminate manual processes?&lt;/strong> &lt;a href="https://dev--200rx.netlify.app/contact">Contact me&lt;/a> to discuss your automation needs and get a custom proposal.&lt;/p></description></item><item><title>Emergency IT Support</title><link>https://dev--200rx.netlify.app/services/emergency-support/</link><pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate><guid>https://dev--200rx.netlify.app/services/emergency-support/</guid><description>&lt;h1 id="emergency-it-support">Emergency IT Support&lt;/h1>
+&lt;p>When critical systems fail, rapid response is essential. Get expert help to minimize downtime and restore operations quickly.&lt;/p>
+&lt;h2 id="emergency-response-services">Emergency Response Services&lt;/h2>
+&lt;h3 id="247-critical-support">24/7 Critical Support&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>Immediate response&lt;/strong> to system failures&lt;/li>
+&lt;li>&lt;strong>Remote troubleshooting&lt;/strong> capabilities&lt;/li>
+&lt;li>&lt;strong>Escalation management&lt;/strong> for complex issues&lt;/li>
+&lt;li>&lt;strong>Real-time communication&lt;/strong> during incidents&lt;/li>
+&lt;/ul>
+&lt;h3 id="crisis-management">Crisis Management&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>Incident command&lt;/strong> structure and coordination&lt;/li>
+&lt;li>&lt;strong>Stakeholder communication&lt;/strong> and updates&lt;/li>
+&lt;li>&lt;strong>Priority-based triage&lt;/strong> for multiple issues&lt;/li>
+&lt;li>&lt;strong>Business impact assessment&lt;/strong> and mitigation&lt;/li>
+&lt;/ul>
+&lt;h3 id="system-recovery">System Recovery&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>Data recovery&lt;/strong> and restoration&lt;/li>
+&lt;li>&lt;strong>Service restoration&lt;/strong> procedures&lt;/li>
+&lt;li>&lt;strong>Backup validation&lt;/strong> and testing&lt;/li>
+&lt;li>&lt;strong>Failover activation&lt;/strong> when needed&lt;/li>
+&lt;/ul>
+&lt;h2 id="rapid-response-capabilities">Rapid Response Capabilities&lt;/h2>
+&lt;h3 id="remote-access-tools">Remote Access Tools&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>Secure remote connection&lt;/strong> to your systems&lt;/li>
+&lt;li>&lt;strong>Administrative access&lt;/strong> for critical repairs&lt;/li>
+&lt;li>&lt;strong>Screen sharing&lt;/strong> for collaborative troubleshooting&lt;/li>
+&lt;li>&lt;strong>File transfer&lt;/strong> for emergency patches&lt;/li>
+&lt;/ul>
+&lt;h3 id="diagnostic-expertise">Diagnostic Expertise&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>System log analysis&lt;/strong> and interpretation&lt;/li>
+&lt;li>&lt;strong>Performance monitoring&lt;/strong> and analysis&lt;/li>
+&lt;li>&lt;strong>Network troubleshooting&lt;/strong> and optimization&lt;/li>
+&lt;li>&lt;strong>Security incident&lt;/strong> response&lt;/li>
+&lt;/ul>
+&lt;h3 id="recovery-tools">Recovery Tools&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>Custom recovery scripts&lt;/strong> for common issues&lt;/li>
+&lt;li>&lt;strong>Automated diagnostics&lt;/strong> for faster resolution&lt;/li>
+&lt;li>&lt;strong>System restore&lt;/strong> and rollback procedures&lt;/li>
+&lt;li>&lt;strong>Emergency patches&lt;/strong> and hotfixes&lt;/li>
+&lt;/ul>
+&lt;h2 id="service-levels">Service Levels&lt;/h2>
+&lt;h3 id="standard-emergency-support">Standard Emergency Support&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>4-hour response&lt;/strong> time guarantee&lt;/li>
+&lt;li>&lt;strong>Business hours&lt;/strong> primary coverage&lt;/li>
+&lt;li>&lt;strong>Remote resolution&lt;/strong> preferred method&lt;/li>
+&lt;li>&lt;strong>Follow-up documentation&lt;/strong> included&lt;/li>
+&lt;/ul>
+&lt;h3 id="premium-emergency-support">Premium Emergency Support&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>1-hour response&lt;/strong> time guarantee&lt;/li>
+&lt;li>&lt;strong>24/7 availability&lt;/strong> including holidays&lt;/li>
+&lt;li>&lt;strong>On-site support&lt;/strong> when required&lt;/li>
+&lt;li>&lt;strong>Dedicated hotline&lt;/strong> for critical issues&lt;/li>
+&lt;/ul>
+&lt;h3 id="enterprise-emergency-support">Enterprise Emergency Support&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>30-minute response&lt;/strong> time guarantee&lt;/li>
+&lt;li>&lt;strong>Dedicated support engineer&lt;/strong> assignment&lt;/li>
+&lt;li>&lt;strong>Priority escalation&lt;/strong> to vendor support&lt;/li>
+&lt;li>&lt;strong>Post-incident review&lt;/strong> and improvement&lt;/li>
+&lt;/ul>
+&lt;h2 id="common-emergency-scenarios">Common Emergency Scenarios&lt;/h2>
+&lt;h3 id="server-failures">Server Failures&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>Hardware diagnostics&lt;/strong> and replacement coordination&lt;/li>
+&lt;li>&lt;strong>Service restoration&lt;/strong> on alternate systems&lt;/li>
+&lt;li>&lt;strong>Data recovery&lt;/strong> from failed storage&lt;/li>
+&lt;li>&lt;strong>Application troubleshooting&lt;/strong> and repair&lt;/li>
+&lt;/ul>
+&lt;h3 id="network-outages">Network Outages&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>Connectivity diagnosis&lt;/strong> and restoration&lt;/li>
+&lt;li>&lt;strong>Routing and switching&lt;/strong> issue resolution&lt;/li>
+&lt;li>&lt;strong>DNS/DHCP service&lt;/strong> recovery&lt;/li>
+&lt;li>&lt;strong>Internet connectivity&lt;/strong> troubleshooting&lt;/li>
+&lt;/ul>
+&lt;h3 id="security-incidents">Security Incidents&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>Malware removal&lt;/strong> and system cleaning&lt;/li>
+&lt;li>&lt;strong>Intrusion response&lt;/strong> and containment&lt;/li>
+&lt;li>&lt;strong>Account compromise&lt;/strong> remediation&lt;/li>
+&lt;li>&lt;strong>Security baseline&lt;/strong> restoration&lt;/li>
+&lt;/ul>
+&lt;h3 id="performance-crises">Performance Crises&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>Resource exhaustion&lt;/strong> diagnosis and relief&lt;/li>
+&lt;li>&lt;strong>Performance bottleneck&lt;/strong> identification&lt;/li>
+&lt;li>&lt;strong>Capacity planning&lt;/strong> for immediate needs&lt;/li>
+&lt;li>&lt;strong>Load balancing&lt;/strong> and optimization&lt;/li>
+&lt;/ul>
+&lt;h2 id="value-proposition">Value Proposition&lt;/h2>
+&lt;ul>
+&lt;li>&lt;strong>Minimize business disruption&lt;/strong> with rapid response&lt;/li>
+&lt;li>&lt;strong>Leverage 10+ years&lt;/strong> of crisis management experience&lt;/li>
+&lt;li>&lt;strong>Access to specialized tools&lt;/strong> and diagnostic capabilities&lt;/li>
+&lt;li>&lt;strong>Federal and enterprise&lt;/strong> experience with critical systems&lt;/li>
+&lt;li>&lt;strong>Clear communication&lt;/strong> throughout the incident&lt;/li>
+&lt;/ul>
+&lt;h2 id="engagement-model">Engagement Model&lt;/h2>
+&lt;ol>
+&lt;li>&lt;strong>Initial Contact&lt;/strong> - Immediate response and triage&lt;/li>
+&lt;li>&lt;strong>Assessment&lt;/strong> - Rapid diagnosis and impact analysis&lt;/li>
+&lt;li>&lt;strong>Response&lt;/strong> - Coordinated resolution efforts&lt;/li>
+&lt;li>&lt;strong>Recovery&lt;/strong> - System restoration and validation&lt;/li>
+&lt;li>&lt;strong>Follow-up&lt;/strong> - Post-incident review and recommendations&lt;/li>
+&lt;/ol>
+&lt;hr>
+&lt;p>&lt;strong>Facing a critical IT emergency?&lt;/strong> &lt;a href="https://dev--200rx.netlify.app/contact">Contact me immediately&lt;/a> - Response within 1 hour guaranteed.&lt;/p></description></item><item><title>IT Infrastructure Consulting</title><link>https://dev--200rx.netlify.app/services/infrastructure-consulting/</link><pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate><guid>https://dev--200rx.netlify.app/services/infrastructure-consulting/</guid><description>&lt;h1 id="it-infrastructure-consulting">IT Infrastructure Consulting&lt;/h1>
+&lt;p>Optimize your IT infrastructure for peak performance, reliability, and scalability with expert analysis and strategic recommendations.&lt;/p>
+&lt;h2 id="core-services">Core Services&lt;/h2>
+&lt;h3 id="infrastructure-assessment">Infrastructure Assessment&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>Complete system architecture&lt;/strong> review&lt;/li>
+&lt;li>&lt;strong>Performance bottleneck&lt;/strong> identification&lt;/li>
+&lt;li>&lt;strong>Security posture&lt;/strong> evaluation&lt;/li>
+&lt;li>&lt;strong>Capacity planning&lt;/strong> and growth projections&lt;/li>
+&lt;/ul>
+&lt;h3 id="system-optimization">System Optimization&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>Performance tuning&lt;/strong> for maximum efficiency&lt;/li>
+&lt;li>&lt;strong>Resource allocation&lt;/strong> optimization&lt;/li>
+&lt;li>&lt;strong>Network configuration&lt;/strong> improvements&lt;/li>
+&lt;li>&lt;strong>Storage and backup&lt;/strong> strategy enhancement&lt;/li>
+&lt;/ul>
+&lt;h3 id="troubleshooting--resolution">Troubleshooting &amp;amp; Resolution&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>Root cause analysis&lt;/strong> of complex issues&lt;/li>
+&lt;li>&lt;strong>Emergency response&lt;/strong> for critical problems&lt;/li>
+&lt;li>&lt;strong>Preventive maintenance&lt;/strong> planning&lt;/li>
+&lt;li>&lt;strong>Documentation&lt;/strong> and knowledge transfer&lt;/li>
+&lt;/ul>
+&lt;h2 id="specialized-expertise">Specialized Expertise&lt;/h2>
+&lt;h3 id="windows-server--active-directory">Windows Server &amp;amp; Active Directory&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>Enterprise AD management&lt;/strong> (600+ systems experience)&lt;/li>
+&lt;li>&lt;strong>Group Policy optimization&lt;/strong> and troubleshooting&lt;/li>
+&lt;li>&lt;strong>DNS/DHCP configuration&lt;/strong> and performance&lt;/li>
+&lt;li>&lt;strong>Server consolidation&lt;/strong> and modernization&lt;/li>
+&lt;/ul>
+&lt;h3 id="virtualization-vmware-vsphere">Virtualization (VMware vSphere)&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>ESXi cluster&lt;/strong> optimization&lt;/li>
+&lt;li>&lt;strong>VM lifecycle management&lt;/strong> automation&lt;/li>
+&lt;li>&lt;strong>Resource pooling&lt;/strong> and allocation&lt;/li>
+&lt;li>&lt;strong>High availability&lt;/strong> configuration&lt;/li>
+&lt;/ul>
+&lt;h3 id="cloud-integration-microsoft-azure">Cloud Integration (Microsoft Azure)&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>Hybrid identity&lt;/strong> setup and optimization&lt;/li>
+&lt;li>&lt;strong>Cloud migration&lt;/strong> planning and execution&lt;/li>
+&lt;li>&lt;strong>Cost optimization&lt;/strong> strategies&lt;/li>
+&lt;li>&lt;strong>Security configuration&lt;/strong> best practices&lt;/li>
+&lt;/ul>
+&lt;h2 id="typical-outcomes">Typical Outcomes&lt;/h2>
+&lt;ul>
+&lt;li>&lt;strong>30% improvement&lt;/strong> in system efficiency&lt;/li>
+&lt;li>&lt;strong>50% reduction&lt;/strong> in downtime incidents&lt;/li>
+&lt;li>&lt;strong>40% faster&lt;/strong> problem resolution&lt;/li>
+&lt;li>&lt;strong>25% cost savings&lt;/strong> through optimization&lt;/li>
+&lt;/ul>
+&lt;h2 id="engagement-process">Engagement Process&lt;/h2>
+&lt;ol>
+&lt;li>
+&lt;p>&lt;strong>Discovery Phase&lt;/strong> (1-2 weeks)&lt;/p></description></item><item><title>Contact Me</title><link>https://dev--200rx.netlify.app/contact/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://dev--200rx.netlify.app/contact/</guid><description>&lt;p>Ready to work together? Let&amp;rsquo;s discuss your project and how I can help with your system administration, cloud infrastructure, or automation needs.&lt;/p></description></item></channel></rss>
