@@ -60,5 +60,8 @@
     "vite-plugin-node-stdlib-browser": "^0.2.1"
   },
   "name": "portfolio",
-  "version": "0.1.0"
+  "version": "0.1.0",
+  "dependencies": {
+    "@popperjs/core": "^2.11.8"
+  }
 }
