@@ -2,8 +2,12 @@
 <html lang="{{ .Site.Language.Lang }}">
   <head>
     <title>{{- .Site.Title -}}</title>
-    {{ $siteDescription := .Site.Params.description }}
-    {{ if (index .Site.Data .Site.Language.Lang).site }}
+    {{ $siteDescription := "System Administrator specializing in cloud administration, automation, and DevOps practices. Experienced in Windows, Networking, PowerShell, and federal environments." }}
+    {{ if site.Data.en.site }}
+      {{ if site.Data.en.site.description }}
+        {{ $siteDescription = site.Data.en.site.description }}
+      {{ end }}
+    {{ else if (index .Site.Data .Site.Language.Lang).site }}
       {{ $siteConfig := (index .Site.Data .Site.Language.Lang).site }}
       {{ if $siteConfig.description }}
         {{ $siteDescription = $siteConfig.description }}

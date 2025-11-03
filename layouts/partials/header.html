@@ -1,0 +1,136 @@
+{{- /* Enhanced SEO Header Partial - Overrides theme default */ -}}
+
+{{- /* Basic Meta Tags */ -}}
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+{{- /* Calculate Description for use throughout */ -}}
+{{ $description := "" }}
+{{ if .Description }}
+  {{ $description = .Description }}
+{{ else if .Summary }}
+  {{ $description = .Summary }}
+{{ else if site.Data.en.site }}
+  {{ $description = site.Data.en.site.description }}
+{{ end }}
+
+{{- /* Meta Description - Skip for homepage as it's handled in index.html */ -}}
+{{ if not .IsHome }}
+  {{ if $description }}
+    <meta name="description" content="{{ $description }}" />
+  {{ end }}
+{{ end }}
+
+{{- /* Canonical URL */ -}}
+<link rel="canonical" href="{{ .Permalink }}" />
+
+{{- /* Author Information */ -}}
+{{ with site.Data.en.author.name }}
+  <meta name="author" content="{{ . }}" />
+{{ end }}
+
+{{- /* Style Bundle */ -}}
+{{ partial "helpers/style-bundle.html" . }}
+
+{{- /* Favicon */ -}}
+{{ if site.Params.logo.favicon }}
+  {{ $favicon := site.Params.logo.favicon }}
+  {{ $favicon = resources.Get $favicon }}
+  {{ if and $favicon (ne $favicon.MediaType.SubType "svg") }}
+    {{ $favicon = $favicon.Resize "42x" }}
+  {{ end }}
+  {{ $favicon = $favicon.RelPermalink}}
+  <link rel="icon" type="image/png" href="{{ $favicon }}" />
+{{ end }}
+
+{{- /* RSS Feed */ -}}
+{{ with .OutputFormats.Get "rss" -}}
+  {{ printf `<link rel=%q type=%q href=%q title=%q>` .Rel .MediaType.Type .Permalink site.Title | safeHTML }}
+{{ end }}
+
+{{- /* JSON-LD Structured Data */ -}}
+{{ if .IsHome }}
+  {{- /* Website Schema for Homepage */ -}}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "{{ site.Title }}",
+    "url": "{{ site.BaseURL }}",
+    {{ with $description }}"description": "{{ . }}",{{ end }}
+    {{ with site.Data.en.author }}
+    "author": {
+      "@type": "Person",
+      "name": "{{ .name }}",
+      {{ with .contactInfo.email }}"email": "{{ . }}",{{ end }}
+      {{ with .contactInfo.website }}"url": "{{ . }}",{{ end }}
+      "jobTitle": "{{ .professional.currentRole | default "IT Infrastructure Specialist" }}"
+    },
+    {{ end }}
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "{{ site.BaseURL }}search/?keyword={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+{{ else if eq .Section "posts" }}
+  {{- /* Article Schema for Blog Posts */ -}}
+  {{ $author := site.Data.en.author }}
+  {{ $authorName := $author.name | default "Corey Miller" }}
+  {{ $authorImage := $author.image | default "/images/author/CM1.png" | absURL }}
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "{{ .Title }}",
+    "description": "{{ $description }}",
+    {{ with .Params.hero }}"image": "{{ . | absURL }}",{{ end }}
+    "datePublished": "{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}",
+    {{ if .Lastmod }}"dateModified": "{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}",{{ end }}
+    "author": {
+      "@type": "Person",
+      "name": "{{ $authorName }}",
+      {{ with $author.contactInfo.email }}"email": "{{ . }}",{{ end }}
+      {{ with $author.contactInfo.website }}"url": "{{ . }}",{{ end }}
+      "image": "{{ $authorImage }}"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "{{ site.Title }}",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "{{ $authorImage }}"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "{{ .Permalink }}"
+    },
+    {{ with .Params.tags }}"keywords": "{{ delimit . ", " }}",{{ end }}
+    "articleSection": "{{ .Section | title }}",
+    "wordCount": {{ .WordCount }}
+  }
+  </script>
+{{ else if eq .Section "services" }}
+  {{- /* Service Schema for Service Pages */ -}}
+  {{ $author := site.Data.en.author }}
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "{{ .Title }}",
+    "description": "{{ $description }}",
+    "provider": {
+      "@type": "Person",
+      "name": "{{ $author.name | default "Corey Miller" }}",
+      {{ with $author.contactInfo.email }}"email": "{{ . }}",{{ end }}
+      {{ with $author.contactInfo.website }}"url": "{{ . }}"{{ end }}
+    },
+    "url": "{{ .Permalink }}"
+  }
+  </script>
+{{ end }}
