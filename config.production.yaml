@@ -1,0 +1,67 @@
+baseURL: "https://200rx.com"
+languageCode: "en-us"
+title: "Ray Miller - IT Infrastructure Specialist"
+theme: "toha"
+
+# Production-specific parameters
+params:
+  # Production environment
+  environment: "production"
+  showEnvironmentBadge: false
+  
+  # Production API endpoints
+  crmApiUrl: "https://200rxio-crm-production.up.railway.app"
+  aiApiUrl: "https://portfolio-ai-backend-1zyj.onrender.com"
+  
+  # Production analytics (add GA4 ID when ready)
+  analytics:
+    google:
+      id: "" # Add production GA4 tracking ID here
+    
+  # Production contact form
+  contact:
+    testMode: false
+    
+# Production build settings
+build:
+  writeStats: true
+  
+# Production markup settings  
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+  highlight:
+    style: github
+    noClasses: false
+    
+# Enable production features
+enableRobotsTXT: true # Enable robots.txt in production
+enableGitInfo: true
+enableEmoji: true
+
+# Production menu structure
+# Note: Toha theme uses its own navigation system via data files
+# See data/en/sections/*.yaml for navigation configuration
+
+# Pagination
+pagination:
+  pagerSize: 10
+  path: "page"
+
+# Taxonomies
+taxonomies:
+  tag: "tags"
+  category: "categories"
+  series: "series"
+
+# Related content
+related:
+  threshold: 80
+  includeNewer: true
+  toLower: false
+  indices:
+    - name: "tags"
+      weight: 100
+    - name: "categories"
+      weight: 200
