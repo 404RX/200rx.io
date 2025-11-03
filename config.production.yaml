@@ -13,20 +13,20 @@ params:
   crmApiUrl: "https://200rxio-crm-production.up.railway.app"
   aiApiUrl: "https://portfolio-ai-backend-1zyj.onrender.com"
   
-  # Development analytics (disable or use test IDs)
+  # Production analytics (add GA4 ID when ready)
   analytics:
     google:
-      id: "" # Disable in dev or use GA4-DEV-ID
+      id: "" # Add production GA4 tracking ID here
     
-  # Development contact form
+  # Production contact form
   contact:
-    testMode: true
+    testMode: false
     
-# Development build settings
+# Production build settings
 build:
   writeStats: true
   
-# Development markup settings  
+# Production markup settings  
 markup:
   goldmark:
     renderer:
@@ -40,12 +40,9 @@ enableRobotsTXT: true # Enable robots.txt in production
 enableGitInfo: true
 enableEmoji: true
 
-# Development menu structure
-menu:
-  main:
-    - name: "🚧 DEV ENVIRONMENT"
-      url: "#"
-      weight: 1
+# Production menu structure
+# Note: Toha theme uses its own navigation system via data files
+# See data/en/sections/*.yaml for navigation configuration
 
 # Pagination
 pagination:
